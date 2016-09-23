@@ -13,3 +13,5 @@ This repository contains all the firmware necessary to impliment with Spidy.
 
 - [XMabbX](https://github.com/XMabbX)
   - Create the main program which will learn to walk to the robot.
+
+# Material Needed
