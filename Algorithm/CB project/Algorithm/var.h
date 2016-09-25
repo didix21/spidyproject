@@ -22,7 +22,13 @@ class network
 
 class genes
 {
-
+    public:
+    genes();
+    int into;
+    int out;
+    float weight;
+    bool enabled;
+    int innovation;
 };
 
 class genomes
@@ -93,6 +99,16 @@ mutationRates[5]=DisableMutationChance;
 mutationRates[6]=StepSize;
 }
 
+genes::genes(){
+into=0;
+out=0;
+weight=0.0;
+enabled=true;
+innovation=0;
+}
 
+genomes copyGenome(genomes);//Funcio que copia dos genomes;
+genomes basicGenome();//Creates a new genome;
 
+genes copyGene(genes);
 #endif // VAR_H_INCLUDED
