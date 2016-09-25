@@ -5,6 +5,16 @@
 int Inputs = 4;
 int Outputs = 4;
 
+float MutateConnectionsChance = 0.25;
+float PerturbChance=0.9;
+float CrossoverChance=0.75;
+float LinkMutationChance=2.0;
+float NodeMutationChance=0.5;
+float BiasMutationChance=0.4;
+float StepSize=0.1;
+float DisableMutationChance=0.4;
+float EnableMutationChance=0.2;
+
 class network
 {
 
@@ -19,13 +29,14 @@ class genomes
 {
 
     public:
+    genomes();
     std::vector<genes> GenesVec;
     int fitness;
     int adjustedFitness;
     std::vector<network> NetworkVec;
     int maxneuron;
     int globalRank;
-    int mutationRates[7];
+    float mutationRates[7];
 };
 
 
@@ -65,9 +76,22 @@ maxFitness=0;
 species::species(){
 topFitness=0;
 staleness=0;
-genomes=0;
+averageFitness=0;
 }
 
+genomes::genomes(){
+fitness=0;
+adjustedFitness=0;
+maxneuron=0;
+globalRank=0;
+mutationRates[0]=MutateConnectionsChance;
+mutationRates[1]=LinkMutationChance;
+mutationRates[2]=BiasMutationChance;
+mutationRates[3]=NodeMutationChance;
+mutationRates[4]=EnableMutationChance;
+mutationRates[5]=DisableMutationChance;
+mutationRates[6]=StepSize;
+}
 
 
 

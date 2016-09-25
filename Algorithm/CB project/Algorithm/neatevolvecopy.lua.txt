@@ -922,7 +922,7 @@ while true do
 		displayGenome(genome)
 	end
 	
-	if pool.currentFrame%5 == 0 then
+	if pool.currentFrame%5 == 0 then //Calcula outputs!! 
 		evaluateCurrent()
 	end
 
