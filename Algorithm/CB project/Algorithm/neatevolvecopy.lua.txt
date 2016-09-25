@@ -60,19 +60,19 @@ function getPositions()
 end
 
 function getTile(dx, dy)
-	//Obtain tile
+	--Obtain tile
 end
 
 function getSprites()
-	//Game carachteristicss
+	--Game carachteristicss
 end
 
 function getExtendedSprites()
-	//Gane
+	--Gane
 end
 
 function getInputs()
-	// Obatin inputs
+	-- Obatin inputs
 end
 
 function sigmoid(x)
@@ -116,7 +116,7 @@ function newGenome()
 	genome.maxneuron = 0
 	genome.globalRank = 0
 	genome.mutationRates = {}
-	genome.mutationRates["connections"] = MutateConnectionsChance //In lua the index can be everything
+	genome.mutationRates["connections"] = MutateConnectionsChance --In lua the index can be everything
 	genome.mutationRates["link"] = LinkMutationChance
 	genome.mutationRates["bias"] = BiasMutationChance
 	genome.mutationRates["node"] = NodeMutationChance
@@ -771,7 +771,7 @@ function fitnessAlreadyMeasured()
 end
 
 function displayGenome(genome)
-		//Delete by me
+		--Delete by me
 end
 
 function writeFile(filename)
@@ -922,7 +922,7 @@ while true do
 		displayGenome(genome)
 	end
 	
-	if pool.currentFrame%5 == 0 then //Calcula outputs!! 
+	if pool.currentFrame%5 == 0 then --Calcula outputs!! 
 		evaluateCurrent()
 	end
 
