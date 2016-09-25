@@ -15,15 +15,10 @@ float StepSize=0.1;
 float DisableMutationChance=0.4;
 float EnableMutationChance=0.2;
 
-class network
-{
-
-};
-
-class genes
+class gene
 {
     public:
-    genes();
+    gene();
     int into;
     int out;
     float weight;
@@ -31,15 +26,20 @@ class genes
     int innovation;
 };
 
-class genomes
+class neuron
 {
+    std::vector<gene> IncomingVec;
+    float value;
+};
 
+class genome
+{
     public:
-    genomes();
-    std::vector<genes> GenesVec;
+    genome();
+    std::vector<gene> GenesVec;
     int fitness;
     int adjustedFitness;
-    std::vector<network> NetworkVec;
+    std::vector<neuron> Network;
     int maxneuron;
     int globalRank;
     float mutationRates[7];
@@ -52,7 +52,7 @@ class species
     species();
     int topFitness;
     int staleness;
-    std::vector<genomes> GenomesVec;
+    std::vector<genome> GenomesVec;
     int averageFitness;
 
 };
@@ -85,7 +85,7 @@ staleness=0;
 averageFitness=0;
 }
 
-genomes::genomes(){
+genome::genome(){
 fitness=0;
 adjustedFitness=0;
 maxneuron=0;
@@ -99,7 +99,7 @@ mutationRates[5]=DisableMutationChance;
 mutationRates[6]=StepSize;
 }
 
-genes::genes(){
+gene::gene(){
 into=0;
 out=0;
 weight=0.0;
@@ -107,8 +107,11 @@ enabled=true;
 innovation=0;
 }
 
-genomes copyGenome(genomes);//Funcio que copia dos genomes;
-genomes basicGenome();//Creates a new genome;
+genome copyGenome(genome);//Funcio que copia dos genomes;
+genome basicGenome();//Creates a new genome;
 
-genes copyGene(genes);
+gene copyGene(gene);
+
+std::vector<neuron> generateNetwork(genome);
+
 #endif // VAR_H_INCLUDED

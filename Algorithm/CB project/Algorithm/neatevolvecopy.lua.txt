@@ -56,7 +56,7 @@ TimeoutConstant = 20
 MaxNodes = 1000000
 
 function getPositions()
-	//Obtain position
+	--Obtain position
 end
 
 function getTile(dx, dy)
@@ -195,7 +195,7 @@ function generateNetwork(genome)
 		network.neurons[MaxNodes+o] = newNeuron()
 	end
 	
-	table.sort(genome.genes, function (a,b)
+	table.sort(genome.genes, function (a,b)  --This order function receives two arguments and must return true if the first argument should come first in the sorted array.
 		return (a.out < b.out)
 	end)
 	for i=1,#genome.genes do
