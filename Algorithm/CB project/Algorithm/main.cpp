@@ -10,10 +10,10 @@ string OutputsNames[] = {"Servo1","Servo2","Servo3","Servo4"};
 
 int main()
 {
-
+    Pool pool;
 
     //cout << "Hello world!" << endl;
-    //cout << InputsNames[1];
+    //cout << pool.currentFrame;
 
 
     return 0;
