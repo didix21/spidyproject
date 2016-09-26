@@ -15,6 +15,8 @@ float StepSize=0.1;
 float DisableMutationChance=0.4;
 float EnableMutationChance=0.2;
 
+int Population=100;
+
 class gene
 {
     public:
@@ -30,7 +32,7 @@ class neuron
 {
     public:
     neuron();
-    std::vector<gene> IncomingVec;
+    std::vector<gene> IncomingVec; //No estic segur d'aixo.
     float value;
 };
 
@@ -38,6 +40,15 @@ class genome
 {
     public:
     genome();
+    void generateNetwork(); //Send a genome to generate the NN
+    int randomNeuron(bool nonInput);
+    bool existLink(gene link);
+    void pointMutate();
+    void linkMutate(bool forceBias);
+    void nodeMutate();
+    void enableDisableMutate(bool enable);
+    void mutate();
+
     std::vector<gene> GenesVec;
     int fitness;
     int adjustedFitness;
@@ -48,10 +59,13 @@ class genome
 };
 
 
-class species
+class specie
 {
     public:
-    species();
+    specie();
+    void calculateAverageFitness();
+    void breedChild();
+
     int topFitness;
     int staleness;
     std::vector<genome> GenomesVec;
@@ -63,7 +77,20 @@ class Pool
 {
     public:
     Pool();
-    std::vector<species> SpeciesVec;
+    void rankGlobally();
+    void totalAverageFitness();
+    void cullSpecies(bool cutToOne);
+    void removeStaleSpecies();
+    void removeWeakSpecies();
+    void addToSpecies(genome child);
+    void newGeneration();
+    void initializePool();
+    void initializeRun();
+    void evaluateCurrent();
+    void nextGenome();
+    void newInnovation();
+
+    std::vector<specie> SpeciesVec;
     int generation;
     int innovation;
     int currentSpecies;
@@ -82,7 +109,7 @@ currentSpecies=1;
 maxFitness=0;
 }
 
-species::species(){
+specie::specie(){
 GenomesVec.clear();
 topFitness=0;
 staleness=0;
@@ -90,6 +117,8 @@ averageFitness=0;
 }
 
 genome::genome(){
+GenesVec.clear();
+Network.clear();
 fitness=0;
 adjustedFitness=0;
 maxneuron=0;
@@ -112,34 +141,19 @@ innovation=0;
 }
 
 neuron::neuron(){
+IncomingVec.clear();
 value=0.0;
 }
 
-
 genome copyGenome(genome genomes);//Funcio que copia dos genomes;
+
 genome basicGenome();//Creates a new genome;
 
 gene copyGene(gene genes);
 
-std::vector<neuron> generateNetwork(genome genomes); //Send a genome to genrate the NN
-
 void evaluateNetwork(std::vector<neuron> network,float * Inputs,float * Outputs); //Calculate the output of a network
 
 genome crossover(genome g1,genome g2);
-
-int randomNeuron(gene genes,bool nonInput);
-
-bool existLink(gene genes,gene link);
-
-void pointMutate(genome genomes);
-
-std::vector<gene> linkMutate(genome genomes, bool forceBias);
-
-std::vector<gene> nodeMutate(genome genomes);
-
-bool enbaleDisableMutate(genome genomes, bool enable);
-
-genome mutate(genome genomes);
 
 float disjoint(gene genes1,gene genes2);
 
@@ -147,6 +161,56 @@ float weights(gene genes1,gene genes2);
 
 bool sameSpecies(genome genome1,genome genome2);
 
+bool fitnessAlreadyMeasured();
 
+void writeFile();
+
+void savePool();
+
+void loadFile();
+
+void loadPool();
+
+void playTop();
+
+//std::vector<neuron> generateNetwork(genome genomes);
+
+//int randomNeuron(gene genes,bool nonInput);
+
+//bool existLink(gene genes,gene link); //Problably move to the gene class
+
+//void pointMutate(genome genomes); //Problably move to the genome class
+
+//std::vector<gene> linkMutate(genome genomes, bool forceBias); //Problably mode to the genome class
+
+//std::vector<gene> nodeMutate(genome genomes); //Problably mode to the genome class
+
+//bool enableDisableMutate(genome genomes, bool enable); //Problably mode to the genome class
+
+//genome mutate(genome genomes); //Problably move to the genome class
+
+//void rankGlobally(Pool PoolRank);
+
+//float calculateAverageFitness(specie species);
+
+//float totalAverageFitness();
+
+//std::vector<specie> cullSpecie(specie species,bool cutToOne);
+
+//genome breedChild(std::vector<specie> species);
+
+//std::vector<specie> removeStaleSpecies();
+
+//std::vector<specie> removeWeakSpecies();
+
+//void addToSpecies(genome child);
+
+//void newGeneration();
+
+//void initializePool();
+
+//void evalutateCurrent();
+
+//void nextGenome();
 
 #endif // VAR_H_INCLUDED

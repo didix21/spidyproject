@@ -8,6 +8,14 @@ using namespace std;
 string InputsNames[] = {"Servi1","Servi2","Servi3","Servi4"};
 string OutputsNames[] = {"Servo1","Servo2","Servo3","Servo4"};
 
+void Pool::initializePool()
+{
+    for(int i;Population;i++)
+    {
+
+    }
+}
+
 int main()
 {
     Pool pool;
