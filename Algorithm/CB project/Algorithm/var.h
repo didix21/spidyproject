@@ -51,10 +51,10 @@ class genome
     int randomNeuron(bool nonInput); //
     bool existLink(gene link); //Search if the link exist
     void pointMutate(); // Mutate the weights
-    void linkMutate(bool forceBias); //Mutate links between nodes
+    void linkMutate(bool forceBias,int* innovation); //Mutate links between nodes
     void nodeMutate(); //
     void enableDisableMutate(bool enable); //Enable or disable a genome
-    void mutate(); //Mutates a genome with all the options
+    void mutate(int* innovation); //Mutates a genome with all the options
     bool containsLink(gene Link);
 
     std::vector<gene> GenesVec;
@@ -157,7 +157,7 @@ value=0.0;
 
 genome copyGenome(genome genomes);//Funcio que copia dos genomes;
 
-genome basicGenome();//Creates a new genome;
+genome basicGenome(int* innovation);//Creates a new genome;
 
 gene copyGene(gene genes);
 

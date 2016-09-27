@@ -134,24 +134,24 @@ void Pool::initializePool()
 {
     for(int i=0;i<Population;++i)
     {
-        genome basic = basicGenome();
+        genome basic = basicGenome(&innovation);
         addToSpecies(basic);
         //cout << SpeciesVec.size();
         //cout << i;
     }
 }
 
-genome basicGenome()
+genome basicGenome(int* innovation)
 {
     genome genome;
     //innovation = 1;
     genome.maxneuron = Inputs;
-    mutate(genome);
+    genome.mutate(innovation);
 
     return genome;
 }
 
-void genome::mutate()
+void genome::mutate(int* innovation)
 {
 
     for (unsigned int i=0;i<ARRAY_SIZE(mutationRates);i++)
@@ -172,17 +172,17 @@ void genome::mutate()
 
     for(float p=mutationRates[1];p>0;p--)
     {
-        if(RANDOM<p)
+        if(0<p)
         {
-            linkMutate(false);
+            linkMutate(false,innovation);
         }
     }
 
     for(float p=mutationRates[2];p>0;p--)
     {
-        if(RANDOM<p)
+        if(0<p)
         {
-            linkMutate(true);
+            linkMutate(true,innovation);
         }
     }
 
@@ -226,7 +226,7 @@ void genome::pointMutate()
     }
 }
 
-void genome::linkMutate(bool forceBias)
+void genome::linkMutate(bool forceBias,int* innovation)
 {
     int neuron1 = randomNeuron(false);
     int neuron2 = randomNeuron(true);
@@ -254,7 +254,9 @@ void genome::linkMutate(bool forceBias)
     {
         return;
     }
-    newLink.innovation = newInnovation();
+
+    ++*innovation;
+    newLink.innovation = *innovation;
     newLink.weight = RANDOM*4-2;
 }
 
@@ -297,7 +299,8 @@ int main()
     myintVec.push_back(10);
     pool.initializePool();
 
-    pool.SpeciesVec[0].GenomesVec[0].mutate();
+    cout << pool.innovation <<endl;
+    pool.SpeciesVec[0].GenomesVec[0].mutate(&pool.innovation);
     //tam = myintVec.size();
     cout << "Hello world!" << endl;
     //cout << myintVec[0];
