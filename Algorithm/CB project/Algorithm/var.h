@@ -2,6 +2,9 @@
 #define VAR_H_INCLUDE
 #include <vector>
 
+#define ARRAY_SIZE(array) (sizeof((array))/sizeof((array[0])))
+
+
 int Inputs = 4;
 int Outputs = 4;
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <stdlib.h>
 #include "var.h"
 
 
@@ -19,10 +20,7 @@ bool sameSpecies(genome genome1,genome genom2)
 
 float disjoint(std::vector<gene> genes1,std::vector<gene> genes2)
 {
-    int length;
-    int max1 = findmax(genes1);
-    int max2 = findmax(genes2);
-    length = max(max1,max2);
+    int length = max(findmax(genes1),findmax(genes2));
     bool i1[length]={};
     bool i2[length]={};
 
@@ -56,12 +54,12 @@ float disjoint(std::vector<gene> genes1,std::vector<gene> genes2)
     {
         if(!(i1[genes2[i].innovation]))
         {
-            disjointGenes +=1;
+            ++disjointGenes;
         }
     }
 
     float n = max(genes1.size(),genes2.size());
-    //Search disjoints and count them
+    //Searc#include <stdlib.h>h disjoints and count them
 
     return disjointGenes/n;
 }
@@ -82,22 +80,36 @@ int findmax(std::vector<gene> gene)
 
 float weights(std::vector<gene> genes1,std::vector<gene> genes2)
 {
-    int length;
-    int max1 = findmax(genes1);
-    int max2 = findmax(genes2);
-    length = max(max1,max2);
+    int length = max(findmax(genes1),findmax(genes2));
     bool i2[length]={};
+    int i2l[length]={};
 
     for(unsigned int i=0;i<genes2.size();i++)
     {
         i2[genes2[i].innovation]=true;
+        i2l[genes2[i].innovation]=i;
     }
 
     float sum=0;
     float coincident=0;
+
+    for(unsigned int i=0;i<genes1.size();i++)
+    {
+        if(genes1[i].innovation<length)
+        {
+            if((i2[genes1[i].innovation]) == true)
+            {
+                sum += abs(genes1[i].weight-genes2[i2l[genes2[i].innovation]].weight);
+                ++coincident;
+            }
+        }
+    }
+
+    return sum/coincident;
 }
 
-void Pool::addToSpecies(genome child){
+void Pool::addToSpecies(genome child)
+{
     bool foundSpecie = false;
     for (unsigned int s=0;s<SpeciesVec.size();s++)
     {
@@ -137,6 +149,15 @@ genome basicGenome()
     return genome;
 }
 
+void genome::mutate()
+{
+    for (unsigned int i=0;i<ARRAY_SIZE(mutationRates);i++)
+    {
+
+    }
+
+}
+
 int main()
 {
     Pool pool;
@@ -151,7 +172,7 @@ int main()
     //tam = myintVec.size();
     cout << "Hello world!" << endl;
     //cout << myintVec[0];
-    cout <<pool.SpeciesVec[0].GenomesVec.size();
+    cout <<pool.SpeciesVec.size();
 
 
     return 0;

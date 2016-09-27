@@ -1,7 +1,9 @@
 # depslib dependency file v1.0
-1474976544 source:c:\users\marca\desktop\project_learning\robotlearning\algorithm\cb project\algorithm\main.cpp
+1474996308 source:c:\users\marca\desktop\project_learning\robotlearning\algorithm\cb project\algorithm\main.cpp
 	<iostream>
 	<string>
+	<math.h>
+	<stdlib.h>
 	"var.h"
 
 1474976574 c:\users\marca\desktop\project_learning\robotlearning\algorithm\cb project\algorithm\var.h
