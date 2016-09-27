@@ -4,6 +4,8 @@
 
 #define ARRAY_SIZE(array) (sizeof((array))/sizeof((array[0])))
 
+#define RANDOM (float)(rand())/(RAND_MAX)
+
 
 int Inputs = 4;
 int Outputs = 4;

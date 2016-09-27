@@ -2,6 +2,8 @@
 #include <string>
 #include <math.h>
 #include <stdlib.h>
+#include <ctime>
+//#include <random>
 #include "var.h"
 
 
@@ -151,15 +153,78 @@ genome basicGenome()
 
 void genome::mutate()
 {
+
     for (unsigned int i=0;i<ARRAY_SIZE(mutationRates);i++)
     {
-
+        float r=(float)(rand())/(RAND_MAX);
+        if(r<0.5)
+        {
+            mutationRates[i] *= 0.98;
+        }else{
+            mutationRates[i] *= 1.05263;
+        }
     }
+
+    if(RANDOM<mutationRates[0])
+    {
+        pointMutate();
+    }
+
+    for(float p=mutationRates[1];p>0;p--)
+    {
+        if(RANDOM<p)
+        {
+            linkMutate(false);
+        }
+    }
+
+    for(float p=mutationRates[2];p>0;p--)
+    {
+        if(RANDOM<p)
+        {
+            linkMutate(true);
+        }
+    }
+
+    for(float p=mutationRates[3];p>0;p--)
+    {
+        if(RANDOM<p)
+        {
+            nodeMutate();
+        }
+    }
+
+    for(float p=mutationRates[4];p>0;p--)
+    {
+        if(RANDOM<p)
+        {
+            enableDisableMutate(true);
+        }
+    }
+
+    for(float p=mutationRates[5];p>0;p--)
+    {
+        if(RANDOM<p)
+        {
+            enableDisableMutate(false);
+        }
+    }
+
 
 }
 
+void genome::pointMutate(){}
+
+void genome::linkMutate(bool forceBias){}
+
+void genome::nodeMutate(){}
+
+void genome::enableDisableMutate(bool enable){};
+
 int main()
 {
+
+    srand (time(NULL));
     Pool pool;
     std::vector<int> myintVec;
     //int tam;
@@ -169,10 +234,11 @@ int main()
     myintVec.push_back(10);
     pool.initializePool();
 
+    pool.SpeciesVec[0].GenomesVec[0].mutate();
     //tam = myintVec.size();
     cout << "Hello world!" << endl;
     //cout << myintVec[0];
-    cout <<pool.SpeciesVec.size();
+    //cout << r;
 
 
     return 0;
