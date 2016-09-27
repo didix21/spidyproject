@@ -146,7 +146,7 @@ genome basicGenome()
     genome genome;
     //innovation = 1;
     genome.maxneuron = Inputs;
-    //mutate(genome);
+    mutate(genome);
 
     return genome;
 }
@@ -228,8 +228,56 @@ void genome::pointMutate()
 
 void genome::linkMutate(bool forceBias)
 {
+    int neuron1 = randomNeuron(false);
+    int neuron2 = randomNeuron(true);
 
+    gene newLink;
+    if((neuron1<=Inputs) && (neuron2<=Inputs))
+    {
+        return;
+    }
 
+    if (neuron2<=Inputs)
+    {
+        swap(neuron1,neuron2);
+    }
+
+    newLink.into = neuron1;
+    newLink.out = neuron2;
+
+    if (forceBias)
+    {
+        newLink.into = Inputs;
+    }
+
+    if(containsLink(newLink))
+    {
+        return;
+    }
+    newLink.innovation = newInnovation();
+    newLink.weight = RANDOM*4-2;
+}
+
+int genome::randomNeuron(bool nonInput)
+{
+
+}
+
+int Pool::newInnovation()
+{
+    return ++innovation;
+}
+
+bool genome::containsLink(gene Link)
+{
+    for(unsigned int i=0;i<GenesVec.size();i++)
+    {
+        if((GenesVec[i].into == Link.into)&&(GenesVec[i].out==Link.out))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void genome::nodeMutate(){}

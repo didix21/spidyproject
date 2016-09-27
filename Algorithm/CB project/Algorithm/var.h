@@ -55,6 +55,7 @@ class genome
     void nodeMutate(); //
     void enableDisableMutate(bool enable); //Enable or disable a genome
     void mutate(); //Mutates a genome with all the options
+    bool containsLink(gene Link);
 
     std::vector<gene> GenesVec;
     int fitness;
@@ -95,7 +96,7 @@ class Pool
     void initializeRun();
     void evaluateCurrent();
     void nextGenome();
-    void newInnovation();
+    int newInnovation();
 
     int Population;
     std::vector<specie> SpeciesVec;
