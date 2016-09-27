@@ -5,6 +5,10 @@
 int Inputs = 4;
 int Outputs = 4;
 
+float DeltaDisjoint = 2.0;
+float DeltaWeights = 0.4;
+float DeltaThreshold = 1.0;
+
 float MutateConnectionsChance = 0.25;
 float PerturbChance=0.9;
 float CrossoverChance=0.75;
@@ -15,9 +19,7 @@ float StepSize=0.1;
 float DisableMutationChance=0.4;
 float EnableMutationChance=0.2;
 
-int Population=100;
-
-class gene
+class gene  // This class is the gene that creates a genome
 {
     public:
     gene();
@@ -41,13 +43,13 @@ class genome
     public:
     genome();
     void generateNetwork(); //Send a genome to generate the NN
-    int randomNeuron(bool nonInput);
-    bool existLink(gene link);
-    void pointMutate();
-    void linkMutate(bool forceBias);
-    void nodeMutate();
-    void enableDisableMutate(bool enable);
-    void mutate();
+    int randomNeuron(bool nonInput); //
+    bool existLink(gene link); //Search if the link exist
+    void pointMutate(); // Mutate the weights
+    void linkMutate(bool forceBias); //Mutate links between nodes
+    void nodeMutate(); //
+    void enableDisableMutate(bool enable); //Enable or disable a genome
+    void mutate(); //Mutates a genome with all the options
 
     std::vector<gene> GenesVec;
     int fitness;
@@ -90,6 +92,7 @@ class Pool
     void nextGenome();
     void newInnovation();
 
+    int Population;
     std::vector<specie> SpeciesVec;
     int generation;
     int innovation;
@@ -107,6 +110,7 @@ currentFrame=0;
 currentGenome=1;
 currentSpecies=1;
 maxFitness=0;
+Population=100;
 }
 
 specie::specie(){
@@ -155,9 +159,9 @@ void evaluateNetwork(std::vector<neuron> network,float * Inputs,float * Outputs)
 
 genome crossover(genome g1,genome g2);
 
-float disjoint(gene genes1,gene genes2);
+float disjoint(std::vector<gene> genes1,std::vector<gene> genes2);
 
-float weights(gene genes1,gene genes2);
+float weights(std::vector<gene> genes1,std::vector<gene> genes2);
 
 bool sameSpecies(genome genome1,genome genome2);
 
@@ -172,6 +176,8 @@ void loadFile();
 void loadPool();
 
 void playTop();
+
+int findmax(std::vector<gene>);
 
 //std::vector<neuron> generateNetwork(genome genomes);
 

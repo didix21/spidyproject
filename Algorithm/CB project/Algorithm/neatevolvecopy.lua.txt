@@ -655,7 +655,7 @@ function addToSpecies(child)
 	end
 	
 	if not foundSpecies then
-		local childSpecies = newSpecies()
+		local x = newSpecies()
 		table.insert(childSpecies.genomes, child)
 		table.insert(pool.species, childSpecies)
 	end
