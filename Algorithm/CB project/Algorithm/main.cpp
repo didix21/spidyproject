@@ -213,9 +213,24 @@ void genome::mutate()
 
 }
 
-void genome::pointMutate(){}
+void genome::pointMutate()
+{
+    for(unsigned int i=0;i<GenesVec.size();i++)
+    {
+        if(RANDOM<PerturbChance)
+        {
+           GenesVec[i].weight += RANDOM*mutationRates[6]*2-mutationRates[6];
+        }else{
+            GenesVec[i].weight += RANDOM*4-2;
+        }
+    }
+}
 
-void genome::linkMutate(bool forceBias){}
+void genome::linkMutate(bool forceBias)
+{
+
+
+}
 
 void genome::nodeMutate(){}
 
