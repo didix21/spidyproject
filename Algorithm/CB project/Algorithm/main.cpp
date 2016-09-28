@@ -32,19 +32,19 @@ float disjoint(std::vector<gene> genes1,std::vector<gene> genes2)
 
     //Fill each array if the innovation index is in the genome
 
-    for(unsigned int i=0;i<genes1.size();i++)
+    for(unsigned int i=0;i<genes1.size();++i)
     {
         i1[genes1[i].innovation]=true;
     }
 
-    for(unsigned int i=0;i<genes2.size();i++)
+    for(unsigned int i=0;i<genes2.size();++i)
     {
         i2[genes2[i].innovation]=true;
     }
 
     float disjointGenes = 0;
 
-    for(unsigned int i=0;i<genes1.size();i++)
+    for(unsigned int i=0;i<genes1.size();++i)
     {
         if(!(i2[genes1[i].innovation]))
         {
@@ -52,7 +52,7 @@ float disjoint(std::vector<gene> genes1,std::vector<gene> genes2)
         }
     }
 
-    for(unsigned int i=0;i<genes2.size();i++)
+    for(unsigned int i=0;i<genes2.size();++i)
     {
         if(!(i1[genes2[i].innovation]))
         {
@@ -70,7 +70,7 @@ int findmax(std::vector<gene> gene)
 {
     int maxi=0;
 
-    for(unsigned int i=0;i<gene.size();i++)
+    for(unsigned int i=0;i<gene.size();++i)
         {
             if(gene[i].innovation>maxi)
             {
@@ -86,7 +86,7 @@ float weights(std::vector<gene> genes1,std::vector<gene> genes2)
     bool i2[length]={};
     int i2l[length]={};
 
-    for(unsigned int i=0;i<genes2.size();i++)
+    for(unsigned int i=0;i<genes2.size();++i)
     {
         i2[genes2[i].innovation]=true;
         i2l[genes2[i].innovation]=i;
@@ -95,7 +95,7 @@ float weights(std::vector<gene> genes1,std::vector<gene> genes2)
     float sum=0;
     float coincident=0;
 
-    for(unsigned int i=0;i<genes1.size();i++)
+    for(unsigned int i=0;i<genes1.size();++i)
     {
         if(genes1[i].innovation<length)
         {
@@ -113,7 +113,7 @@ float weights(std::vector<gene> genes1,std::vector<gene> genes2)
 void Pool::addToSpecies(genome child)
 {
     bool foundSpecie = false;
-    for (unsigned int s=0;s<SpeciesVec.size();s++)
+    for (unsigned int s=0;s<SpeciesVec.size();++s)
     {
         if (!(foundSpecie) && (sameSpecies(child, SpeciesVec[s].GenomesVec[0])))
         {
@@ -154,7 +154,7 @@ genome basicGenome(int* innovation)
 void genome::mutate(int* innovation)
 {
 
-    for (unsigned int i=0;i<ARRAY_SIZE(mutationRates);i++)
+    for (unsigned int i=0;i<ARRAY_SIZE(mutationRates);++i)
     {
         float r=(float)(rand())/(RAND_MAX);
         if(r<0.5)
@@ -170,7 +170,7 @@ void genome::mutate(int* innovation)
         pointMutate();
     }
 
-    for(float p=mutationRates[1];p>0;p--)
+    for(float p=mutationRates[1];p>0;--p)
     {
         if(0<p)
         {
@@ -178,7 +178,7 @@ void genome::mutate(int* innovation)
         }
     }
 
-    for(float p=mutationRates[2];p>0;p--)
+    for(float p=mutationRates[2];p>0;--p)
     {
         if(0<p)
         {
@@ -186,15 +186,15 @@ void genome::mutate(int* innovation)
         }
     }
 
-    for(float p=mutationRates[3];p>0;p--)
+    for(float p=mutationRates[3];p>0;--p)
     {
         if(RANDOM<p)
         {
-            nodeMutate();
+            nodeMutate(innovation);
         }
     }
 
-    for(float p=mutationRates[4];p>0;p--)
+    for(float p=mutationRates[4];p>0;--p)
     {
         if(RANDOM<p)
         {
@@ -202,7 +202,7 @@ void genome::mutate(int* innovation)
         }
     }
 
-    for(float p=mutationRates[5];p>0;p--)
+    for(float p=mutationRates[5];p>0;--p)
     {
         if(RANDOM<p)
         {
@@ -215,7 +215,7 @@ void genome::mutate(int* innovation)
 
 void genome::pointMutate()
 {
-    for(unsigned int i=0;i<GenesVec.size();i++)
+    for(unsigned int i=0;i<GenesVec.size();++i)
     {
         if(RANDOM<PerturbChance)
         {
@@ -258,10 +258,50 @@ void genome::linkMutate(bool forceBias,int* innovation)
     ++*innovation;
     newLink.innovation = *innovation;
     newLink.weight = RANDOM*4-2;
+
+    GenesVec.push_back(newLink);
 }
 
 int genome::randomNeuron(bool nonInput)
 {
+    bool neurons[MaxNodes+Outputs]={};
+
+    if (!nonInput)
+    {
+        for(int i=0;i<Inputs;++i)
+        {
+            neurons[i]=true;
+        }
+    }
+
+    for(int i=0;i<Outputs;++i)
+    {
+        neurons[MaxNodes+Outputs]=true;
+    }
+
+    int sum=0;
+
+    for(int i=0;i<(MaxNodes+Outputs);++i)
+    {
+        if(neurons[i])
+        {
+            ++sum;
+        }
+    }
+
+    int neuronsl[sum] = {};
+
+    int x=0;
+    for(int i=0;i<(MaxNodes+Outputs);++i)
+    {
+        if(neurons[i])
+        {
+            neuronsl[x]=i;
+            x++;
+        }
+    }
+
+    return neurons[neuronsl[rand()%sum]];
 
 }
 
@@ -282,7 +322,16 @@ bool genome::containsLink(gene Link)
     return false;
 }
 
-void genome::nodeMutate(){}
+void genome::nodeMutate(int* innovation)
+{
+    if(GenesVec.size()==0)
+    {
+        return;
+    }
+    ++maxneuron;
+
+
+}
 
 void genome::enableDisableMutate(bool enable){};
 

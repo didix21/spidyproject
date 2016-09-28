@@ -24,6 +24,8 @@ float StepSize=0.1;
 float DisableMutationChance=0.4;
 float EnableMutationChance=0.2;
 
+int MaxNodes=10000;
+
 class gene  // This class is the gene that creates a genome
 {
     public:
@@ -52,7 +54,7 @@ class genome
     bool existLink(gene link); //Search if the link exist
     void pointMutate(); // Mutate the weights
     void linkMutate(bool forceBias,int* innovation); //Mutate links between nodes
-    void nodeMutate(); //
+    void nodeMutate(int* innovation); //
     void enableDisableMutate(bool enable); //Enable or disable a genome
     void mutate(int* innovation); //Mutates a genome with all the options
     bool containsLink(gene Link);
