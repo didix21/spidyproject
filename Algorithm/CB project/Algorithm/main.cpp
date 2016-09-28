@@ -289,6 +289,9 @@ int genome::randomNeuron(bool nonInput)
         }
     }
 
+    if(sum==0){
+        return 0;
+    }
     int neuronsl[sum] = {};
 
     int x=0;
@@ -300,8 +303,8 @@ int genome::randomNeuron(bool nonInput)
             x++;
         }
     }
-
-    return neurons[neuronsl[rand()%sum]];
+    int randnum = rand()%sum;
+    return neuronsl[randnum];
 
 }
 
@@ -330,10 +333,60 @@ void genome::nodeMutate(int* innovation)
     }
     ++maxneuron;
 
+    int genernd = rand()%(GenesVec.size());
 
+    if(!GenesVec[genernd].enabled)
+    {
+        return;
+    }
+
+    gene gene1 = copyGene(GenesVec[genernd]);
+    gene1.out = maxneuron;
+    gene1.weight = 1;
+    ++*innovation;
+    gene1.innovation = *innovation;
+    gene1.enabled = true;
+    GenesVec.push_back(gene1);
+
+    gene gene2 = copyGene(GenesVec[genernd]);
+    gene2.out = maxneuron;
+    ++*innovation;
+    gene2.innovation = *innovation;
+    gene2.enabled = true;
+    GenesVec.push_back(gene2);
 }
 
-void genome::enableDisableMutate(bool enable){};
+gene copyGene(gene genes)
+{
+    gene genecopy;
+    genecopy.into=genes.into;
+    genecopy.out=genes.out;
+    genecopy.weight=genes.weight;
+    genecopy.enabled=genes.enabled;
+    genecopy.innovation=genes.innovation;
+
+    return genecopy;
+}
+
+void genome::enableDisableMutate(bool enable)
+{
+    std::vector<int> candidates;
+    for(unsigned int i=0;i<GenesVec.size();++i)
+    {
+        if(GenesVec[i].enabled== !enable)
+        {
+            candidates.push_back(i);
+        }
+
+        if(candidates.size()==0)
+        {
+            return;
+        }
+
+        int genernd = rand()%(candidates.size());
+        GenesVec[genernd].enabled = !GenesVec[genernd].enabled;
+    }
+}
 
 int main()
 {
@@ -349,7 +402,8 @@ int main()
     pool.initializePool();
 
     cout << pool.innovation <<endl;
-    pool.SpeciesVec[0].GenomesVec[0].mutate(&pool.innovation);
+    cout << pool.SpeciesVec.size() <<endl;
+    //pool.SpeciesVec[0].GenomesVec[0].mutate(&pool.innovation);
     //tam = myintVec.size();
     cout << "Hello world!" << endl;
     //cout << myintVec[0];
