@@ -3,6 +3,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <ctime>
+#include <iostream>
+#include <fstream>
 //#include <random>
 #include "var.h"
 
@@ -276,7 +278,7 @@ int genome::randomNeuron(bool nonInput)
 
     for(int i=0;i<Outputs;++i)
     {
-        neurons[MaxNodes+Outputs]=true;
+        neurons[MaxNodes+i]=true;
     }
 
     int sum=0;
@@ -288,10 +290,10 @@ int genome::randomNeuron(bool nonInput)
             ++sum;
         }
     }
-
     if(sum==0){
         return 0;
     }
+
     int neuronsl[sum] = {};
 
     int x=0;
@@ -304,6 +306,7 @@ int genome::randomNeuron(bool nonInput)
         }
     }
     int randnum = rand()%sum;
+
     return neuronsl[randnum];
 
 }
@@ -388,6 +391,53 @@ void genome::enableDisableMutate(bool enable)
     }
 }
 
+void customWriteFile(Pool pool)
+{
+    ofstream file;
+    file.open("Test.txt");
+    file << "Pool generation:" SPACE;
+    file << pool.generation SPACE;
+    file << pool.innovation SPACE;
+    file << pool.currentSpecies SPACE;
+    file << pool.currentGenome SPACE;
+    file << pool.currentFrame SPACE;
+
+    file << "Number of species:" << pool.SpeciesVec.size() SPACE;
+    for(unsigned int i=0;i<pool.SpeciesVec.size();++i)
+    {
+        file << TAB "Specie:" << i SPACE;
+        file << TAB pool.SpeciesVec[i].averageFitness SPACE;
+        file << TAB pool.SpeciesVec[i].topFitness SPACE;
+        file << TAB pool.SpeciesVec[i].staleness SPACE;
+        file << TAB "Number of genomes:" << pool.SpeciesVec[i].GenomesVec.size() SPACE;
+        for(unsigned int x=0;x<pool.SpeciesVec[i].GenomesVec.size();++x)
+        {
+            file << TAB TAB "Genome:" << x SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].fitness SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].maxneuron SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].globalRank SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].mutationRates[0] SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].mutationRates[1] SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].mutationRates[2] SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].mutationRates[3] SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].mutationRates[4] SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].mutationRates[5] SPACE;
+            file << TAB TAB pool.SpeciesVec[i].GenomesVec[x].mutationRates[6] SPACE;
+            file << TAB TAB "Number of genes:" << pool.SpeciesVec[i].GenomesVec[x].GenesVec.size() SPACE;
+            for(unsigned int y=0;y<pool.SpeciesVec[i].GenomesVec[x].GenesVec.size();++y)
+            {
+                file << TAB TAB TAB "Gene:" << y SPACE;
+                file << TAB TAB TAB pool.SpeciesVec[i].GenomesVec[x].GenesVec[y].enabled SPACE;
+                file << TAB TAB TAB pool.SpeciesVec[i].GenomesVec[x].GenesVec[y].innovation SPACE;
+                file << TAB TAB TAB pool.SpeciesVec[i].GenomesVec[x].GenesVec[y].into SPACE;
+                file << TAB TAB TAB pool.SpeciesVec[i].GenomesVec[x].GenesVec[y].out SPACE;
+                file << TAB TAB TAB pool.SpeciesVec[i].GenomesVec[x].GenesVec[y].weight SPACE;
+            }
+        }
+    }
+    file.close();
+}
+
 int main()
 {
 
@@ -406,6 +456,8 @@ int main()
     //pool.SpeciesVec[0].GenomesVec[0].mutate(&pool.innovation);
     //tam = myintVec.size();
     cout << "Hello world!" << endl;
+
+    customWriteFile(pool);
     //cout << myintVec[0];
     //cout << r;
 

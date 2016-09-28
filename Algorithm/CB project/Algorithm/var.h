@@ -4,6 +4,10 @@
 
 #define ARRAY_SIZE(array) (sizeof((array))/sizeof((array[0])))
 
+#define SPACE <<"\n"
+
+#define TAB "\t"<<
+
 #define RANDOM (float)(rand())/(RAND_MAX)
 
 
@@ -184,6 +188,10 @@ void loadFile();
 void loadPool();
 
 void playTop();
+
+void customWriteFile(Pool pool);
+
+Pool customReadFile();
 
 int findmax(std::vector<gene>);
 
