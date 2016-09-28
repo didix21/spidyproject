@@ -5,6 +5,7 @@
 #define ARRAY_SIZE(array) (sizeof((array))/sizeof((array[0])))
 
 #define SPACE <<"\n"
+#define READ getline(file,line)
 
 #define TAB "\t"<<
 
@@ -122,7 +123,7 @@ currentFrame=0;
 currentGenome=1;
 currentSpecies=1;
 maxFitness=0;
-Population=100;
+Population=1000;
 }
 
 specie::specie(){
