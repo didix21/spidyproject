@@ -583,9 +583,50 @@ void Pool::cullSpecies(bool cutToOne)
 {
     for(unsigned int i=0;i<SpeciesVec.size();++i)
     {
+        std::vector<genome> Genomecopy;
+        Genomecopy = SpeciesVec[i].GenomesVec;
 
+        bool visited[Genomecopy.size()]={};
+        int index=0;
+
+        SpeciesVec[i].GenomesVec.clear();
+        int maxFitness = 0;
+
+        for(unsigned int z=0;z<Genomecopy.size();++z)
+        {
+            maxFitness = 0;
+            index = 0;
+            for(unsigned int x=0;x<Genomecopy.size();++x)
+            {
+                if(!visited[x])
+                {
+                    if(maxFitness<Genomecopy[x].fitness)
+                    {
+                        maxFitness=Genomecopy[x].fitness;
+                        index = x;
+                    }
+                }
+            }
+            SpeciesVec[i].GenomesVec.push_back(Genomecopy[index]);
+        }
+
+        unsigned int remaining = floor(SpeciesVec[i].GenomesVec.size()/2);
+        if(cutToOne)
+        {
+            remaining = 1;
+        }
+        while(SpeciesVec[i].GenomesVec.size()>remaining)
+        {
+            SpeciesVec[i].GenomesVec.pop_back();
+        }
     }
 }
+
+void specie::breedChild()
+{
+
+}
+
 int main()
 {
 
