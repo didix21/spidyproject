@@ -19,6 +19,8 @@ float DeltaDisjoint = 2.0;
 float DeltaWeights = 0.4;
 float DeltaThreshold = 1.0;
 
+int StaleSpecies = 15;
+
 float MutateConnectionsChance = 0.25;
 float PerturbChance=0.9;
 float CrossoverChance=0.75;
@@ -162,7 +164,7 @@ IncomingVec.clear();
 value=0.0;
 }
 
-genome copyGenome(genome genomes);//Funcio que copia dos genomes;
+genome copyGenome(genome g1);//Funcio que copia dos genomes;
 
 genome basicGenome(int* innovation);//Creates a new genome;
 
