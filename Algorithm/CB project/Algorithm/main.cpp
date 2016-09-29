@@ -622,9 +622,24 @@ void Pool::cullSpecies(bool cutToOne)
     }
 }
 
-void specie::breedChild()
+void specie::breedChild(int* innovation)
 {
-
+    genome child;
+    int genernd;
+    if(RANDOM < CrossoverChance)
+    {
+        genernd = rand()%(GenomesVec.size());
+        genome g1 = GenomesVec[genernd];
+        genernd = rand()%(GenomesVec.size());
+        genome g2 = GenomesVec[genernd];
+        child = crossover(g1,g2);
+    }else{
+        genernd = rand()%(GenomesVec.size());
+        genome g = GenomesVec[genernd];
+        child = copyGenome(g);
+    }
+    child.mutate(innovation);
+    GenomesVec.push_back(child);
 }
 
 int main()
