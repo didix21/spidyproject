@@ -660,7 +660,6 @@ void specie::breedChild(int* innovation)
     GenomesVec.push_back(child);
 }
 
-
 void Pool::removeStaleSpecies()
 {
     std::vector<specie> survived;
@@ -711,6 +710,54 @@ void Pool::removeStaleSpecies()
 
     SpeciesVec = survived;
 }
+
+void Pool::removeWeakSpecies()
+{
+    std::vector<specie> survived;
+
+    float sum = totalAverageFitness();
+
+    for(unsigned int i=0;i<SpeciesVec.size();++i)
+    {
+        float breed = floor(SpeciesVec[i].averageFitness/sum * Population);
+        if (breed >=1)
+        {
+            survived.push_back(SpeciesVec[i]);
+        }
+    }
+
+    SpeciesVec.clear();
+    SpeciesVec = survived;
+}
+
+float Pool::totalAverageFitness()
+{
+    float total = 0;
+    for(unsigned int i=0;i<SpeciesVec.size();++i)
+    {
+        total += SpeciesVec[i].averageFitness;
+    }
+
+    return total;
+}
+
+void specie::calculateAverageFitness()
+{
+    float total;
+
+    for(unsigned int i=0;i<GenomesVec.size();++i)
+    {
+        total += GenomesVec[i].globalRank;
+    }
+
+    averageFitness = total/GenomesVec.size();
+}
+
+void Pool::rankGlobally()
+{
+
+}
+
 int main()
 {
 

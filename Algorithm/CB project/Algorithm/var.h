@@ -95,7 +95,7 @@ class Pool
     public:
     Pool();
     void rankGlobally();
-    void totalAverageFitness();
+    float totalAverageFitness();
     void cullSpecies(bool cutToOne);
     void removeStaleSpecies();
     void removeWeakSpecies();
