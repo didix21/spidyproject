@@ -81,7 +81,7 @@ class specie
     public:
     specie();
     void calculateAverageFitness();
-    void breedChild(int* innovation);
+    genome breedChild(int* innovation);
 
     int topFitness;
     int staleness;

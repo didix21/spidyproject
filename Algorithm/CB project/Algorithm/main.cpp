@@ -621,6 +621,7 @@ void Pool::cullSpecies(bool cutToOne)
         }
     }
 }
+
 genome copyGenome(genome g1)
 {
     genome g2;
@@ -640,7 +641,8 @@ genome copyGenome(genome g1)
     return g2;
 
 }
-void specie::breedChild(int* innovation)
+
+genome specie::breedChild(int* innovation)
 {
     genome child;
     int genernd;
@@ -657,7 +659,7 @@ void specie::breedChild(int* innovation)
         child = copyGenome(g);
     }
     child.mutate(innovation);
-    GenomesVec.push_back(child);
+    return child;
 }
 
 void Pool::removeStaleSpecies()
@@ -743,7 +745,7 @@ float Pool::totalAverageFitness()
 
 void specie::calculateAverageFitness()
 {
-    float total;
+    float total=0;
 
     for(unsigned int i=0;i<GenomesVec.size();++i)
     {
@@ -755,9 +757,52 @@ void specie::calculateAverageFitness()
 
 void Pool::rankGlobally()
 {
+    bool visited[Population];
+    int indexspecie;
+    int indexgenome;
+    float maxFitness;
 
+    for(int z=0;z<Population;++z)
+    {
+        maxFitness = 0;
+        indexspecie = 0;
+        indexgenome = 0;
+        for(int x=0;x<Population;++x)
+        {
+            for(unsigned int i=0;i<SpeciesVec.size();++i)
+            {
+                for(unsigned int y=0;y<SpeciesVec[i].GenomesVec.size();++y)
+                {
+                    if(!visited[x])
+                    {
+                        if(SpeciesVec[i].GenomesVec[y].fitness>maxFitness)
+                        {
+                            maxFitness = SpeciesVec[i].GenomesVec[y].fitness;
+                            indexgenome = y;
+                            indexspecie = i;
+                        }
+                    }
+                }
+            }
+        }
+        SpeciesVec[indexspecie].GenomesVec[indexgenome].globalRank=z;
+    }
 }
 
+void Pool::newGeneration()
+{
+    cullSpecies(false);
+    rankGlobally();
+    removeStaleSpecies();
+    rankGlobally();
+    for(unsigned int i=0;i<SpeciesVec.size();++i)
+    {
+        SpeciesVec[i].calculateAverageFitness();
+    }
+    removeWeakSpecies();
+    float sum = totalAverageFitness();
+
+}
 int main()
 {
 
