@@ -546,6 +546,46 @@ Pool customReadFile()
     return pool;
 
 }
+
+genome crossover(genome genome1,genome genome2)
+{
+    if(genome2.fitness>genome1.fitness)
+    {
+        swap(genome1,genome2);
+    }
+
+    genome child;
+
+    int length = findmax(genome2.GenesVec);
+    bool innovation2[length] = {};
+    int innovation2l[length] = {};
+    for(unsigned int i=0;i<genome2.GenesVec.size();++i)
+    {
+        innovation2[genome2.GenesVec[i].innovation]=true;
+        innovation2l[genome2.GenesVec[i].innovation]=i;
+    }
+
+    for(unsigned int i=0;i<genome1.GenesVec.size();++i)
+    {
+        if ((innovation2[genome1.GenesVec[i].innovation]) && (RANDOM<=0.5) && (genome2.GenesVec[innovation2l[genome1.GenesVec[i].innovation]].enabled))
+        {
+            child.GenesVec.push_back(copyGene(genome2.GenesVec[innovation2l[genome1.GenesVec[i].innovation]]));
+        }else{
+            child.GenesVec.push_back(copyGene(genome1.GenesVec[i]));
+        }
+    }
+
+    return child;
+}
+
+
+void Pool::cullSpecies(bool cutToOne)
+{
+    for(unsigned int i=0;i<SpeciesVec.size();++i)
+    {
+
+    }
+}
 int main()
 {
 
