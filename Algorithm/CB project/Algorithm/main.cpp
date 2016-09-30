@@ -801,8 +801,23 @@ void Pool::newGeneration()
     }
     removeWeakSpecies();
     float sum = totalAverageFitness();
+    std::vector<genome> children;
+    for(unsigned int i=0;i<SpeciesVec.size();++i)
+    {
+        int breed = floor(SpeciesVec[i].averageFitness/sum * Population)-1;
+        for(int x=0;x<breed;++x)
+        {
+            children.push_back(SpeciesVec[i].breedChild(&innovation));
+        }
+    }
+    cullSpecies(true);
+    while((children.size()+SpeciesVec.size())<Population)
+    {
+        int num =
+    }
 
 }
+
 int main()
 {
 
