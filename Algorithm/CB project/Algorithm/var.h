@@ -126,7 +126,7 @@ currentFrame=0;
 currentGenome=1;
 currentSpecies=1;
 maxFitness=0;
-Population=100;
+Population=10;
 }
 
 specie::specie(){
@@ -169,35 +169,25 @@ genome copyGenome(genome g1);//Funcio que copia dos genomes;
 
 genome basicGenome(int* innovation);//Creates a new genome;
 
-gene copyGene(gene genes);
+gene copyGene(gene genes);//Copy a gene
 
-void evaluateNetwork(std::vector<neuron> network,float * Inputs,float * Outputs); //Calculate the output of a network
+void evaluateNetwork(std::vector<neuron> network,float * Inputs,float * Outputs); //Calculate the output of a network Unused!!!
 
-genome crossover(genome g1,genome g2);
+genome crossover(genome g1,genome g2);//Creates a cross between 2 genomes
 
-float disjoint(std::vector<gene> genes1,std::vector<gene> genes2);
+float disjoint(std::vector<gene> genes1,std::vector<gene> genes2); //Calculates distance depending of the innovation
 
-float weights(std::vector<gene> genes1,std::vector<gene> genes2);
+float weights(std::vector<gene> genes1,std::vector<gene> genes2); // Calculate distance depending of the weights of equal innvoations
 
-bool sameSpecies(genome genome1,genome genome2);
+bool sameSpecies(genome genome1,genome genome2); // Comapare 2 genome to see if pertain into the same specie
 
-bool fitnessAlreadyMeasured();
-
-void writeFile();
-
-void savePool();
-
-void loadFile();
-
-void loadPool();
-
-void playTop();
+bool fitnessAlreadyMeasured(); //unsuseD!!
 
 void customWriteFile(Pool pool);
 
 Pool customReadFile();
 
-int findmax(std::vector<gene>);
+int findmax(std::vector<gene>); //Finds the maximmum of innovation of a genome
 
 //std::vector<neuron> generateNetwork(genome genomes);
 
