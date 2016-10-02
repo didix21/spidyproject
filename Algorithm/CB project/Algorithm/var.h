@@ -12,7 +12,7 @@
 #define RANDOM (float)(rand())/(RAND_MAX)
 
 
-int Inputs = 4;
+int Inputs = 4+1;//Number of inputs + bias
 int Outputs = 4;
 
 float DeltaDisjoint = 2.0;
@@ -106,6 +106,7 @@ class Pool
     void evaluateCurrent();
     void nextGenome();
     int newInnovation();
+    void randomFitness();
 
     int Population;
     std::vector<specie> SpeciesVec;
@@ -125,7 +126,7 @@ currentFrame=0;
 currentGenome=1;
 currentSpecies=1;
 maxFitness=0;
-Population=1000;
+Population=100;
 }
 
 specie::specie(){

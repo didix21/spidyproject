@@ -51,7 +51,7 @@ float disjoint(std::vector<gene> genes1,std::vector<gene> genes2)
     {
         if(!(i2[genes1[i].innovation]))
         {
-            disjointGenes +=1;
+            ++disjointGenes;
         }
     }
 
@@ -86,8 +86,8 @@ int findmax(std::vector<gene> gene)
 float weights(std::vector<gene> genes1,std::vector<gene> genes2)
 {
     int length = max(findmax(genes1),findmax(genes2));
-    bool i2[length]={};
-    int i2l[length]={};
+    bool i2[length]={0};
+    int i2l[length]={0};
 
     for(unsigned int i=0;i<genes2.size();++i)
     {
@@ -104,7 +104,7 @@ float weights(std::vector<gene> genes1,std::vector<gene> genes2)
         {
             if((i2[genes1[i].innovation]) == true)
             {
-                sum += abs(genes1[i].weight-genes2[i2l[genes2[i].innovation]].weight);
+                sum += abs(genes1[i].weight-genes2[i2l[genes1[i].innovation]].weight);
                 ++coincident;
             }
         }
@@ -130,7 +130,6 @@ void Pool::addToSpecies(genome child)
         newspecie.GenomesVec.push_back(child);
         SpeciesVec.push_back(newspecie);
     }
-    specie specie = SpeciesVec[0];
 }
 
 void Pool::initializePool()
@@ -139,15 +138,12 @@ void Pool::initializePool()
     {
         genome basic = basicGenome(&innovation);
         addToSpecies(basic);
-        //cout << SpeciesVec.size();
-        //cout << i;
     }
 }
 
 genome basicGenome(int* innovation)
 {
     genome genome;
-    //innovation = 1;
     genome.maxneuron = Inputs;
     genome.mutate(innovation);
 
@@ -271,43 +267,66 @@ int genome::randomNeuron(bool nonInput)
 
     if (!nonInput)
     {
-        for(int i=0;i<Inputs;++i)
+        for(int i=0;i<=Inputs;++i)
         {
             neurons[i]=true;
         }
     }
 
-    for(int i=0;i<Outputs;++i)
+    for(int i=0;i<=Outputs;++i)
     {
         neurons[MaxNodes+i]=true;
     }
 
-    int sum=0;
+    for(unsigned int i=0;i<GenesVec.size();++i)
+    {
+        if((!nonInput)||(GenesVec[i].into>Inputs))
+        {
+            neurons[GenesVec[i].into]=true;
+        }
+        if((!nonInput)||(GenesVec[i].out>Inputs))
+        {
+            neurons[GenesVec[i].out]=true;
+        }
+    }
+
+//    int sum=0;
+//
+//    for(int i=0;i<(MaxNodes+Outputs);++i)
+//    {
+//        if(neurons[i])
+//        {
+//            ++sum;
+//        }
+//    }
+//    if(sum==0){
+//        return 0;
+//    }
+//
+//    int neuronsl[sum] = {};
+//
+//    int x=0;
+//    for(int i=0;i<(MaxNodes+Outputs);++i)
+//    {
+//        if(neurons[i])
+//        {
+//            neuronsl[x]=i;
+//            x++;
+//        }
+//    }
+//    int randnum = rand()%sum;
+
+    std::vector<int> neuronsl;
 
     for(int i=0;i<(MaxNodes+Outputs);++i)
     {
         if(neurons[i])
         {
-            ++sum;
+            neuronsl.push_back(i);
         }
     }
-    if(sum==0){
-        return 0;
-    }
 
-    int neuronsl[sum] = {};
-
-    int x=0;
-    for(int i=0;i<(MaxNodes+Outputs);++i)
-    {
-        if(neurons[i])
-        {
-            neuronsl[x]=i;
-            x++;
-        }
-    }
-    int randnum = rand()%sum;
-
+    int randnum = rand()%(neuronsl.size());
     return neuronsl[randnum];
 
 }
@@ -321,7 +340,7 @@ bool genome::containsLink(gene Link)
 {
     for(unsigned int i=0;i<GenesVec.size();i++)
     {
-        if((GenesVec[i].into == Link.into)&&(GenesVec[i].out==Link.out))
+        if((GenesVec[i].into == Link.into)&&(GenesVec[i].out == Link.out))
         {
             return true;
         }
@@ -344,6 +363,8 @@ void genome::nodeMutate(int* innovation)
         return;
     }
 
+    GenesVec[genernd].enabled = false;
+
     gene gene1 = copyGene(GenesVec[genernd]);
     gene1.out = maxneuron;
     gene1.weight = 1;
@@ -353,7 +374,7 @@ void genome::nodeMutate(int* innovation)
     GenesVec.push_back(gene1);
 
     gene gene2 = copyGene(GenesVec[genernd]);
-    gene2.out = maxneuron;
+    gene2.into = maxneuron;
     ++*innovation;
     gene2.innovation = *innovation;
     gene2.enabled = true;
@@ -377,25 +398,25 @@ void genome::enableDisableMutate(bool enable)
     std::vector<int> candidates;
     for(unsigned int i=0;i<GenesVec.size();++i)
     {
-        if(GenesVec[i].enabled== !enable)
+        if(GenesVec[i].enabled==!enable)
         {
             candidates.push_back(i);
         }
-
-        if(candidates.size()==0)
-        {
-            return;
-        }
-
-        int genernd = rand()%(candidates.size());
-        GenesVec[genernd].enabled = !GenesVec[genernd].enabled;
     }
+
+    if(candidates.size()==0)
+    {
+        return;
+    }
+
+    int genernd = rand()%(candidates.size());
+    GenesVec[genernd].enabled = !GenesVec[genernd].enabled;
 }
 
 void customWriteFile(Pool pool)
 {
     ofstream file;
-    file.open("Testcopy.txt");
+    file.open("Test.txt");
     file << "Pool generation:" SPACE;
     file << pool.generation SPACE;
     file << pool.innovation SPACE;
@@ -576,6 +597,12 @@ genome crossover(genome genome1,genome genome2)
         }
     }
 
+    child.maxneuron = max(genome1.maxneuron,genome2.maxneuron);
+
+    for(unsigned int i=0;i<7;++i)
+    {
+        child.mutationRates[i] = genome1.mutationRates[i];
+    }
     return child;
 }
 
@@ -585,7 +612,6 @@ void Pool::cullSpecies(bool cutToOne)
     {
         std::vector<genome> Genomecopy;
         Genomecopy = SpeciesVec[i].GenomesVec;
-
         bool visited[Genomecopy.size()]={};
         int index=0;
 
@@ -610,7 +636,7 @@ void Pool::cullSpecies(bool cutToOne)
             SpeciesVec[i].GenomesVec.push_back(Genomecopy[index]);
         }
 
-        unsigned int remaining = floor(SpeciesVec[i].GenomesVec.size()/2);
+        unsigned int remaining = ceil((double)SpeciesVec[i].GenomesVec.size()/2);
         if(cutToOne)
         {
             remaining = 1;
@@ -757,35 +783,51 @@ void specie::calculateAverageFitness()
 
 void Pool::rankGlobally()
 {
-    bool visited[Population];
+    //Calculate number of genomes
+
+    int cont = 0;
+    for(unsigned int i=0;i<SpeciesVec.size();++i)
+    {
+        for(unsigned int j=0;j<SpeciesVec[i].GenomesVec.size();++j)
+        {
+            ++cont;
+        }
+    }
+    bool visited[cont] ={};
     int indexspecie;
     int indexgenome;
+    int indexvisited;
+    int countvisited;
     float maxFitness;
 
-    for(int z=0;z<Population;++z)
+    for(int z=1;z<=cont;++z)
     {
         maxFitness = 0;
         indexspecie = 0;
         indexgenome = 0;
-        for(int x=0;x<Population;++x)
+        indexvisited = 0;
+        countvisited = 0;
+
+        for(unsigned int i=0;i<SpeciesVec.size();++i)
         {
-            for(unsigned int i=0;i<SpeciesVec.size();++i)
+            for(unsigned int y=0;y<SpeciesVec[i].GenomesVec.size();++y)
             {
-                for(unsigned int y=0;y<SpeciesVec[i].GenomesVec.size();++y)
+                if(!visited[countvisited])
                 {
-                    if(!visited[x])
+                    if(SpeciesVec[i].GenomesVec[y].fitness>maxFitness)
                     {
-                        if(SpeciesVec[i].GenomesVec[y].fitness>maxFitness)
-                        {
-                            maxFitness = SpeciesVec[i].GenomesVec[y].fitness;
-                            indexgenome = y;
-                            indexspecie = i;
-                        }
+                        maxFitness = SpeciesVec[i].GenomesVec[y].fitness;
+                        indexgenome = y;
+                        indexspecie = i;
+                        indexvisited = countvisited;
                     }
                 }
+                ++countvisited;
             }
+
         }
         SpeciesVec[indexspecie].GenomesVec[indexgenome].globalRank=z;
+        visited[indexvisited]=true;
     }
 }
 
@@ -811,13 +853,30 @@ void Pool::newGeneration()
         }
     }
     cullSpecies(true);
-    while((children.size()+SpeciesVec.size())<Population)
+    while((children.size()+SpeciesVec.size())<((unsigned int)Population))
     {
-        int num =
+        int num = rand()%SpeciesVec.size();
+        children.push_back(SpeciesVec[num].breedChild(&innovation));
     }
-
+    for(unsigned int i=0;i<children.size();++i)
+    {
+        addToSpecies(children[i]);
+    }
+    generation++;
 }
 
+void Pool::randomFitness()
+{
+
+    for(unsigned int i=0;i<SpeciesVec.size();++i)
+    {
+        for(unsigned int j=0;j<SpeciesVec[i].GenomesVec.size();++j)
+        {
+            int ale = rand()%10000;
+            SpeciesVec[i].GenomesVec[j].fitness = ale;
+        }
+    }
+}
 int main()
 {
 
@@ -829,20 +888,37 @@ int main()
     //tam = myintVec.size();
 
     //myintVec.push_back(10);
-    //pool.initializePool();
+    pool.initializePool();
+
+
+    for(int i=0;i<10;++i)
+    {
+    cout<< pool.generation;
+    pool.randomFitness();
+    pool.newGeneration();
+    }
+
+//    pool.cullSpecies(false);
+//    pool.rankGlobally();
+//    pool.removeStaleSpecies();
+//    pool.rankGlobally();
+//        for(unsigned int i=0;i<pool.SpeciesVec.size();++i)
+//    {
+//        pool.SpeciesVec[i].calculateAverageFitness();
+//    }
+//    pool.removeWeakSpecies();
 
     //cout << pool.innovation <<endl;
     //cout << pool.SpeciesVec.size() <<endl;
     //pool.SpeciesVec[0].GenomesVec[0].mutate(&pool.innovation);
     //tam = myintVec.size();
-    cout << "Hello world!" << endl;
-
-    //customWriteFile(pool);
-    pool = customReadFile();
     customWriteFile(pool);
+//    pool = customReadFile();
+//    customWriteFile(pool);
     //cout << myintVec[0];
     //cout << r;
 
 
     return 0;
 }
+
