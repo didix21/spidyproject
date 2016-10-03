@@ -948,9 +948,9 @@ int main()
 
     for(int i=0;i<2;++i)
     {
-    cout<< pool.generation;
-    pool.randomFitness();
-    pool.newGeneration();
+        cout<< pool.generation;
+        pool.randomFitness();
+        pool.newGeneration();
     }
 
 //    pool.cullSpecies(false);
