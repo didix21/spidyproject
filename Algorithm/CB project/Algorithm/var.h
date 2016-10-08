@@ -11,6 +11,8 @@
 
 #define RANDOM (float)(rand())/(RAND_MAX)
 
+#include <string>
+
 
 int Inputs = 4+1;//Number of inputs + bias
 int Outputs = 4;
@@ -28,7 +30,7 @@ float LinkMutationChance=2.0;
 float NodeMutationChance=0.5;
 float BiasMutationChance=0.4;
 float StepSize=0.1;
-float DisableMutationChance=0.4;
+float DisableMutationChance=0.3;
 float EnableMutationChance=0.2;
 
 int MaxNodes=10000;
@@ -48,7 +50,8 @@ class neuron
 {
     public:
     neuron();
-    std::vector<gene> IncomingVec; //No estic segur d'aixo.
+    std::vector<int> IncomingVec; //No estic segur d'aixo.
+    std::vector<float> WeightVec;
     float value;
 };
 
@@ -102,8 +105,6 @@ class Pool
     void addToSpecies(genome child);
     void newGeneration();
     void initializePool();
-    void initializeRun();
-    void evaluateCurrent();
     void nextGenome();
     int newInnovation();
     void randomFitness();
@@ -126,7 +127,7 @@ currentFrame=0;
 currentGenome=1;
 currentSpecies=1;
 maxFitness=0;
-Population=10;
+Population=300;
 }
 
 specie::specie(){
@@ -171,7 +172,7 @@ genome basicGenome(int* innovation);//Creates a new genome;
 
 gene copyGene(gene genes);//Copy a gene
 
-void evaluateNetwork(std::vector<neuron> network,float * Inputs,float * Outputs); //Calculate the output of a network Unused!!!
+void evaluateNetwork(std::vector<neuron> network,float * Inputs,float * Outputs); //Calculate the output of a network
 
 genome crossover(genome g1,genome g2);//Creates a cross between 2 genomes
 
@@ -183,50 +184,10 @@ bool sameSpecies(genome genome1,genome genome2); // Comapare 2 genome to see if 
 
 bool fitnessAlreadyMeasured(); //unsuseD!!
 
-void customWriteFile(Pool pool);
+//void customWriteFile(Pool pool,string filename);
 
 Pool customReadFile();
 
 int findmax(std::vector<gene>); //Finds the maximmum of innovation of a genome
-
-//std::vector<neuron> generateNetwork(genome genomes);
-
-//int randomNeuron(gene genes,bool nonInput);
-
-//bool existLink(gene genes,gene link); //Problably move to the gene class
-
-//void pointMutate(genome genomes); //Problably move to the genome class
-
-//std::vector<gene> linkMutate(genome genomes, bool forceBias); //Problably mode to the genome class
-
-//std::vector<gene> nodeMutate(genome genomes); //Problably mode to the genome class
-
-//bool enableDisableMutate(genome genomes, bool enable); //Problably mode to the genome class
-
-//genome mutate(genome genomes); //Problably move to the genome class
-
-//void rankGlobally(Pool PoolRank);
-
-//float calculateAverageFitness(specie species);
-
-//float totalAverageFitness();
-
-//std::vector<specie> cullSpecie(specie species,bool cutToOne);
-
-//genome breedChild(std::vector<specie> species);
-
-//std::vector<specie> removeStaleSpecies();
-
-//std::vector<specie> removeWeakSpecies();
-
-//void addToSpecies(genome child);
-
-//void newGeneration();
-
-//void initializePool();
-
-//void evalutateCurrent();
-
-//void nextGenome();
 
 #endif // VAR_H_INCLUDED
