@@ -616,7 +616,7 @@ genome crossover(genome genome1,genome genome2)
         }
     }
 
-    for(unsigned int i=0;i<length;++i)
+    for(int i=0;i<length;++i)
     {
         if(innovation2[i]&&(!added[i]))
         {
@@ -952,34 +952,52 @@ void Pool::randomFitness()
 }
 
 
-//void genome::generateNetwork()
-//{
-//    for(unsigned int i=0;i<GenesVec.size();++i)
-//    {
-//     if(GenesVec[i].disable)
-//     {
-//         if(Network[GenesVec[i].into])
-//         {
-//
-//         }else if(GenesVec[i].into<Inputs)
-//         {
-//
-//         }else{
-//         neuron newneuron;
-//         Network[GenesVec[i].into]=newneuron;
-//         }
-//
-//        if(Network[GenesVec[i].out])
-//        {
-//
-//        }else if(GenesVec[i].into<Outputs)
-//        {
-//
-//        }
-//     }
-//    }
-//
-//}
+void genome::generateNetwork()
+{
+    bool active[MaxNodes+Outputs] = {};
+    Network.clear();
+    Network.resize(MaxNodes+Outputs);
+    Networkorder.clear();
+
+    //Generate all the nodes
+    for(int i=0;i<Inputs;++i)
+    {
+        neuron newneuron;
+        Network[i]=newneuron;
+        active[i]=false;
+        Networkorder.push_back(i);
+    }
+
+    for(int o=0;o<Outputs;++o)
+    {
+        neuron newneuron;
+        Network[MaxNodes+o]=newneuron;
+        active[MaxNodes+o]=true;
+    }
+    for(unsigned int i=0;i<GenesVec.size();++i)
+    {
+     if(GenesVec[i].enabled)
+     {
+        if(!active[GenesVec[i].out])
+        {
+            neuron newneuron;
+            Network[GenesVec[i].out]=newneuron;
+            active[GenesVec[i].out]=true;
+        }
+        if(!active[GenesVec[i].into])
+        {
+            neuron newneuron;
+            Network[GenesVec[i].into]=newneuron;
+            active[GenesVec[i].into]=true;
+            Network[GenesVec[i].into].IncomingVec.push_back(GenesVec[i].out);
+        }else{
+            Network[GenesVec[i].into].IncomingVec.push_back(GenesVec[i].out);
+        }
+     }
+    }
+    //Order the nodes
+
+}
 
 
 int main()
@@ -995,8 +1013,8 @@ int main()
     //myintVec.push_back(10);
     pool.initializePool();
 
-
     //customWriteFile(pool,"Test1.txt");
+
     for(int i=0;i<20;++i)
     {
         cout<< pool.generation;

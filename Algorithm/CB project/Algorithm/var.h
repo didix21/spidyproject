@@ -73,6 +73,7 @@ class genome
     int fitness;
     int adjustedFitness;
     std::vector<neuron> Network;
+    std::vector<int> Networkorder;
     int maxneuron;
     int globalRank;
     float mutationRates[7];
