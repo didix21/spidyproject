@@ -33,7 +33,7 @@ float StepSize=0.1;
 float DisableMutationChance=0.3;
 float EnableMutationChance=0.2;
 
-int MaxNodes=10000;
+const int MaxNodes=10000;
 
 class gene  // This class is the gene that creates a genome
 {
@@ -74,6 +74,7 @@ class genome
     int adjustedFitness;
     std::vector<neuron> Network;
     std::vector<int> Networkorder;
+    int Layer[MaxNodes]={};
     int maxneuron;
     int globalRank;
     float mutationRates[7];
