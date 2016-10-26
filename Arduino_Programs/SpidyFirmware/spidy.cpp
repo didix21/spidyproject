@@ -101,7 +101,6 @@
     legsPosition[10] = l6s1.read();
     legsPosition[11] = l6s2.read();
 
-
     return legsPosition;
    }
 
