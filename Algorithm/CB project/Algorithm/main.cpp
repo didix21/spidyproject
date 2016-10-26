@@ -244,12 +244,12 @@ void genome::linkMutate(bool forceBias,int* innovation)
         swap(neuron1,neuron2);
     }
 
-    newLink.into = neuron1;
-    newLink.out = neuron2;
+    newLink.into = neuron2;
+    newLink.out = neuron1;
 
     if (forceBias)
     {
-        newLink.into = Inputs-1;
+        newLink.out = Inputs-1;
     }
 
     if(containsLink(newLink))
@@ -270,7 +270,7 @@ int genome::randomNeuron(bool nonInput)
 
     if (!nonInput)
     {
-        for(int i=0;i<Inputs;++i)
+        for(int i=0;i<(Inputs-1);++i)
         {
             neurons[i]=true;
         }
@@ -955,6 +955,7 @@ void Pool::randomFitness()
 void genome::generateNetwork()
 {
     bool active[MaxNodes+Outputs] = {};
+    bool found = false;
     Network.clear();
     Network.resize(MaxNodes+Outputs);
     Networkorder.clear();
@@ -989,14 +990,97 @@ void genome::generateNetwork()
             neuron newneuron;
             Network[GenesVec[i].into]=newneuron;
             active[GenesVec[i].into]=true;
+            found = false;
+            for(unsigned int x=0;x<Network[GenesVec[i].into].IncomingVec.size();++x)
+            {
+                if(GenesVec[i].out==Network[GenesVec[i].into].IncomingVec[x])
+                    found = true;
+            }
+            if(!found)
             Network[GenesVec[i].into].IncomingVec.push_back(GenesVec[i].out);
         }else{
+            found = false;
+            for(unsigned int x=0;x<Network[GenesVec[i].into].IncomingVec.size();++x)
+            {
+                if(GenesVec[i].out==Network[GenesVec[i].into].IncomingVec[x])
+                    found = true;
+            }
+            if(!found)
             Network[GenesVec[i].into].IncomingVec.push_back(GenesVec[i].out);
         }
      }
     }
-    //Order the nodes
+    //Initialize Order the nodes
+    for(int i=5;i<MaxNodes;++i)
+    {
+        if(active[i]){
+            found = false;
+            int larger = 0;
+            for(unsigned int j=0;j<Network[i].IncomingVec.size();++j)
+            {
+                if((Network[i].IncomingVec[j]>Inputs)&&(Network[i].IncomingVec[j]<MaxNodes))
+                {
+                    cout << Network[i].IncomingVec[j];
+                    int Test = Network[i].IncomingVec[j];
+                    if(Layer[Network[i].IncomingVec[j]]!=0)
+                    {
+                        found=true;
+                        if(Layer[Network[i].IncomingVec[j]]+1>larger)
+                        larger=Layer[Network[i].IncomingVec[j]]+1;
+                    }
+                }
+            }
+            cout<< "End" <<endl;
+            if(!found)
+            {
+                Layer[i]=1;
+            }else{
+                Layer[i]=larger;
+            }
+        }
+    }
 
+    //Check for correct layers
+    bool change = true;
+    int limit = 10;
+    int limitindex = 0;
+    while(change&&(limitindex<limit))
+    {
+        change = false;
+        for(int i=5;i<MaxNodes;++i)
+        {
+            if(active[i])
+            {
+                found = false;
+                int larger = 0;
+                for(unsigned int j=0;j<Network[i].IncomingVec.size();++j)
+                {
+                    if((Network[i].IncomingVec[j]>Inputs)&&(Network[i].IncomingVec[j]<MaxNodes))
+                    {
+                        if((Layer[Network[i].IncomingVec[j]]!=0)&& Layer[Network[i].IncomingVec[j]]>=Layer[j])
+                        {
+                            found = true;
+                            if(Layer[Network[i].IncomingVec[j]]+1>larger)
+                            larger=Layer[Network[i].IncomingVec[j]]+1;
+                        }
+                    }
+                }
+                if(found)
+                {
+                    if(larger!=Layer[i])
+                    {
+                        Layer[i]=larger;
+                        change = true;
+                    }
+                }
+            }
+        }
+        limitindex++;
+    }
+    cout << "Limit";
+    cout << limitindex << endl;
+
+    //Create order array from the layers
 }
 
 
@@ -1005,6 +1089,14 @@ int main()
 
     srand (time(NULL));
     Pool pool;
+//    pool=customReadFile();
+//    pool.SpeciesVec[0].GenomesVec[0].generateNetwork();
+//
+//    for(unsigned int i=0;i<MaxNodes;++i)
+//    {
+//        cout<< pool.SpeciesVec[0].GenomesVec[0].Layer[i];
+//    }
+
     //std::vector<int> myintVec;
     //int tam;
 
@@ -1013,14 +1105,14 @@ int main()
     //myintVec.push_back(10);
     pool.initializePool();
 
-    //customWriteFile(pool,"Test1.txt");
-
     for(int i=0;i<20;++i)
     {
         cout<< pool.generation;
         pool.randomFitness();
         pool.newGeneration();
     }
+
+    customWriteFile(pool,"Test1.txt");
 
 //    pool.cullSpecies(false);
 //    pool.rankGlobally();s
@@ -1036,7 +1128,7 @@ int main()
     //cout << pool.SpeciesVec.size() <<endl;
     //pool.SpeciesVec[0].GenomesVec[0].mutate(&pool.innovation);
     //tam = myintVec.size();
-    customWriteFile(pool,"Test.txt");
+//    customWriteFile(pool,"Test.txt");
 //    pool = customReadFile();
 //    customWriteFile(pool);
     //cout << myintVec[0];
