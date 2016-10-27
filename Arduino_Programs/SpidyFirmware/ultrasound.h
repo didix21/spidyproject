@@ -16,6 +16,11 @@
     pinMode(TrigerPin, OUTPUT);
   }
   
+  long microsecondsToCentimeters(long microseconds)
+  {
+    return microseconds / 29 / 2;
+  }
+  
   // Get distance from the ultrasound sensor
   long get_distance_U()
   {
@@ -31,11 +36,6 @@
     /*Serial.print(cm_U);
     Serial.print("cm");
     Serial.println();  */
-  }
-  
-  long microsecondsToCentimeters(long microseconds)
-  {
-    return microseconds / 29 / 2;
   }
 
 #endif // _ULTRASOUND_H_

@@ -1,5 +1,5 @@
 /**
- * ultrasound.h
+ * comunication.h
  */
 
 #ifndef _COMUNICATION_H_
@@ -9,11 +9,11 @@
   
   #define SLAVE_ADDRESS 0x04
   
-  int state_receive;
-  int state_send, option;
-  int pwm_values[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
-  long duration_U, cm_U;
-  long accelerometer_X, accelerometer_Y, accelerometer_Z;
+  static int state_receive=0;
+  static int state_send=0, option;
+  static uint8_t legsAngle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+  static long duration_U=0, cm_U=0;
+  static long accelerometer_X=0, accelerometer_Y=0, accelerometer_Z=0;
 
   void receiveData(int byteCount);
   void sendData();
@@ -24,19 +24,16 @@
     
     Wire.onReceive(receiveData);  // define callbacks for i2c communication
     Wire.onRequest(sendData);   
-    
-    //initialize state machines
-    state_receive = 0;
-    state_send=0;
-    
-    // Set initial values
-    duration_U = 0;
+  }
+
+  void read_angles(uint8_t *legs_Angle){
+    legs_Angle = legsAngle;
   }
      
   // callback for received data
   void receiveData(int byteCount){
     int i2c_option=0;
-    while(Wire.available()) {    
+    while(Wire.available()) {     
       switch (state_receive){
         case 0:
           state_receive = Wire.read();
@@ -49,9 +46,9 @@
           }
         break;        
         case 1 ... 12:
-          pwm_values[state_receive-1] = Wire.read();
+          legsAngle[state_receive-1] = Wire.read();
           Serial.print("data received: ");
-          Serial.println(pwm_values[state_receive-1]);
+          Serial.println(legsAngle[state_receive-1]);
           state_receive = 0;
         break;
         default:

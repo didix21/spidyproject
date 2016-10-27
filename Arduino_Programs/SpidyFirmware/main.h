@@ -8,7 +8,6 @@
    
   #include "configuration.h"
   #include "spidy.h"
-  #include "comunication.h"
   #include <Wire.h>
 
 
