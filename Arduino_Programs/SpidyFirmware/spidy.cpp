@@ -1,4 +1,3 @@
-
 #include "spidy.h"
   // Constructor
   Spidy::Spidy() {
@@ -84,7 +83,7 @@
     
    }
 
-   uint8_t Spidy::readLegsPosition(uint8_t *legsAngle) {
+   uint8_t* Spidy::readLegsPosition(uint8_t *legsAngle) {
     
     uint8_t legsPosition[12]; // Twelve Servo Motors
     // Read actual legs position
@@ -122,5 +121,3 @@
     return achievedPosition;
    }
    
-
-

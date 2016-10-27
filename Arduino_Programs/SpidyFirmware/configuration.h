@@ -31,11 +31,21 @@
   
   
  // Serial Definition
- #ifndef MYSER
+ #ifndef MYSERESIAL
  
-  #define MYSER Serial // Usefull for MEGA we can change easily between Serial, Serial1, Serial2
+  #define MYSERIAL Serial // Usefull for MEGA we can change easily between Serial, Serial1, Serial2
+
+  #ifndef BAUDRATE
+
+    #define BAUDRATE 9600
+
+  #endif
+
+  #define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
  
  #endif // MYSER
+
+
 
  // Range of each servo leg
 
