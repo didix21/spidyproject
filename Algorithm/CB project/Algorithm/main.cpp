@@ -15,26 +15,30 @@ using namespace std;
 string InputsNames[] = {"Servi1","Servi2","Servi3","Servi4"};
 string OutputsNames[] = {"Servo1","Servo2","Servo3","Servo4"};
 
+
+// Computes if two genomes belongs to the same specie
 bool sameSpecies(genome genome1,genome genom2)
 {
-    float dd = DeltaDisjoint*disjoint(genome1.GenesVec,genom2.GenesVec);
-    float dw = DeltaWeights*weights(genome1.GenesVec,genom2.GenesVec);
+    float dd = DeltaDisjoint*disjoint(genome1.GenesVec,genom2.GenesVec); // Calculates the disjoint in the innovation
+    float dw = DeltaWeights*weights(genome1.GenesVec,genom2.GenesVec); // Calculates the disjoint itn he weights
 
     return ((dd+dw) < DeltaDisjoint);
 }
 
 float disjoint(std::vector<gene> genes1,std::vector<gene> genes2)
 {
-    int length = max(findmax(genes1),findmax(genes2));
+    //calculates the disjoint value
+
+    int length = max(findmax(genes1),findmax(genes2));    //Find the max number of innovation
     bool i1[length]={};
     bool i2[length]={};
     float disjointGenes = 0;
 
-    //Find the max number of innovation
-
     //Create 2 arrays i1 and i2 initialized to 0(false)
 
     //Fill each array if the innovation index is in the genome
+
+    //For each disjoint goes up disjointGenes
 
     for(unsigned int i=0;i<genes1.size();++i)
     {
@@ -74,6 +78,7 @@ float disjoint(std::vector<gene> genes1,std::vector<gene> genes2)
 
 int findmax(std::vector<gene> gene)
 {
+    //Finds the maximum innovation value
     int maxi=0;
 
     for(unsigned int i=0;i<gene.size();++i)
@@ -88,6 +93,7 @@ int findmax(std::vector<gene> gene)
 
 float weights(std::vector<gene> genes1,std::vector<gene> genes2)
 {
+    //Return the disjjoint value for the weights
     int length = max(findmax(genes1),findmax(genes2));
     bool i2[length]={0};
     int i2l[length]={0};
@@ -118,9 +124,11 @@ float weights(std::vector<gene> genes1,std::vector<gene> genes2)
 
 void Pool::addToSpecies(genome child)
 {
+    // Add a genome to a specie
     bool foundSpecie = false;
     for (unsigned int s=0;s<SpeciesVec.size();++s)
     {
+        // search for a existent specie
         if (!(foundSpecie) && (sameSpecies(child, SpeciesVec[s].GenomesVec[0])))
         {
             SpeciesVec[s].GenomesVec.push_back(child);
@@ -129,6 +137,7 @@ void Pool::addToSpecies(genome child)
     }
     if (!foundSpecie)
     {
+        //If not finds a specie to fit the new genome creates a new one
         specie newspecie;
         newspecie.GenomesVec.push_back(child);
         SpeciesVec.push_back(newspecie);
@@ -155,9 +164,11 @@ genome basicGenome(int* innovation)
 
 void genome::mutate(int* innovation)
 {
+    //Function to mutate a genome
 
     for (unsigned int i=0;i<7;++i)
     {
+        //Modificaion of the mutation ratios
         if(RANDOM<0.5)
         {
             mutationRates[i] *= 0.98;
@@ -168,6 +179,7 @@ void genome::mutate(int* innovation)
 
     if(RANDOM<mutationRates[0])
     {
+        //Choose a point mutation
         pointMutate();
     }
 
@@ -175,6 +187,7 @@ void genome::mutate(int* innovation)
     {
         if(RANDOM<p)
         {
+            //Choose a link mutation without bias
             linkMutate(false,innovation);
         }
     }
@@ -183,6 +196,7 @@ void genome::mutate(int* innovation)
     {
         if(RANDOM<p)
         {
+            //Choose a link mutation forcing bias
             linkMutate(true,innovation);
         }
     }
@@ -191,6 +205,7 @@ void genome::mutate(int* innovation)
     {
         if(RANDOM<p)
         {
+            //Chosse a node mutation
             nodeMutate(innovation);
         }
     }
@@ -216,6 +231,7 @@ void genome::mutate(int* innovation)
 
 void genome::pointMutate()
 {
+    //Changes the weight of a link
     for(unsigned int i=0;i<GenesVec.size();++i)
     {
         if(RANDOM<PerturbChance)
@@ -229,7 +245,8 @@ void genome::pointMutate()
 
 void genome::linkMutate(bool forceBias,int* innovation)
 {
-    int neuron1 = randomNeuron(false);
+    //Adds a new link between two existing neurons
+    int neuron1 = randomNeuron(false); // Pick a random neuron of the existing ones
     int neuron2 = randomNeuron(true);
 
     gene newLink;
@@ -266,23 +283,27 @@ void genome::linkMutate(bool forceBias,int* innovation)
 
 int genome::randomNeuron(bool nonInput)
 {
+    // return a random neuron form the existing ones
     bool neurons[MaxNodes+Outputs]={};
 
     if (!nonInput)
     {
         for(int i=0;i<(Inputs-1);++i)
         {
+            //Add inputs to the list
             neurons[i]=true;
         }
     }
 
     for(int i=0;i<=Outputs;++i)
     {
+        //Add outputs to the list
         neurons[MaxNodes+i]=true;
     }
 
     for(unsigned int i=0;i<GenesVec.size();++i)
     {
+        //Search for all the existing neurons
         if((!nonInput)||(GenesVec[i].into>=Inputs))
         {
             neurons[GenesVec[i].into]=true;
@@ -325,6 +346,7 @@ int genome::randomNeuron(bool nonInput)
     {
         if(neurons[i])
         {
+            //Creates a the list with all the possible choicable neurons
             neuronsl.push_back(i);
         }
     }
@@ -341,6 +363,7 @@ int Pool::newInnovation()
 
 bool genome::containsLink(gene Link)
 {
+    //Check if the link exist in the net
     for(unsigned int i=0;i<GenesVec.size();i++)
     {
         if((GenesVec[i].into == Link.into)&&(GenesVec[i].out == Link.out))
@@ -353,6 +376,7 @@ bool genome::containsLink(gene Link)
 
 void genome::nodeMutate(int* innovation)
 {
+    //Mutates a node, choose a existing link and creates a new neuron in the link
     if(GenesVec.size()==0)
     {
         return;
@@ -404,6 +428,7 @@ gene copyGene(gene genes)
 
 void genome::enableDisableMutate(bool enable)
 {
+    // enable or disable a link
     int cont=0;
     std::vector<int> index;
     for(unsigned int i=0;i<GenesVec.size();++i)
@@ -582,6 +607,7 @@ Pool customReadFile()
 
 genome crossover(genome genome1,genome genome2)
 {
+    // create a child with two parents
     if(genome2.fitness>genome1.fitness)
     {
         swap(genome1,genome2);
@@ -595,10 +621,12 @@ genome crossover(genome genome1,genome genome2)
     int innovation2l[length] = {};
     for(unsigned int i=0;i<genome2.GenesVec.size();++i)
     {
+        // Generates the list of all the innovations
         innovation2[genome2.GenesVec[i].innovation]=true;
         innovation2l[genome2.GenesVec[i].innovation]=i;
     }
 
+    //Checks for all the coincidences and choose one of the parents, when there is no coincidence adds directly to the child the innovation
     for(unsigned int i=0;i<genome1.GenesVec.size();++i)
     {
         if(genome1.GenesVec[i].innovation<length)
@@ -628,6 +656,7 @@ genome crossover(genome genome1,genome genome2)
 
     for(unsigned int i=0;i<7;++i)
     {
+        //Inherits the rates of the genome1
         child.mutationRates[i] = genome1.mutationRates[i];
     }
     return child;
@@ -635,6 +664,8 @@ genome crossover(genome genome1,genome genome2)
 
 void Pool::cullSpecies(bool cutToOne)
 {
+    //Eliminates the half of genomes of each specie, or only to only if it's true
+    // depending of the genome performance
 
     //Try to optimize this function!!!!
 
@@ -683,31 +714,46 @@ void Pool::cullSpecies(bool cutToOne)
         SpeciesVec[i].GenomesVec.clear();
         int maxFitness = 0;
 
-        for(unsigned int z=0;z<ceil((double)Genomecopy.size()/2);++z)
+        if(!cutToOne)
         {
+            for(unsigned int z=0;z<ceil((double)Genomecopy.size()/2);++z)
+            {
+                //Search for the half top of the list of the best performance genomes
+                maxFitness = 0;
+                index = 0;
+                for(unsigned int x=0;x<Genomecopy.size();++x)
+                {
+                    if(!visited[x])
+                    {
+                        if(maxFitness<Genomecopy[x].fitness)
+                        {
+                            maxFitness=Genomecopy[x].fitness;
+                            index = x;
+                        }
+                    }
+                }
+                SpeciesVec[i].GenomesVec.push_back(Genomecopy[index]);
+                visited[index]=true;
+            }
+        }
+
+        if(cutToOne)
+        {
+//            genome temp;
+//            temp = SpeciesVec[i].GenomesVec[0];
+//            SpeciesVec[i].GenomesVec.clear();
+//            SpeciesVec[i].GenomesVec.push_back(temp);
             maxFitness = 0;
-            index = 0;
             for(unsigned int x=0;x<Genomecopy.size();++x)
             {
-                if(!visited[x])
-                {
+                //Search for the genome with highest fitness
                     if(maxFitness<Genomecopy[x].fitness)
                     {
                         maxFitness=Genomecopy[x].fitness;
                         index = x;
                     }
-                }
             }
             SpeciesVec[i].GenomesVec.push_back(Genomecopy[index]);
-            visited[index]=true;
-        }
-
-        if(cutToOne)
-        {
-            genome temp;
-            temp = SpeciesVec[i].GenomesVec[0];
-            SpeciesVec[i].GenomesVec.clear();
-            SpeciesVec[i].GenomesVec.push_back(temp);
         }
     }
 }
@@ -737,6 +783,7 @@ genome copyGenome(genome g1)
 
 genome specie::breedChild(int* innovation)
 {
+    //Generates a child for 2 random parents or copies and mutates from one parent
     genome child;
     int genernd;
     if(RANDOM < CrossoverChance)
@@ -756,7 +803,7 @@ genome specie::breedChild(int* innovation)
 
 void Pool::removeStaleSpecies()
 {
-
+    //Remove species that have been performing bad during a few generations
     //Try to optimtize this function
     std::vector<specie> survived;
     for(unsigned int i=0;i<SpeciesVec.size();++i)
@@ -813,6 +860,7 @@ void Pool::removeStaleSpecies()
 
 void Pool::removeWeakSpecies()
 {
+    //Remove species that are useless
     std::vector<specie> survived;
 
     float sum = totalAverageFitness();
@@ -855,15 +903,11 @@ void specie::calculateAverageFitness()
 
 void Pool::rankGlobally()
 {
-    //Calculate number of genomes
-
+    //Ranks ordening all the genomes
     int cont = 0;
     for(unsigned int i=0;i<SpeciesVec.size();++i)
     {
-//        for(unsigned int j=0;j<SpeciesVec[i].GenomesVec.size();++j)
-//        {
-//            ++cont;
-//        }
+        //Calculate number of genomes
         cont += SpeciesVec[i].GenomesVec.size();
     }
     bool visited[cont] ={};
@@ -959,6 +1003,7 @@ void genome::generateNetwork()
     Network.clear();
     Network.resize(MaxNodes+Outputs);
     Networkorder.clear();
+    int layerlimit = maxneuron;
 
     //Generate all the nodes
     for(int i=0;i<Inputs;++i)
@@ -968,6 +1013,8 @@ void genome::generateNetwork()
         active[i]=false;
         Networkorder.push_back(i);
     }
+
+    Networkorder.push_back(Inputs);
 
     for(int o=0;o<Outputs;++o)
     {
@@ -1021,7 +1068,7 @@ void genome::generateNetwork()
                 if((Network[i].IncomingVec[j]>Inputs)&&(Network[i].IncomingVec[j]<MaxNodes))
                 {
                     cout << Network[i].IncomingVec[j];
-                    int Test = Network[i].IncomingVec[j];
+                    //int Test = Network[i].IncomingVec[j];
                     if(Layer[Network[i].IncomingVec[j]]!=0)
                     {
                         found=true;
@@ -1067,10 +1114,13 @@ void genome::generateNetwork()
                 }
                 if(found)
                 {
-                    if(larger!=Layer[i])
+                    if(larger<layerlimit)
                     {
-                        Layer[i]=larger;
-                        change = true;
+                        if(larger!=Layer[i])
+                        {
+                            Layer[i]=larger;
+                            change = true;
+                        }
                     }
                 }
             }
@@ -1081,6 +1131,24 @@ void genome::generateNetwork()
     cout << limitindex << endl;
 
     //Create order array from the layers
+    for(int j=0;j<layerlimit;++j)
+    {
+        for(int i=0;i<MaxNodes;++i)
+        {
+            if(Layer[i]!=0)
+            {
+                if(Layer[i]==j)
+                {
+                    Networkorder.push_back(i);
+                }
+            }
+        }
+    }
+
+    for(int o=0;o<Outputs;++o)
+    {
+        Networkorder.push_back(MaxNodes+o);
+    }
 }
 
 
