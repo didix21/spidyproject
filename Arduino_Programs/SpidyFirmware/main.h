@@ -13,17 +13,6 @@
 
 
   #ifdef COMMANDLINE_CONTROL
-    //int val; // This variable reads the value from the analog pin
-    Spidy spidy;
-    char syllable[12];
-    char data;
-    int j=0;
-    int intDegrees;
-    String degrees;
-    int x=0,i = 0;
-    bool comFinished= false;
-    bool manual = true;
-    int actualServo;
 
     /*
      * COMMAND LINE: 
@@ -61,17 +50,28 @@
      * "l6s2"
      */
   
+    //int val; // This variable reads the value from the analog pin
+    Spidy spidy;
+    char syllable[12];
+    char data;
+    int j=0;
+    int intDegrees;
+    String degrees;
+    int x=0,i = 0;
+    bool comFinished= false;
+    bool manual = true;
+    int actualServo;
+  
     void commandLine() {
       String whichServo, command;
       bool legCommandChoose = false;
-      exit:
+
       if(comFinished) { // if serial has finished of reading then...
         if(syllable[0] == 'l') { // if the first character is a l it means will control servo legs
             whichServo = "";
             for(j=0; j<x; j++) whichServo += syllable[j]; // Read wich servo has been chosen
             legCommandChoose = true;
             comFinished = false;
-            goto exit;
           }
           else if(syllable[0] == 'c') { // if the first command is 'c' it means is a 'c+command'
              command = "";
@@ -92,8 +92,8 @@
                 spidy.setSpidyUp();       
              }
              comFinished = false;
-             goto exit;
           }
+          
           if(legCommandChoose) {
             for(j=0; j<x; j++){
                 degrees += syllable[j];
@@ -159,18 +159,7 @@
      }
     }
   
-    void serialEvent(){
-      while(MYSERIAL.available()) {
-        data=(char)MYSERIAL.read();    
-        if (data != '\n'){
-          syllable[i++]=data;   
-        } else{
-            comFinished = true; 
-           x=i;
-           i=0;
-        }
-      }
-   }
+ 
 
  #endif // COMMANDLINE_CONTROL
   

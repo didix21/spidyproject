@@ -4,8 +4,11 @@
     
     // Initialize Servo Motors
     l1s1.attach(L1S1_PIN);
+    delay(100);
     l1s2.attach(L1S2_PIN);
+    delay(100);
     l2s1.attach(L2S1_PIN);
+    delay(100);
     l2s2.attach(L2S2_PIN);
     l3s1.attach(L3S1_PIN);
     l3s2.attach(L3S2_PIN);
