@@ -8,6 +8,9 @@ void setup() {
   MYSERIAL.println(" Program has started");
   //spidy.setSpidyRest();
 
+  spidy.setSpidyRest();
+  init_comunication();
+  ultrasound_setup();
 }
 
 void loop() {
