@@ -8,7 +8,9 @@
    
   #include "configuration.h"
   #include "spidy.h"
-  #include <Wire.h>
+  //#include <Wire.h>
+  #include "comunication.h"
+  #include "ultrasound.h"
 
 
 
