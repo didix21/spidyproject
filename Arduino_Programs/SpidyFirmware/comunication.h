@@ -1,7 +1,7 @@
 /**
  * comunication.h
  * 
- * Through a call to init_comunication() an i2c comunication will be setup useing the following protocol:
+ *  Through a call to init_comunication() an i2c comunication will be setup useing the following protocol:
  *    On receive data request:
  *      -read number of leg [1..12] or option for send data: 100=ultrasound 101=accelerometer_X 102=accelerometer_Y 103=accelerometer_Z
  *      -read PWM duty cycle [0..255]
@@ -10,6 +10,8 @@
  *      (requires an option selection from a receive data request)
  *      -send LSByte from the data asked for
  *      -send MSByte from the data asked for
+ *      
+ *  To update the values of the variables sent use the functions read_angles(), write_duration_U() and write_accelerometer()
  */
 
 #ifndef _COMUNICATION_H_
@@ -21,9 +23,11 @@
   
   static int state_receive=0;
   static int state_send=0, option;
-  static uint8_t legsAngle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
-  static unsigned int duration_U=0, cm_U=0;
+
+  static uint8_t legs_Angle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+  static unsigned int duration_U=0;
   static int accelerometer_X=0, accelerometer_Y=0, accelerometer_Z=0;
+  
 
   void receiveData(int byteCount);
   void sendData();
@@ -36,8 +40,18 @@
     Wire.onRequest(sendData);   
   }
 
-  void read_angles(uint8_t *legs_Angle){
-    legs_Angle = legsAngle;
+  void read_angles(uint8_t *legsAngle){
+    legsAngle = legs_Angle;
+  }
+
+  void write_duration_U(unsigned int durationUltrasound){
+    duration_U = durationUltrasound;
+  }
+
+  void write_accelerometer(int acc_x, int acc_y, int acc_z){
+    accelerometer_X = acc_x;
+    accelerometer_Y = acc_y;
+    accelerometer_Z = acc_z;
   }
      
   // callback for received data
@@ -56,9 +70,9 @@
           }
         break;        
         case 1 ... 12:
-          legsAngle[state_receive-1] = Wire.read();
+          legs_Angle[state_receive-1] = Wire.read();
           Serial.print("data received: ");
-          Serial.println(legsAngle[state_receive-1]);
+          Serial.println(legs_Angle[state_receive-1]);
           state_receive = 0;
         break;
         default:
