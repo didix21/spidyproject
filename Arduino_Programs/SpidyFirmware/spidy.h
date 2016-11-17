@@ -18,6 +18,7 @@
      */
     public:
       Spidy(); 
+      void attachServos();
       void setSpidyRest();
       void setSpidyUp();
       void setSpidyDown();
