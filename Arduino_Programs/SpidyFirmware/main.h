@@ -53,6 +53,7 @@
      */
   
     //int val; // This variable reads the value from the analog pin
+   
     Spidy spidy;
     char syllable[12];
     char data;
@@ -65,8 +66,8 @@
     int actualServo;
   
     void commandLine() {
-      String whichServo, command;
-      bool legCommandChoose = false;
+      static String whichServo, command;
+      static bool legCommandChoose = false;
 
       if(comFinished) { // if serial has finished of reading then...
         if(syllable[0] == 'l') { // if the first character is a l it means will control servo legs
@@ -95,7 +96,6 @@
              }
              comFinished = false;
           }
-          
           if(legCommandChoose) {
             for(j=0; j<x; j++){
                 degrees += syllable[j];
@@ -154,13 +154,13 @@
              MYSERIAL.println (" Servo Sent: L6S2");
              spidy.l6s2.write(intDegrees);
            }
-      }      
+        }      
+      }
       else{
         degrees = " ";
       }
-     }
     }
-  
+ 
  
 
  #endif // COMMANDLINE_CONTROL
