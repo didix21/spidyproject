@@ -65,18 +65,25 @@ while(1):
 			state = 0;
 		if state==100:
 			c.send(str(distance_U))
+			state = 0;
 		if state==101:
 			c.send(str(accel_X))
+			state = 0;
 		if state==102:
 			c.send(str(accel_Y))
+			state = 0;
 		if state==103:
 			c.send(str(accel_Z))
+			state = 0;
 		if state==104:
 			c.send(str(gyro_X))
+			state = 0;
 		if state==105:
 			c.send(str(gyro_Y))
+			state = 0;
 		if state==106:
 			c.send(str(gyro_Z))
+			state = 0;
 
 	except:
 		s.listen(10)
