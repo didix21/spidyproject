@@ -52,33 +52,33 @@
  #ifndef RANGE_OF_EACH_SERVO
   
   // Leg 1 
-  #define L1S1_MIN 90  // In degrees
-  #define L1S1_MAX 140 // In degrees
+  #define L1S1_MIN 0  // In degrees
+  #define L1S1_MAX 180 // In degrees
   #define L1S2_MIN 90 // In degrees
   #define L1S2_MAX 90 // In degrees
   // Leg 2
-  #define L2S1_MIN 90 // In degrees
-  #define L2S1_MAX 140 // In degrees
+  #define L2S1_MIN 0 // In degrees
+  #define L2S1_MAX 180 // In degrees
   #define L2S2_MIN 90 // In degrees
   #define L2S2_MAX 90 // In degrees
   // Leg 3
-  #define L3S1_MIN 90 // In degrees
-  #define L3S1_MAX 140 // In degrees
+  #define L3S1_MIN 0 // In degrees
+  #define L3S1_MAX 180 // In degrees
   #define L3S2_MIN 90 // In degrees
   #define L3S2_MAX 90 // In degrees
   // Leg 4
-  #define L4S1_MIN 90 // In degrees
-  #define L4S1_MAX 140 // In degrees
+  #define L4S1_MIN 0 // In degrees
+  #define L4S1_MAX 180 // In degrees
   #define L4S2_MIN 90 // In degrees
   #define L4S2_MAX 90 // In degrees
   // Leg 5
-  #define L5S1_MIN 90  // In degrees
-  #define L5S1_MAX 140 // In degrees
+  #define L5S1_MIN 0  // In degrees
+  #define L5S1_MAX 180 // In degrees
   #define L5S2_MIN 90 // In degrees
   #define L5S2_MAX 90 // In degrees
   // Leg 6
-  #define L6S1_MIN 90 // In degrees
-  #define L6S1_MAX 140 // In degrees
+  #define L6S1_MIN 0 // In degrees
+  #define L6S1_MAX 180 // In degrees
   #define L6S2_MIN 90 // In degrees
   #define L6S2_MAX 90 // In degrees
 
