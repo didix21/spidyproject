@@ -18,12 +18,6 @@
     l5s2.attach(L5S2_PIN);
     l6s1.attach(L6S1_PIN);
     l6s2.attach(L6S2_PIN);
-
-    /*/ Initialize comunication
-    init_comunication();
-    // Initialize sensors
-    ultrasound_setup();*/
-
   }
 
   // Sent all the servos to rest
@@ -120,8 +114,7 @@
       // (legsAngle[i] - 10) <= legsPosition[i] <= (legsAngle[i] + 10)
       if((legsPosition[i] >= (legsAngle[i] - 10)) && (legsPosition[i] <= (legsAngle[i] + 10))) { 
         achievedPosition[i] = true;
-      } 
-      else {
+      } else {
         achievedPosition[i] = false;
       }
     }
