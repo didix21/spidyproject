@@ -15,7 +15,7 @@ ArduinoController runs the services related with the arduino:
 	/arduino/pwm
 """
 def pwm_service_cb(req):
-	#callback of pwm_service
+	#callback of pwmservice
 
 def __init__(self):
 	rospy.loginfo("Initializing client_socket_topic")
