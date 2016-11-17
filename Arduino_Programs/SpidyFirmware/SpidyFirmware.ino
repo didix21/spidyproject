@@ -29,7 +29,9 @@ void setup() {
   spidy.l6s2.attach(L6S2_PIN);
   delay(100);
   //spidy.setSpidyRest();
-
+  spidy.setSpidyRest();
+  init_comunication();
+  ultrasound_setup();
 
 }
 
