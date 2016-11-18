@@ -28,9 +28,7 @@ void setup() {
 //  delay(500);
 //  spidy.l6s2.attach(L6S2_PIN);
 //  delay(500);
-  spidy.attachServos();
-  //spidy.setSpidyRest();
-  //spidy.setSpidyRest();
+  //spidy.attachServos();
   //init_comunication();
   //ultrasound_setup();
 
@@ -42,11 +40,10 @@ void loop() {
   commandLine();
   //spidy.setSpidyUp();
 
-  spidy.l6s2.write(0);
-
 }
 
    void serialEvent(){
+      int i;
       while(MYSERIAL.available()) {
         data=(char)MYSERIAL.read();    
         if (data != '\n'){

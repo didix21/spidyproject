@@ -45,11 +45,9 @@
  
  #endif // MYSER
 
+// *********************************** Range of each servo leg ***********************************
 
-
- // Range of each servo leg
-
- #ifndef RANGE_OF_EACH_SERVO
+ #ifndef RANGE_OF_EACH_SERVO // 
   
   // Leg 1 
   #define L1S1_MIN 0  // In degrees
@@ -93,5 +91,7 @@
   #define RANGE_OF_EACH_SERVO
 
  #endif // RANGE_OF_EACH_SERVO
+
+// **************************************************************************************************
 
 #endif // _CONFIGURATION_H_

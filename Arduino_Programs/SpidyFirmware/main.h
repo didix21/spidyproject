@@ -57,109 +57,132 @@
     Spidy spidy;
     char syllable[12];
     char data;
-    int j=0;
     int intDegrees;
     String degrees;
-    int x=0,i = 0;
+    int x=0;
     bool comFinished= false;
     bool manual = true;
     int actualServo;
-  
-    
-  
+   
     void commandLine() {
       static String whichServo, command;
       static bool legCommandChoose = false, refreshMode = false;
-
+      int j=0;
+      static uint8_t arrayOfDegrees[11]={90,90,90,90,90,90,90,90,90,90,90}, refreshModeCounter = 0;
       if(comFinished) { // if serial has finished of reading then...
-        if(syllable[0] == 'l') { // if the first character is a l it means will control servo legs
+        switch(syllable[0]) { // It is looked for the first character
+          case 'l': // if the first character is a l it means will control servo legs
+          
             whichServo = "";
             for(j=0; j<x; j++) whichServo += syllable[j]; // Read wich servo has been chosen
             legCommandChoose = true;
             comFinished = false;
-          }
-          else if(syllable[0] == 'c') { // if the first command is 'c' it means is a 'c+command'
+            
+          break;
+          
+          case 'c': // if the first command is 'c' it means is a 'c+command'
+          
              command = "";
              legCommandChoose = false;
              for(j=0; j<x; j++) command += syllable[j]; // read the command
 
              // Compares which command has been chosen
              if(command == "crest") {
-                MYSERIAL.println (" Command Send: crest");
+                COMMAND_SENT(command); //Print: <<Command Sent: crest>>
                 spidy.setSpidyRest();
              }
              else if (command == "cdown") {
-                MYSERIAL.println (" Command Send: cdown");
+                COMMAND_SENT(command);
                 spidy.setSpidyDown();
              }
              else if (command == "cup") {
-                MYSERIAL.println (" Command Send: cup");
+                COMMAND_SENT(command);
                 spidy.setSpidyUp();       
              }
              else if (command == "crefresh") {
-                MYSERIAL.println ("Command Send: crefresh");
+                COMMAND_SENT(command);
                 refreshMode = true;
              }
              comFinished = false;
-          }
-          if(legCommandChoose) {
+             
+          break;
+        }
+ 
+        if(legCommandChoose) { // If legCommandChoose is true, we can controll each servo via commands
+          for(j=0; j<x; j++){
+              degrees += syllable[j];
+            }
+          PRINT_DEGREES(degrees); // Print: << Degrees: nº degrees >>
+          intDegrees=degrees.toInt();
+          comFinished = false;
+         if (whichServo.equals("l1s1")) {
+            SERVO_SENT(whichServo); // Print: << Servo Sent: lnºsnº >>
+            spidy.l1s1.write(intDegrees);
+         }
+         else if (whichServo == "l1s2") {
+            SERVO_SENT(whichServo);
+            spidy.l1s2.write(intDegrees);
+         }
+         else if (whichServo == "l2s1") {
+           SERVO_SENT(whichServo);
+           spidy.l2s1.write(intDegrees);
+         }
+         else if (whichServo == "l2s2") {
+           SERVO_SENT(whichServo);
+           spidy.l2s2.write(intDegrees);
+         }
+         else if (whichServo == "l3s1") {
+           SERVO_SENT(whichServo);
+           spidy.l3s1.write(intDegrees);
+         }
+         else if (whichServo == "l3s2") {
+           SERVO_SENT(whichServo);
+           spidy.l3s2.write(intDegrees);
+         }
+         else if (whichServo == "l4s1") {
+           SERVO_SENT(whichServo);
+           spidy.l4s1.write(intDegrees);
+         }
+         else if (whichServo == "l4s2") {
+           SERVO_SENT(whichServo);
+           spidy.l4s2.write(intDegrees);
+         }
+         else if (whichServo == "l5s1") {
+           SERVO_SENT(whichServo);
+           spidy.l5s1.write(intDegrees);
+         }
+         else if (whichServo == "l5s2") {
+           SERVO_SENT(whichServo);
+           spidy.l5s2.write(intDegrees);
+         }
+         else if (whichServo == "l6s1") {
+           SERVO_SENT(whichServo);
+           spidy.l6s1.write(intDegrees);
+         }
+         else if (whichServo == "l6s2") {
+           SERVO_SENT(whichServo);
+           spidy.l6s2.write(intDegrees);
+         }
+        }
+        
+        if(refreshMode) { // refreshMode allows to modify all the servors writing the number of degrees eleven times
+          if(refreshModeCounter <= 11) {
             for(j=0; j<x; j++){
                 degrees += syllable[j];
               }
+            MYSERIAL.print("Servo: ");
+            MYSERIAL.print(refreshModeCounter);
+            MYSERIAL.print(" -> ");
             PRINT_DEGREES(degrees); // Print: << Degrees: nº degrees >>
             intDegrees=degrees.toInt();
-            comFinished = false;
-           if (whichServo.equals("l1s1")) {
-              SERVO_SENT(whichServo); // Print: << Servo Sent: lnºsnº >>
-              spidy.l1s1.write(intDegrees);
-           }
-           else if (whichServo == "l1s2") {
-              SERVO_SENT(whichServo);
-              spidy.l1s2.write(intDegrees);
-           }
-           else if (whichServo == "l2s1") {
-             SERVO_SENT(whichServo);
-             spidy.l2s1.write(intDegrees);
-           }
-           else if (whichServo == "l2s2") {
-             SERVO_SENT(whichServo);
-             spidy.l2s2.write(intDegrees);
-           }
-           else if (whichServo == "l3s1") {
-             SERVO_SENT(whichServo);
-             spidy.l3s1.write(intDegrees);
-           }
-           else if (whichServo == "l3s2") {
-             SERVO_SENT(whichServo);
-             spidy.l3s2.write(intDegrees);
-           }
-           else if (whichServo == "l4s1") {
-             SERVO_SENT(whichServo);
-             spidy.l4s1.write(intDegrees);
-           }
-           else if (whichServo == "l4s2") {
-             SERVO_SENT(whichServo);
-             spidy.l4s2.write(intDegrees);
-           }
-           else if (whichServo == "l5s1") {
-             SERVO_SENT(whichServo);
-             spidy.l5s1.write(intDegrees);
-           }
-           else if (whichServo == "l5s2") {
-             SERVO_SENT(whichServo);
-             spidy.l5s2.write(intDegrees);
-           }
-           else if (whichServo == "l6s1") {
-             SERVO_SENT(whichServo);
-             spidy.l6s1.write(intDegrees);
-           }
-           else if (whichServo == "l6s2") {
-             SERVO_SENT(whichServo);
-             spidy.l6s2.write(intDegrees);
-           }
-        }
-        else if (refreshMode) {
-                
+            
+            arrayOfDegrees[refreshModeCounter] = (uint8_t)intDegrees;
+            refreshModeCounter++;
+          } 
+          else {
+            spidy.refreshLegs(arrayOfDegrees); // Once the arrayOfDegrees has been filled, we call refreshLegs method.
+            refreshModeCounter = 0;            
+          }
         }
       }
       else{
