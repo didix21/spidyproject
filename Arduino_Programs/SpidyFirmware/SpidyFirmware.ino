@@ -4,13 +4,13 @@
 void setup() {
   // put your setup code here, to run once:
   MYSERIAL.begin(9600);
-  spidy.l1s1.attach(L1S1_PIN);
-  delay(500);
-  spidy.l1s2.attach(L1S2_PIN);
-  delay(500);
-  spidy.l2s1.attach(L2S1_PIN);
-  delay(500);
-  spidy.l2s2.attach(L2S2_PIN);
+//  spidy.l1s1.attach(L1S1_PIN);
+//  delay(500);
+//  spidy.l1s2.attach(L1S2_PIN);
+//  delay(500);
+//  spidy.l2s1.attach(L2S1_PIN);
+//  delay(500);
+//  spidy.l2s2.attach(L2S2_PIN);
 //  delay(500);
 //  spidy.l3s1.attach(L3S1_PIN);
 //  delay(500);
@@ -28,7 +28,7 @@ void setup() {
 //  delay(500);
 //  spidy.l6s2.attach(L6S2_PIN);
 //  delay(500);
-  spidy.attachServos();
+  //spidy.attachServos();
   //spidy.setSpidyRest();
   //spidy.setSpidyRest();
   //init_comunication();

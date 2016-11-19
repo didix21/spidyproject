@@ -70,13 +70,12 @@
     void commandLine() {
       static String whichServo, command;
       static bool legCommandChoose = false, refreshMode = false;
-
+      static uint8_t arrayOfDegrees[11]={90,90,90,90,90,90,90,90,90,90,90}, refreshModeCounter = 0;
       if(comFinished) { // if serial has finished of reading then...
         if(syllable[0] == 'l') { // if the first character is a l it means will control servo legs
             whichServo = "";
             for(j=0; j<x; j++) whichServo += syllable[j]; // Read wich servo has been chosen
             legCommandChoose = true;
-            comFinished = false;
           }
           else if(syllable[0] == 'c') { // if the first command is 'c' it means is a 'c+command'
              command = "";
@@ -85,30 +84,30 @@
 
              // Compares which command has been chosen
              if(command == "crest") {
-                MYSERIAL.println (" Command Send: crest");
+                COMMAND_SENT(command); //Print: <<Command Sent: crest>>
                 spidy.setSpidyRest();
              }
              else if (command == "cdown") {
-                MYSERIAL.println (" Command Send: cdown");
+                COMMAND_SENT(command);
                 spidy.setSpidyDown();
              }
              else if (command == "cup") {
-                MYSERIAL.println (" Command Send: cup");
+                COMMAND_SENT(command);
                 spidy.setSpidyUp();       
              }
              else if (command == "crefresh") {
-                MYSERIAL.println ("Command Send: crefresh");
+                COMMAND_SENT(command);
                 refreshMode = true;
              }
-             comFinished = false;
           }
           if(legCommandChoose) {
-            for(j=0; j<x; j++){
-                degrees += syllable[j];
-              }
-            PRINT_DEGREES(degrees); // Print: << Degrees: nº degrees >>
-            intDegrees=degrees.toInt();
-            comFinished = false;
+            if(syllable[0] != 'l') {
+              for(j=0; j<x; j++){
+                  degrees += syllable[j];
+                }
+              PRINT_DEGREES(degrees); // Print: << Degrees: nº degrees >>
+              intDegrees=degrees.toInt();
+           }
            if (whichServo.equals("l1s1")) {
               SERVO_SENT(whichServo); // Print: << Servo Sent: lnºsnº >>
               spidy.l1s1.write(intDegrees);
@@ -159,8 +158,40 @@
            }
         }
         else if (refreshMode) {
+           if(refreshModeCounter <= 11 && syllable[0] != 'c') {
+            for(j=0; j<x; j++){
+                degrees += syllable[j];
+              }
+            intDegrees=degrees.toInt();
+            arrayOfDegrees[refreshModeCounter] = (uint8_t)intDegrees;
+            MYSERIAL.print("Servo: ");
+            MYSERIAL.print(refreshModeCounter);
+            MYSERIAL.print(" -> ");
+            PRINT_DEGREES((uint8_t)intDegrees); // Print: << Degrees: nº degrees >>
+
+            refreshModeCounter++;
+          } 
+          else if(syllable[0] != 'c'){
+            /***************************************************************************
+             *  All this prints arrayOfDegrees = {nº,nº,nº,nº,nº,nº,nº,nº,nº,nº,nº,nº} *
+             ***************************************************************************/
+            MYSERIAL.println(ASTERISKS);
+            MYSERIAL.print("\t arrayOfDegrees = {"); // Prints "arrayOfDegrees = { "
+            for(j = 0; j <= 11; j++) {
+              MYSERIAL.print(arrayOfDegrees[j]);
+              if(j < 11) MYSERIAL.print(",");
+            }
+            MYSERIAL.println("}");
+            MYSERIAL.println(ASTERISKS);
+           /***************************************************************************
+            *************************************************************************** 
+            ***************************************************************************/
+            spidy.refreshLegs(arrayOfDegrees); // Once the arrayOfDegrees has been filled, we call refreshLegs method.
+            refreshModeCounter = 0;            
+          }
                 
         }
+        comFinished = false;
       }
       else{
         degrees = " ";
