@@ -1,5 +1,8 @@
 #include "spidy.h"
-  // Constructor
+  
+  /** 
+   *  Constructor
+   */
   Spidy::Spidy() {
        // Nothing
   }
@@ -32,7 +35,9 @@
     delay(500);
   }
 
-  // Sent all the servos to rest
+  /** 
+   * Sent all the servos to rest  
+   */
   void Spidy::setSpidyRest() {
     
     l1s1.write(L1S1_MIN);
@@ -55,7 +60,9 @@
     
    }
 
-   // To rise Spidy
+   /** 
+    * To rise Spidy 
+    */
    void Spidy::setSpidyUp() {
     
     l1s1.write(L1S1_MAX);
@@ -72,7 +79,9 @@
     delay(100);
    }
 
-  // Set down Spidy
+  /** 
+   * Set down Spidy
+   */
    void Spidy::setSpidyDown() {
     
     l1s1.write(L1S1_MIN);
@@ -89,6 +98,11 @@
     delay(100);
    }
 
+  /**
+   * This function is in charge of refresh all the servo legs.
+   * Possible some time delays will be implemented in futur to 
+   * avoid high inductances and Arduino Saturation.
+   */
    void Spidy::refreshLegs(uint8_t *legsAngle) {
 
     // Actualize legs position
@@ -107,9 +121,13 @@
     
    }
 
+  /**
+   * This function read all the actual servo values
+   */
    uint8_t* Spidy::readLegsPosition(uint8_t *legsAngle) {
     
     uint8_t legsPosition[12]; // Twelve Servo Motors
+    
     // Read actual legs position
     legsPosition[0] = l1s1.read();
     legsPosition[1] = l1s2.read();
@@ -126,7 +144,10 @@
 
     return legsPosition;
    }
-
+   
+   /**
+    * CheckPostion: checks if all the servo have reached the goal values.
+    */
    bool checkPosition(uint8_t *legsAngle, uint8_t *legsPosition) {
     
     bool achievedPosition[12]; // This array will be used to know if all the servos has achieved the position

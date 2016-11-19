@@ -76,6 +76,7 @@
             whichServo = "";
             for(j=0; j<x; j++) whichServo += syllable[j]; // Read wich servo has been chosen
             legCommandChoose = true;
+            comFinished = false;
           }
           else if(syllable[0] == 'c') { // if the first command is 'c' it means is a 'c+command'
              command = "";
@@ -99,6 +100,7 @@
                 COMMAND_SENT(command);
                 refreshMode = true;
              }
+             comFinished = false;
           }
           if(legCommandChoose) {
             if(syllable[0] != 'l') {
