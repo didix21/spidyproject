@@ -40,22 +40,17 @@
    */
   void Spidy::setSpidyRest() {
     
-    l1s1.write(L1S1_MIN);
+    l1s1.write(L1S1_REST);
     l1s2.write(L1S2_REST);
-    delay(100); //It is a matter of energy
-    l2s1.write(L2S1_MIN);
+    l2s1.write(L2S1_REST);
     l2s2.write(L2S2_REST);
-    delay(100);
-    l3s1.write(L3S1_MIN);
+    l3s1.write(L3S1_REST);
     l3s2.write(L3S2_REST);
-    delay(100);
-    l4s1.write(L4S1_MIN);
+    l4s1.write(L4S1_REST);
     l4s2.write(L4S2_REST);
-    delay(100);
-    l5s1.write(L5S1_MIN);
+    l5s1.write(L5S1_REST);
     l5s2.write(L5S2_REST);
-    delay(100);
-    l6s1.write(L6S1_MIN);
+    l6s1.write(L6S1_REST);
     l6s2.write(L6S2_REST);
     
    }
@@ -65,18 +60,13 @@
     */
    void Spidy::setSpidyUp() {
     
-    l1s1.write(L1S1_MAX);
-    delay(100);
-    l2s1.write(L2S1_MAX);
-    delay(100);
-    l3s1.write(L3S1_MAX);
-    delay(100);
-    l4s1.write(L4S1_MAX);
-    delay(100);
-    l5s1.write(L5S1_MAX);
-    delay(100);
-    l6s1.write(L6S1_MAX);
-    delay(100);
+    l1s2.write(L1S2_MAX);
+    l2s2.write(L2S2_MAX);
+    l3s2.write(L3S2_MAX);
+    l4s2.write(L4S2_MAX);
+    l5s2.write(L5S2_MAX);
+    l6s2.write(L6S2_MAX);
+    
    }
 
   /** 
@@ -84,18 +74,13 @@
    */
    void Spidy::setSpidyDown() {
     
-    l1s1.write(L1S1_MIN);
-    delay(100);
-    l2s1.write(L2S1_MIN);
-    delay(100);
-    l3s1.write(L3S1_MIN);
-    delay(100);
-    l4s1.write(L4S1_MIN);
-    delay(100);
-    l5s1.write(L5S1_MIN);
-    delay(100);
-    l6s1.write(L6S1_MIN);
-    delay(100);
+    l1s2.write(L1S2_MIN);
+    l2s2.write(L2S2_MIN);
+    l3s2.write(L3S2_MIN);
+    l4s2.write(L4S2_MIN);
+    l5s2.write(L5S2_MIN);
+    l6s2.write(L6S2_MIN);
+  
    }
 
   /**

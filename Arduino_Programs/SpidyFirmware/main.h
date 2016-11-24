@@ -72,11 +72,12 @@
       static bool legCommandChoose = false, refreshMode = false;
       static uint8_t arrayOfDegrees[11]={90,90,90,90,90,90,90,90,90,90,90}, refreshModeCounter = 0;
       if(comFinished) { // if serial has finished of reading then...
+        MYSERIAL.println("OK");
         if(syllable[0] == 'l') { // if the first character is a l it means will control servo legs
+            MYSERIAL.println("OK1");
             whichServo = "";
             for(j=0; j<x; j++) whichServo += syllable[j]; // Read wich servo has been chosen
             legCommandChoose = true;
-            comFinished = false;
           }
           else if(syllable[0] == 'c') { // if the first command is 'c' it means is a 'c+command'
              command = "";
@@ -100,9 +101,9 @@
                 COMMAND_SENT(command);
                 refreshMode = true;
              }
-             comFinished = false;
+            
           }
-          if(legCommandChoose) {
+          if(legCommandChoose) {         
             if(syllable[0] != 'l') {
               for(j=0; j<x; j++){
                   degrees += syllable[j];
