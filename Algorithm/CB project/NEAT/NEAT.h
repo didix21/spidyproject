@@ -9,13 +9,16 @@
 #define READ getline(file,line)
 
 #define TAB "\t"<<
+#define TAB2 <<"\t"
 
 #define RANDOM (float)(rand())/(RAND_MAX)
 
 #include <string>
 
-static int Inputs;//Number of inputs + bias
-static int Outputs;
+
+//Try to change to a dynamic definition of the inputs
+const int Inputs=2+1;//Number of inputs + bias
+const int Outputs=1;
 
 const float DeltaDisjoint = 2.0;
 const float DeltaWeights = 0.4;
@@ -23,11 +26,11 @@ const float DeltaThreshold = 1.0;
 
 const int StaleSpecies = 15;
 
-const float MutateConnectionsChance = 0.30;
+const float MutateConnectionsChance = 0.5;
 const float PerturbChance=0.9;
 const float CrossoverChance=0.75;
 const float LinkMutationChance=2.0;
-const float NodeMutationChance=0.5;
+const float NodeMutationChance=0.3;
 const float BiasMutationChance=0.4;
 const float StepSize=0.1;
 const float DisableMutationChance=0.3;
@@ -72,8 +75,7 @@ class genome
     void cleangenomes();
 
     std::vector<gene> GenesVec;
-    int fitness;
-    int adjustedFitness;
+    float fitness;
     std::vector<neuron> Network;
     std::vector<int> Networkorder;
     int Layer[MaxNodes]={};
@@ -90,10 +92,10 @@ class specie
     void calculateAverageFitness();
     genome breedChild(int* innovation);
 
-    int topFitness;
+    float topFitness;
     int staleness;
     std::vector<genome> GenomesVec;
-    int averageFitness;
+    float averageFitness;
 
 };
 
@@ -110,10 +112,10 @@ class Pool
     void newGeneration();
     void initializePool();
     void nextGenome();
-    int newInnovation();
+    //int newInnovation();
     void randomFitness();
-    void evaluateCurrent(int* Inputseval,float* Outputsval); // Evaluate current genome
-    void assignfitness(int fitness); // Assign the fitness to the current genome and update to the next
+    void evaluateCurrent(float* Inputseval,float* Outputsval); // Evaluate current genome
+    void assignfitness(float fitness); // Assign the fitness to the current genome and update to the next
 
     int Population;
     std::vector<specie> SpeciesVec;
@@ -121,7 +123,7 @@ class Pool
     int innovation;
     int currentSpecies;
     int currentGenome;
-    int maxFitness;
+    float maxFitness;
     int inputsnum;
     int outputsnum;
 };
@@ -137,10 +139,7 @@ inline Pool::Pool(int inputval,int outputval)
         Population=PopulationT;
         inputsnum=inputval+1;
         outputsnum=outputval;
-
-        Inputs=inputval+1;
-        Outputs=outputval;
-        }
+}
 
 inline specie::specie(){
         GenomesVec.clear();
@@ -153,7 +152,6 @@ inline genome::genome(){
         GenesVec.clear();
         Network.clear();
         fitness=0;
-        adjustedFitness=0;
         maxneuron=0;
         globalRank=0;
         mutationRates[0]=MutateConnectionsChance;
@@ -178,11 +176,11 @@ inline neuron::neuron(){
         value=0.0;
         }
 
-genome copyGenome(genome g1);//Funcio que copia dos genomes;
+//genome copyGenome(genome g1);//Funcio que copia dos genomes;
 
 genome basicGenome(int* innovation);//Creates a new genome;
 
-gene copyGene(gene genes);//Copy a gene
+//gene copyGene(gene genes);//Copy a gene
 
 void evaluateNetwork(std::vector<neuron> network,float * Inputseval,float * Outputseval); //Calculate the output of a network
 
