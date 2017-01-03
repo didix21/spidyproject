@@ -2,7 +2,6 @@
 
 import socket
 import rospy
-import actionlib
 
 
 ## Socket address
@@ -25,7 +24,7 @@ ArduinoController runs the services related with the arduino:
 	/arduino/accel
 	/arduino/pwm
 """
-def pwm_action_cb(req):
+def pwm_service_cb(req):
 	rospy.loginfo('/arduino/pwm service callback executed')
 	#callback of pwm_service
 
@@ -37,9 +36,9 @@ def main():
 	rospy.loginfo('Socket connected')
 
 
-	PWM_action = actionlib.SimpleActionServer('/arduino/pwm', PWMAction, pwm_service_cb, False)
-	PWM_action.start()
-	rospy.loginfo('Action /arduino/pwm launched')
+	PWMservice = rospy.Service('/arduino/pwm', PWMService, pwm_service_cb)
+	rospy.loginfo('Service /arduino/pwm launched')
+	#self.usersaid_pub = rospy.Publisher('/asr_event', ASREvent)
 
 	## Main loop
 	while(1):	
