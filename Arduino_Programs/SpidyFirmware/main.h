@@ -65,6 +65,8 @@
     bool manual = true;
     int actualServo;
   
+    
+  
     void commandLine() {
       static String whichServo, command;
       static bool legCommandChoose = false;
