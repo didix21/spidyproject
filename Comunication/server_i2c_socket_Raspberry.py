@@ -1,3 +1,6 @@
+
+#!/usr/bin/python
+
 import time
 import numpy
 import socket
@@ -58,7 +61,7 @@ while(1):
 	try:	
 		if state==0:	
 			state = int(s.recv(1024))	#same protocol as i2c
-		if state>=1 && state<=12:
+		if state>=1 and state<=12:
 			bus.write_byte(arduino_address, state)
 			pwm_value = int(s.recv(1024))
 			bus.write_byte(arduino_address, pwm_value)
