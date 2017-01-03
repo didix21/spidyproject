@@ -1,0 +1,9 @@
+<launch>
+        <param name="robot_description" command="cat $(find spidy)/crab_model.xml" />
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+        <node name="state_publisher" pkg="spidy" type="state_publisher" />
+
+        <node name="spawn_$(arg model_name)" pkg="gazebo_ros" type="spawn_model"
+      		args="-param robot_description -urdf -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg model_name)" respawn="false" output="screen"/>
+
+</launch>
