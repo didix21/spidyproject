@@ -176,11 +176,8 @@ inline neuron::neuron(){
         value=0.0;
         }
 
-//genome copyGenome(genome g1);//Funcio que copia dos genomes;
-
 genome basicGenome(int* innovation);//Creates a new genome;
 
-//gene copyGene(gene genes);//Copy a gene
 
 void evaluateNetwork(std::vector<neuron> network,float * Inputseval,float * Outputseval); //Calculate the output of a network
 

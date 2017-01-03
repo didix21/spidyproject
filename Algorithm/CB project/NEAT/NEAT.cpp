@@ -1098,7 +1098,6 @@ void Pool::evaluateCurrent(float* Inputseval,float* Outputsval)
     //Rewrite this function to use neworders
     float sum=0;
     float valant = 0;
-    //Delete this!!!!!!!!! Takes a lot of time
     genome *currentgenome = &SpeciesVec[currentSpecies].GenomesVec[currentGenome];
     if(currentgenome->Network.size()==0)
     {
