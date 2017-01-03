@@ -32,7 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="NEAT.cpp" />
+		<Unit filename="NEAT.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
