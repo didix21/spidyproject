@@ -1,21 +1,23 @@
-
 #include "spidy.h"
   // Constructor
   Spidy::Spidy() {
     
     // Initialize Servo Motors
-    l1s1.attach(L1S1_PIN);
-    l1s2.attach(L1S2_PIN);
-    l2s1.attach(L2S1_PIN);
-    l2s2.attach(L2S2_PIN);
-    l3s1.attach(L3S1_PIN);
-    l3s2.attach(L3S2_PIN);
-    l4s1.attach(L4S1_PIN);
-    l4s2.attach(L4S2_PIN);
-    l5s1.attach(L5S1_PIN);
-    l5s2.attach(L5S2_PIN);
-    l6s1.attach(L6S1_PIN);
-    l6s2.attach(L6S2_PIN);
+//    l1s1.attach(L1S1_PIN);
+//    delay(100);
+//    l1s2.attach(L1S2_PIN);
+//    delay(100);
+//    l2s1.attach(L2S1_PIN);
+//    delay(100);
+//    l2s2.attach(L2S2_PIN);
+//    l3s1.attach(L3S1_PIN);
+//    l3s2.attach(L3S2_PIN);
+//    l4s1.attach(L4S1_PIN);
+//    l4s2.attach(L4S2_PIN);
+//    l5s1.attach(L5S1_PIN);
+//    l5s2.attach(L5S2_PIN);
+//    l6s1.attach(L6S1_PIN);
+//    l6s2.attach(L6S2_PIN);
 
   }
 
@@ -46,24 +48,34 @@
    void Spidy::setSpidyUp() {
     
     l1s1.write(L1S1_MAX);
+    delay(100);
     l2s1.write(L2S1_MAX);
+    delay(100);
     l3s1.write(L3S1_MAX);
+    delay(100);
     l4s1.write(L4S1_MAX);
+    delay(100);
     l5s1.write(L5S1_MAX);
+    delay(100);
     l6s1.write(L6S1_MAX);
-    
+    delay(100);
    }
 
   // Set down Spidy
    void Spidy::setSpidyDown() {
     
     l1s1.write(L1S1_MIN);
+    delay(100);
     l2s1.write(L2S1_MIN);
+    delay(100);
     l3s1.write(L3S1_MIN);
+    delay(100);
     l4s1.write(L4S1_MIN);
+    delay(100);
     l5s1.write(L5S1_MIN);
+    delay(100);
     l6s1.write(L6S1_MIN);
-    
+    delay(100);
    }
 
    void Spidy::refreshLegs(uint8_t *legsAngle) {
@@ -84,7 +96,7 @@
     
    }
 
-   uint8_t Spidy::readLegsPosition(uint8_t *legsAngle) {
+   uint8_t* Spidy::readLegsPosition(uint8_t *legsAngle) {
     
     uint8_t legsPosition[12]; // Twelve Servo Motors
     // Read actual legs position
@@ -122,5 +134,3 @@
     return achievedPosition;
    }
    
-
-

@@ -14,6 +14,7 @@ void setup() {
   p2s2.attach(PIN_P2_S2);
   p3s1.attach(PIN_P3_S1);
   p3s2.attach(PIN_P3_S2);
+  MYSERIAL.println(" All servo attached");
 
 }
 
@@ -29,6 +30,7 @@ void loop() {
     }
     else if(syllable[0] == 'p') {
       whichServo = "";
+      MYSERIAL.println("OK");
       for(j=0; j<x; j++) {
         whichServo += syllable[j];
       }
@@ -136,6 +138,7 @@ void serialEvent(){
     if (data != '\n'){
       syllable[i++]=data;   
     } else{
+        MYSERIAL.println("Read finished");
         comFinished = true; 
        x=i;
        i=0;

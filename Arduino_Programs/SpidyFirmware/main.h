@@ -8,146 +8,161 @@
    
   #include "configuration.h"
   #include "spidy.h"
-  #include <Wire.h>
+  //#include <Wire.h>
+  #include "comunication.h"
+  #include "ultrasound.h"
 
-  #define MYSERIAL Serial
-  #define BAUDRATE 9600
 
 
-  //int val; // This variable reads the value from the analog pin
-  char syllable[12];
-  char data;
-  int j=0;
-  int intDegrees;
-  String degrees;
-  int x=0,i = 0;
-  bool comFinished= false;
-  bool manual = true;
-  int actualServo;
+  #ifdef COMMANDLINE_CONTROL
 
-  void commandLine() {
-    String strin2 = "p1s1";
-    String whichServo, command;
-    exit:
-    if(comFinished) {
-      if(syllable[0] == 'm') {
-        manual = true;
-      }
-      else if(syllable[0] == 'a') {
-        manual = false;
-      }
-      else if(syllable[0] == 'p') {
-        whichServo = "";
-        for(j=0; j<x; j++) {
-          whichServo += syllable[j];
-        }
-        comFinished = false;
-        goto exit;
-      }
-      else if(syllable[0] == 'c') {
-         command = "";
-         for(j=0; j<x; j++) command += syllable[j];
-      
-         if(command == "crest") {
-            MYSERIAL.println (" Command Send: crest");
-            delay(500);
-            p1s1.write(60);
-            p1s2.write(120);
-            delay(100);
-            p2s1.write(0);
-            p2s2.write(60);
-            delay(100);
-            p3s1.write(70);
-            p3s2.write(0);
-            delay(100);
-            delay(500);
-         }
-         else if (command == "cdown") {
-            MYSERIAL.println (" Command Send: cdown");
-            delay(500);
-            p1s1.write(60);
-            p2s1.write(0);
-            p3s1.write(70);
-         }
-         else if (command == "cup") {
-            MYSERIAL.println (" Command Send: cup");
-            p1s1.write(180);
-            p2s1.write(90);
-            p3s1.write(165);        
-         }
-         else if (command == "cupdown") {
-            MYSERIAL.println (" Command Send: cupdown");
-            for(j=0; j<10; j++) {
-              p1s1.write(180);
-              p2s1.write(90);
-              p3s1.write(165);     
-              delay(750);
-              p1s1.write(60);
-              p2s1.write(0);
-              p3s1.write(70);
-              delay(750);            
-            }
-         }
-         comFinished = false;
-         goto exit;
-      }
-        for(j=0; j<x; j++){
-            degrees += syllable[j];
+    /*
+     * COMMAND LINE: 
+     * The command line allows to the user to control the spidy robot using commands,
+     * there are two types of command 'c+commands' and lnºpnº. The first one are used
+     * to execute especific accions. The other one it is used to change the position 
+     * of each servo of each leg where nº is a number.
+     * 
+     * ################## 'c+coommands' availables ##################
+     * To use it 'c+command' only it is nedded to write the command.
+     * 
+     * 
+     * "crest": put spidy in rest position.
+     * "cdown": put spidy in down position.
+     * "cup": put spidy in up position.
+     * 
+     * ########################### lnºpnº ###########################
+     * 
+     * To use 'lnºpnº' command is needed to write first the command
+     * and click intro and then write the degrees. For example type
+     * l1s1, click intro and then write the number of degrees, for 
+     * example 60 and click intro.
+     * 
+     * "l1s1": leg 1 servo 1
+     * "l1s2": leg 1 servo 2
+     * "l2s1": leg 2 servo 1
+     * "l2s2"
+     * "l3s1"
+     * "l3s2"
+     * "l4s1"
+     * "l4s2"
+     * "l5s1"
+     * "l5s2"
+     * "l6s1"
+     * "l6s2"
+     */
+  
+    //int val; // This variable reads the value from the analog pin
+   
+    Spidy spidy;
+    char syllable[12];
+    char data;
+    int j=0;
+    int intDegrees;
+    String degrees;
+    int x=0,i = 0;
+    bool comFinished= false;
+    bool manual = true;
+    int actualServo;
+  
+    void commandLine() {
+      static String whichServo, command;
+      static bool legCommandChoose = false;
+
+      if(comFinished) { // if serial has finished of reading then...
+        if(syllable[0] == 'l') { // if the first character is a l it means will control servo legs
+            whichServo = "";
+            for(j=0; j<x; j++) whichServo += syllable[j]; // Read wich servo has been chosen
+            legCommandChoose = true;
+            comFinished = false;
           }
-          MYSERIAL.print("Send: ");
-          MYSERIAL.print(degrees);
-          MYSERIAL.println();
-          //MYSERIAL.println(" º");
-          intDegrees=degrees.toInt();
-          myServo.write(intDegrees);
-          comFinished = false;
-         if (whichServo.equals("p1s1")) {
-            MYSERIAL.println (" Servo Sent: P1S1");
-            p1s1.write(intDegrees);
-         }
-         else if (whichServo == "p1s2") {
-             MYSERIAL.println (" Servo Sent: P1S2");
-            p1s2.write(intDegrees);
-         }
-         else if (whichServo == "p2s1") {
-           MYSERIAL.println (" Servo Sent: P2S1");
-           p2s1.write(intDegrees);
-         }
-         else if (whichServo == "p2s2") {
-           MYSERIAL.println (" Servo Sent: P2S2");
-           p2s2.write(intDegrees);
-         }
-         else if (whichServo == "p3s1") {
-           MYSERIAL.println (" Servo Sent: P3S1");
-           p3s1.write(intDegrees);
-         }
-         else if (whichServo == "p3s2") {
-           MYSERIAL.println (" Servo Sent: P3S2");
-           p3s2.write(intDegrees);
-         }
-    }
-    else{
-      degrees = " ";
-    }
-    if(!manual) {
-        myServo.write(40);
-        delay(500);
-        myServo.write(150);
-        delay(500);
-    }
-  }
+          else if(syllable[0] == 'c') { // if the first command is 'c' it means is a 'c+command'
+             command = "";
+             legCommandChoose = false;
+             for(j=0; j<x; j++) command += syllable[j]; // read the command
 
-  void serialEvent(){
-    while(MYSERIAL.available()) {
-      data=(char)MYSERIAL.read();    
-      if (data != '\n'){
-        syllable[i++]=data;   
-      } else{
-          comFinished = true; 
-         x=i;
-         i=0;
+             // Compares which command has been chosen
+             if(command == "crest") {
+                MYSERIAL.println (" Command Send: crest");
+                spidy.setSpidyRest();
+             }
+             else if (command == "cdown") {
+                MYSERIAL.println (" Command Send: cdown");
+                spidy.setSpidyDown();
+             }
+             else if (command == "cup") {
+                MYSERIAL.println (" Command Send: cup");
+                spidy.setSpidyUp();       
+             }
+             comFinished = false;
+          }
+          if(legCommandChoose) {
+            for(j=0; j<x; j++){
+                degrees += syllable[j];
+              }
+            MYSERIAL.print("Send: ");
+            MYSERIAL.print(degrees);
+            MYSERIAL.println();
+            //MYSERIAL.println(" º");
+            intDegrees=degrees.toInt();
+            comFinished = false;
+           if (whichServo.equals("l1s1")) {
+              MYSERIAL.println (" Servo Sent: L1S1");
+              spidy.l1s1.write(intDegrees);
+           }
+           else if (whichServo == "l1s2") {
+              MYSERIAL.println (" Servo Sent: L1S2");
+              spidy.l1s2.write(intDegrees);
+           }
+           else if (whichServo == "l2s1") {
+             MYSERIAL.println (" Servo Sent: L2S1");
+             spidy.l2s1.write(intDegrees);
+           }
+           else if (whichServo == "l2s2") {
+             MYSERIAL.println (" Servo Sent: L2S2");
+             spidy.l2s2.write(intDegrees);
+           }
+           else if (whichServo == "l3s1") {
+             MYSERIAL.println (" Servo Sent: L3S1");
+             spidy.l3s1.write(intDegrees);
+           }
+           else if (whichServo == "l3s2") {
+             MYSERIAL.println (" Servo Sent: L3S2");
+             spidy.l3s2.write(intDegrees);
+           }
+           else if (whichServo == "l4s1") {
+             MYSERIAL.println (" Servo Sent: L4S1");
+             spidy.l4s1.write(intDegrees);
+           }
+           else if (whichServo == "l4s2") {
+             MYSERIAL.println (" Servo Sent: L4S2");
+             spidy.l4s2.write(intDegrees);
+           }
+           else if (whichServo == "l5s1") {
+             MYSERIAL.println (" Servo Sent: L5S1");
+             spidy.l5s1.write(intDegrees);
+           }
+           else if (whichServo == "l5s2") {
+             MYSERIAL.println (" Servo Sent: L5S2");
+             spidy.l5s2.write(intDegrees);
+           }
+           else if (whichServo == "l6s1") {
+             MYSERIAL.println (" Servo Sent: L6S1");
+             spidy.l6s1.write(intDegrees);
+           }
+           else if (whichServo == "l6s2") {
+             MYSERIAL.println (" Servo Sent: L6S2");
+             spidy.l6s2.write(intDegrees);
+           }
+        }      
+      }
+      else{
+        degrees = " ";
       }
     }
- }
+ 
+ 
+
+ #endif // COMMANDLINE_CONTROL
   
 #endif // _MAIN_H_
