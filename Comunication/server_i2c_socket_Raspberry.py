@@ -6,6 +6,14 @@ import numpy
 import socket
 import smbus
 
+#Socket address
+HOST = '192.168.0.42'
+PORT = 8888
+
+#i2c addresses
+arduino_address = 0x04
+accel_address = 0x68
+
 def read_word(address, register):
 	high = bus.read_byte_data(address, register)
 	low = bus.read_byte_data(address, register+1)
@@ -18,13 +26,10 @@ def read_word(address, register):
 
 
 def init_accelerometer():
-	bus.write_byte_data(address, 0x6B, 0) #wake up sensor - power management
+	bus.write_byte_data(accel_address, 0x6B, 0) #wake up sensor - power management
 
 
 ## Socket configuration
-HOST = '10.5.3.118'
-PORT = 8888
-
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created'
 
@@ -39,10 +44,8 @@ print 'Connected with ' + addr[0] + ':' + str(addr[1])
 ## I2C configuration
 # for RPI version 1, use "bus = smbus.SMBus(0)"
 bus = smbus.SMBus(1)
-arduino_address = 0x04
-accel_address = 0x68
 
-init_accelerometer()
+#init_accelerometer()
 
 state = 0
 ## Main loop

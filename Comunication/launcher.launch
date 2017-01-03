@@ -1,0 +1,12 @@
+<launch>
+
+	<!-- gpsr it SMACH -->
+  	<node pkg ="gpsrSoar"
+		type="gpsrASAction.py"
+		name="gpsrSoar"
+		output="screen">
+  	</node>
+
+</launch>
+
+
