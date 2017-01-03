@@ -1,0 +1,2 @@
+workspace_test
+-DCATKIN_DEVEL_PREFIX=/home/sxubach/Documents/Robot_Learning/robotLearning/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/sxubach/Documents/Robot_Learning/robotLearning/catkin_ws/install -G Unix Makefiles
