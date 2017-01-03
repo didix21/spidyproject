@@ -8,5 +8,5 @@
    #define COMMAND_SENT(X) do{MYSERIAL.print("Command Sent: "); MYSERIAL.println(X);} while(0)
 
    #define ASTERISKS "***************************************************************************"
-
+   #define SPIDY_FIRMWARE "**************************This is Spidy Firmware***************************" 
 #endif

@@ -72,9 +72,7 @@
       static bool legCommandChoose = false, refreshMode = false;
       static uint8_t arrayOfDegrees[11]={90,90,90,90,90,90,90,90,90,90,90}, refreshModeCounter = 0;
       if(comFinished) { // if serial has finished of reading then...
-        MYSERIAL.println("OK");
         if(syllable[0] == 'l') { // if the first character is a l it means will control servo legs
-            MYSERIAL.println("OK1");
             whichServo = "";
             for(j=0; j<x; j++) whichServo += syllable[j]; // Read wich servo has been chosen
             legCommandChoose = true;
@@ -100,8 +98,7 @@
              else if (command == "crefresh") {
                 COMMAND_SENT(command);
                 refreshMode = true;
-             }
-            
+             } 
           }
           if(legCommandChoose) {         
             if(syllable[0] != 'l') {
@@ -192,7 +189,6 @@
             spidy.refreshLegs(arrayOfDegrees); // Once the arrayOfDegrees has been filled, we call refreshLegs method.
             refreshModeCounter = 0;            
           }
-                
         }
         comFinished = false;
       }
