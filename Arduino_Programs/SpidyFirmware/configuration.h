@@ -45,53 +45,59 @@
  
  #endif // MYSER
 
+// *********************************** Range of each servo leg ***********************************
 
-
- // Range of each servo leg
-
- #ifndef RANGE_OF_EACH_SERVO
+ #ifndef RANGE_OF_EACH_SERVO // 
   
   // Leg 1 
   #define L1S1_MIN 0  // In degrees
-  #define L1S1_MAX 180 // In degrees
+  #define L1S1_MAX 125 // In degrees
   #define L1S2_MIN 90 // In degrees
-  #define L1S2_MAX 90 // In degrees
+  #define L1S2_MAX 180 // In degrees
   // Leg 2
   #define L2S1_MIN 0 // In degrees
-  #define L2S1_MAX 180 // In degrees
-  #define L2S2_MIN 90 // In degrees
+  #define L2S1_MAX 130 // In degrees
+  #define L2S2_MIN 5 // In degrees
   #define L2S2_MAX 90 // In degrees
   // Leg 3
   #define L3S1_MIN 0 // In degrees
-  #define L3S1_MAX 180 // In degrees
-  #define L3S2_MIN 90 // In degrees
-  #define L3S2_MAX 90 // In degrees
+  #define L3S1_MAX 90 // In degrees
+  #define L3S2_MIN 30 // In degrees
+  #define L3S2_MAX 120 // In degrees
   // Leg 4
-  #define L4S1_MIN 0 // In degrees
-  #define L4S1_MAX 180 // In degrees
-  #define L4S2_MIN 90 // In degrees
-  #define L4S2_MAX 90 // In degrees
+  #define L4S1_MIN 10 // In degrees
+  #define L4S1_MAX 90 // In degrees
+  #define L4S2_MIN 20 // In degrees
+  #define L4S2_MAX 110 // In degrees
   // Leg 5
-  #define L5S1_MIN 0  // In degrees
-  #define L5S1_MAX 180 // In degrees
-  #define L5S2_MIN 90 // In degrees
+  #define L5S1_MIN 5 // In degrees
+  #define L5S1_MAX 150 // In degrees
+  #define L5S2_MIN 0 // In degrees
   #define L5S2_MAX 90 // In degrees
   // Leg 6
-  #define L6S1_MIN 0 // In degrees
+  #define L6S1_MIN 25 // In degrees
   #define L6S1_MAX 180 // In degrees
-  #define L6S2_MIN 90 // In degrees
-  #define L6S2_MAX 90 // In degrees
+  #define L6S2_MIN 60 // In degrees
+  #define L6S2_MAX 160 // In degrees
 
   // Centrate Base Paws
-  #define L1S2_REST (L1S2_MAX - L1S2_MIN)/2
-  #define L2S2_REST (L2S2_MAX - L2S2_MIN)/2
-  #define L3S2_REST (L3S2_MAX - L3S2_MIN)/2
-  #define L4S2_REST (L4S2_MAX - L4S2_MIN)/2
-  #define L5S2_REST (L5S2_MAX - L5S2_MIN)/2
-  #define L6S2_REST (L1S2_MAX - L6S2_MIN)/2
+  #define L1S1_REST 60 //(L1S1_MAX - L1S1_MIN)/2
+  #define L1S2_REST L1S2_MIN//(L1S2_MAX - L1S2_MIN)/2
+  #define L2S1_REST 60 //(L2S1_MAX - L2S1_MIN)/2
+  #define L2S2_REST L2S2_MIN//(L2S2_MAX - L2S2_MIN)/2
+  #define L3S1_REST 45//(L3S1_MAX - L3S1_MIN)/2
+  #define L3S2_REST L3S2_MIN//(L3S2_MAX - L3S2_MIN)/2
+  #define L4S1_REST 45//(L4S1_MAX - L4S1_MIN)/2
+  #define L4S2_REST L4S2_MIN//(L4S2_MAX - L4S2_MIN)/2
+  #define L5S1_REST 60//(L5S1_MAX - L5S1_MIN)/2
+  #define L5S2_REST L5S2_MIN//(L5S2_MAX - L5S2_MIN)/2
+  #define L6S1_REST 85//(L6S1_MAX - L6S1_MIN)/2
+  #define L6S2_REST L6S2_MIN//(L1S2_MAX - L6S2_MIN)/2
                      
   #define RANGE_OF_EACH_SERVO
 
  #endif // RANGE_OF_EACH_SERVO
+
+// **************************************************************************************************
 
 #endif // _CONFIGURATION_H_

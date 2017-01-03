@@ -1,5 +1,8 @@
 #include "spidy.h"
-  // Constructor
+  
+  /** 
+   *  Constructor
+   */
   Spidy::Spidy() {
        // Nothing
   }
@@ -7,88 +10,84 @@
   void Spidy::attachServos() {
        // Initialize Servo Motors
     l1s1.attach(L1S1_PIN);
-    delay(100);
+    delay(500);
     l1s2.attach(L1S2_PIN);
-    delay(100);
+    delay(500);
     l2s1.attach(L2S1_PIN);
-    delay(100);
+    delay(500);
     l2s2.attach(L2S2_PIN);
-    delay(100);
+    delay(500);
     l3s1.attach(L3S1_PIN);
-    delay(100);
+    delay(500);
     l3s2.attach(L3S2_PIN);
-    delay(100);
+    delay(500);
     l4s1.attach(L4S1_PIN);
-    delay(100);
+    delay(500);
     l4s2.attach(L4S2_PIN);
-    delay(100);
+    delay(500);
     l5s1.attach(L5S1_PIN);
-    delay(100);
+    delay(500);
     l5s2.attach(L5S2_PIN);
-    delay(100);
+    delay(500);
     l6s1.attach(L6S1_PIN);
-    delay(100);
+    delay(500);
     l6s2.attach(L6S2_PIN); 
-    delay(100);
+    delay(500);
   }
 
-  // Sent all the servos to rest
+  /** 
+   * Sent all the servos to rest  
+   */
   void Spidy::setSpidyRest() {
     
-    l1s1.write(L1S1_MIN);
+    l1s1.write(L1S1_REST);
     l1s2.write(L1S2_REST);
-    delay(100); //It is a matter of energy
-    l2s1.write(L2S1_MIN);
+    l2s1.write(L2S1_REST);
     l2s2.write(L2S2_REST);
-    delay(100);
-    l3s1.write(L3S1_MIN);
+    l3s1.write(L3S1_REST);
     l3s2.write(L3S2_REST);
-    delay(100);
-    l4s1.write(L4S1_MIN);
+    l4s1.write(L4S1_REST);
     l4s2.write(L4S2_REST);
-    delay(100);
-    l5s1.write(L5S1_MIN);
+    l5s1.write(L5S1_REST);
     l5s2.write(L5S2_REST);
-    delay(100);
-    l6s1.write(L6S1_MIN);
+    l6s1.write(L6S1_REST);
     l6s2.write(L6S2_REST);
     
    }
 
-   // To rise Spidy
+   /** 
+    * To rise Spidy 
+    */
    void Spidy::setSpidyUp() {
     
-    l1s1.write(L1S1_MAX);
-    delay(100);
-    l2s1.write(L2S1_MAX);
-    delay(100);
-    l3s1.write(L3S1_MAX);
-    delay(100);
-    l4s1.write(L4S1_MAX);
-    delay(100);
-    l5s1.write(L5S1_MAX);
-    delay(100);
-    l6s1.write(L6S1_MAX);
-    delay(100);
+    l1s2.write(L1S2_MAX);
+    l2s2.write(L2S2_MAX);
+    l3s2.write(L3S2_MAX);
+    l4s2.write(L4S2_MAX);
+    l5s2.write(L5S2_MAX);
+    l6s2.write(L6S2_MAX);
+    
    }
 
-  // Set down Spidy
+  /** 
+   * Set down Spidy
+   */
    void Spidy::setSpidyDown() {
     
-    l1s1.write(L1S1_MIN);
-    delay(100);
-    l2s1.write(L2S1_MIN);
-    delay(100);
-    l3s1.write(L3S1_MIN);
-    delay(100);
-    l4s1.write(L4S1_MIN);
-    delay(100);
-    l5s1.write(L5S1_MIN);
-    delay(100);
-    l6s1.write(L6S1_MIN);
-    delay(100);
+    l1s2.write(L1S2_MIN);
+    l2s2.write(L2S2_MIN);
+    l3s2.write(L3S2_MIN);
+    l4s2.write(L4S2_MIN);
+    l5s2.write(L5S2_MIN);
+    l6s2.write(L6S2_MIN);
+  
    }
 
+  /**
+   * This function is in charge of refresh all the servo legs.
+   * Possible some time delays will be implemented in futur to 
+   * avoid high inductances and Arduino Saturation.
+   */
    void Spidy::refreshLegs(uint8_t *legsAngle) {
 
     // Actualize legs position
@@ -107,9 +106,13 @@
     
    }
 
+  /**
+   * This function read all the actual servo values
+   */
    uint8_t* Spidy::readLegsPosition(uint8_t *legsAngle) {
     
     uint8_t legsPosition[12]; // Twelve Servo Motors
+    
     // Read actual legs position
     legsPosition[0] = l1s1.read();
     legsPosition[1] = l1s2.read();
@@ -126,7 +129,10 @@
 
     return legsPosition;
    }
-
+   
+   /**
+    * CheckPostion: checks if all the servo have reached the goal values.
+    */
    bool checkPosition(uint8_t *legsAngle, uint8_t *legsPosition) {
     
     bool achievedPosition[12]; // This array will be used to know if all the servos has achieved the position
