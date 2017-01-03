@@ -4,6 +4,7 @@ import socket
 import rospy
 import actionlib
 
+import action\PWMAction
 
 ## Socket address
 HOST = '192.168.0.42'
@@ -25,9 +26,11 @@ ArduinoController runs the services related with the arduino:
 	/arduino/accel
 	/arduino/pwm
 """
-def pwm_action_cb(req):
+
+def pwm_action_cb(goal):
 	rospy.loginfo('/arduino/pwm service callback executed')
-	#callback of pwm_service
+	PWM_action.set_succeeded()
+	#callback of pwm_action
 
 def main():
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

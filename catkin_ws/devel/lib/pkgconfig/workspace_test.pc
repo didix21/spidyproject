@@ -1,0 +1,8 @@
+prefix=/home/sxubach/Documents/Robot_Learning/robotLearning/catkin_ws/devel
+
+Name: workspace_test
+Description: Description of workspace_test
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/sxubach/Documents/Robot_Learning/robotLearning/catkin_ws/devel/lib 
+Requires: 
