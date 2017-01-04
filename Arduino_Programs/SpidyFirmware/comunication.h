@@ -24,9 +24,9 @@
   static int state_receive=0;
   static int state_send=0, option;
 
-  static uint8_t legs_Angle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
-  static unsigned int duration_U=0;
-  static int accelerometer_X=0, accelerometer_Y=0, accelerometer_Z=0;
+  static uint8_t legs_Angle[12] = {1,2,3,4,5,6,7,8,9,10,11,12};// {0,0,0,0,0,0,0,0,0,0,0,0};//
+  static unsigned int duration_U=42;
+  static int accelerometer_X=25, accelerometer_Y=56, accelerometer_Z=20;
   
 
   void receiveData(int byteCount);
@@ -61,7 +61,7 @@
       switch (state_receive){
         case 0:
           state_receive = Wire.read();
-          Serial.print("data received: info about PWM_");
+          Serial.print("Request received: ");
           Serial.println(state_receive);
   
           if (state_receive>99){
@@ -85,27 +85,32 @@
   // callback for sending data
   void sendData(){ //otpion: 0=ultrasound 1=accelerometer_X 2=accelerometer_Y 3=accelerometer_Z
     byte buf[4];
-  
+
     switch (state_send){
       case 0:     // Save current distance in the buffer and send firts part
+        Serial.print(" - Sending data:");
         // to reconstruct
         // long value = (unsigned long)(buf[4] << 24) | (buf[3] << 16) | (buf[2] << 8) | buf[1];
         switch(option){
           case 0:
-            buf[0] = (byte) duration_U;
-            buf[1] = (byte) duration_U >> 8;
+            buf[1] = (byte) duration_U;
+            buf[0] = (byte) duration_U >> 8;
+            Serial.println(duration_U);
           break;
           case 1:
             buf[0] = (byte) accelerometer_X;
             buf[1] = (byte) accelerometer_X >> 8;
+            Serial.println(accelerometer_X);
           break;
           case 2:
             buf[0] = (byte) accelerometer_Y;
             buf[1] = (byte) accelerometer_Y >> 8;
+            Serial.println(accelerometer_Y);
           break;
           case 3:
             buf[0] = (byte) accelerometer_Z;
             buf[1] = (byte) accelerometer_Z >> 8;
+            Serial.println(accelerometer_Z);
           break;
           default:
             option = 0;
@@ -113,10 +118,12 @@
         }
         
         Wire.write(buf[0]);
+        Serial.println(" - buf[0] sent");
         state_send = 1;
       break;
       case 1:
         Wire.write(buf[1]); 
+        Serial.println(" - buf[1] sent");
         state_send = 0;    
       break;
       default:    
