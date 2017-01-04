@@ -1,0 +1,12 @@
+<launch>
+
+<include file="$(find gazebo_example)/launch/empty_world.launch"/>
+
+<param name="robot_description" command="$(find xacro)/xacro.py '$(find spidy)/models/crab_model.xacro'" />
+
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model crab_model" />
+
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+<node name="state_publisher" pkg="spidy" type="state_publisher" />
+
+</launch>
