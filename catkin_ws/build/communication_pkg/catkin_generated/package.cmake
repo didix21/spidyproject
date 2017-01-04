@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "communication_pkg")
+set(communication_pkg_MAINTAINER "sxubach <sxubach@gmail.com>")
+set(communication_pkg_DEPRECATED "")
+set(communication_pkg_VERSION "0.0.0")
+set(communication_pkg_BUILD_DEPENDS "roscpp" "rospy" "std_msgs" "actionlib" "actionlib_msgs")
+set(communication_pkg_RUN_DEPENDS "roscpp" "rospy" "std_msgs" "actionlib" "actionlib_msgs")
+set(communication_pkg_BUILDTOOL_DEPENDS "catkin")

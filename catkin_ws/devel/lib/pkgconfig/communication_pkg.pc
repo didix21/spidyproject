@@ -1,0 +1,8 @@
+prefix=/home/sxubach/Documents/Robot_Learning/robotLearning/catkin_ws/devel
+
+Name: communication_pkg
+Description: Description of communication_pkg
+Version: 0.0.0
+Cflags: -I/home/sxubach/Documents/Robot_Learning/robotLearning/catkin_ws/devel/include
+Libs: -L/home/sxubach/Documents/Robot_Learning/robotLearning/catkin_ws/devel/lib 
+Requires: 

@@ -43,13 +43,15 @@ print 'Connected with ' + addr[0] + ':' + str(addr[1])
 
 ## I2C configuration
 # for RPI version 1, use "bus = smbus.SMBus(0)"
+print 'Configuring i2c ...'
 bus = smbus.SMBus(1)
 
 #init_accelerometer()
-
+print 'Done!'
 state = 0
 ## Main loop
 while(1):
+	print 'Reading from Arduino ...'
 	bus.write_byte(arduino_address, 100)	# Request ultrasound distance
 	distance_U = float(bus.read_byte(arduino_address))/58 # Read the ultrasound distance
 
@@ -60,17 +62,35 @@ while(1):
 	gyro_X = read_word(accel_address, 0x43)
 	gyro_Y = read_word(accel_address, 0x45)
 	gyro_Z = read_word(accel_address, 0x47)
-	
+	print 'Done!'
+##FAKE VALUES##
+	distance_U = 4
+
+	accel_X = 8
+	accel_Y = 15
+	accel_Z = 16
+
+	gyro_X = 23
+	gyro_Y = 42
+	gyro_Z = 69
+###############
 	try:	
 		if state==0:	
-			state = int(s.recv(1024))	#same protocol as i2c
+			print 'Reading from Socket'
+			state = int(c.recv(1024))	#same protocol as i2c
+			print 'done'
+			print 'Requested state = ' + str(state)
 		if state>=1 and state<=12:
+			c.send("ack.")
+			pwm_value = int(c.recv(1024))
+
 			bus.write_byte(arduino_address, state)
-			pwm_value = int(s.recv(1024))
 			bus.write_byte(arduino_address, pwm_value)
 			state = 0;
 		if state==100:
+			print 'Sending distance_U = ' + str(distance_U) 
 			c.send(str(distance_U))
+			print 'Done!'
 			state = 0;
 		if state==101:
 			c.send(str(accel_X))

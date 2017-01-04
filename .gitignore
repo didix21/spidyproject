@@ -4,3 +4,4 @@ algorithm (Case Conflict)/CB project/Algorithm/Algorithm.cbp
 
 *.pyc
 *~
+*.old
