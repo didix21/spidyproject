@@ -12,7 +12,7 @@ void setup() {
   spidy.attachServos();
   
   init_comunication();
-  //ultrasound_setup();
+  ultrasound_setup();
 
 }
 
@@ -20,7 +20,23 @@ void loop() {
   // put your main code here, to run repeatedly:
   
   commandLine();
+  
+  update_duration_U();
+  read_angles(legsAngle);
+  
+  spidy.refreshLegs(legsAngle);
 
+
+  Serial.print("Distance_U = ");
+  Serial.println(duration_U);
+  Serial.print("pwm = [");
+  Serial.print(legsAngle[0]);
+  for (int i=1;i<12;i++){
+    Serial.print(", ");
+    Serial.print(legsAngle[i]);
+  }
+  Serial.println("]");
+  delay(50);
 }
 
    void serialEvent(){

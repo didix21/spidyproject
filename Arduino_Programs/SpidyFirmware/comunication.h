@@ -24,10 +24,19 @@
   static int state_receive=0;
   static int state_send=0, option;
 
-  static uint8_t legs_Angle[12] = {1,2,3,4,5,6,7,8,9,10,11,12};// {0,0,0,0,0,0,0,0,0,0,0,0};//
+  static uint8_t legs_Angle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};// {1,2,3,4,5,6,7,8,9,10,11,12};//
   static unsigned int duration_U=42;
-  static int accelerometer_X=25, accelerometer_Y=56, accelerometer_Z=20;
   
+  /*typedef struct{
+    byte high;  
+    byte low;  
+  }2_bytes;
+
+  union{
+    static unsigned int value;
+    2_bytes buff;
+  }duration_U;*/
+
 
   void receiveData(int byteCount);
   void sendData();
@@ -38,20 +47,18 @@
     
     Wire.onReceive(receiveData);  // define callbacks for i2c communication
     Wire.onRequest(sendData);   
+
+    duration_U = 42;
   }
 
   void read_angles(uint8_t *legsAngle){
-    legsAngle = legs_Angle;
+    for (int i=0;i<12;i++){
+      legsAngle[i] = legs_Angle[i];
+    }
   }
 
   void write_duration_U(unsigned int durationUltrasound){
     duration_U = durationUltrasound;
-  }
-
-  void write_accelerometer(int acc_x, int acc_y, int acc_z){
-    accelerometer_X = acc_x;
-    accelerometer_Y = acc_y;
-    accelerometer_Z = acc_z;
   }
      
   // callback for received data
@@ -84,7 +91,7 @@
 
   // callback for sending data
   void sendData(){ //otpion: 0=ultrasound 1=accelerometer_X 2=accelerometer_Y 3=accelerometer_Z
-    byte buf[4];
+    static byte buf[4];
 
     switch (state_send){
       case 0:     // Save current distance in the buffer and send firts part
@@ -93,24 +100,10 @@
         // long value = (unsigned long)(buf[4] << 24) | (buf[3] << 16) | (buf[2] << 8) | buf[1];
         switch(option){
           case 0:
-            buf[1] = (byte) duration_U;
-            buf[0] = (byte) duration_U >> 8;
+            buf[0] = (byte) duration_U;
+            buf[1] = (byte) (duration_U >> 8);
+            
             Serial.println(duration_U);
-          break;
-          case 1:
-            buf[0] = (byte) accelerometer_X;
-            buf[1] = (byte) accelerometer_X >> 8;
-            Serial.println(accelerometer_X);
-          break;
-          case 2:
-            buf[0] = (byte) accelerometer_Y;
-            buf[1] = (byte) accelerometer_Y >> 8;
-            Serial.println(accelerometer_Y);
-          break;
-          case 3:
-            buf[0] = (byte) accelerometer_Z;
-            buf[1] = (byte) accelerometer_Z >> 8;
-            Serial.println(accelerometer_Z);
           break;
           default:
             option = 0;
@@ -118,12 +111,14 @@
         }
         
         Wire.write(buf[0]);
-        Serial.println(" - buf[0] sent");
+        Serial.print(" - buf[0] sent:");
+        Serial.println(buf[0]);
         state_send = 1;
       break;
       case 1:
         Wire.write(buf[1]); 
-        Serial.println(" - buf[1] sent");
+        Serial.print(" - buf[1] sent:");
+        Serial.println(buf[1]);
         state_send = 0;    
       break;
       default:    

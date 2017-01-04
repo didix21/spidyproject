@@ -14,8 +14,8 @@
 #define HOST "192.168.0.42"
 #define PORT 8888
 
-char pwm_values[12] = {10,20,30,40,50,60,70,80,90,100,110,120};// {0,0,0,0,0,0,0,0,0,0,0,0};//
-int distance_U = 0;
+char pwm_values[12] = {0,0,0,0,0,0,0,0,0,0,0,0};// {10,20,30,40,50,60,70,80,90,100,110,120};//
+float distance_U = 0;
 int accel_X = 0;
 int accel_Y = 0;
 int accel_Z = 0;
@@ -34,11 +34,14 @@ void error(const char *msg)
 void execute(const communication_pkg::PWMGoalConstPtr& goal, Server* as)
 {
 	char aux[100];
-	as->setSucceeded();
 	
-	//sprintf(aux,"goal 1:%d, goal 12:%d\n",(*goal).pwm[0],(*goal).pwm[11]);
+	for(int i=0;i<12;i++){
+		pwm_values[i] = (*goal).pwm[i];
+	}
 	sprintf(aux,"/arduino/pwm service callback executed");
 	write(1,aux,strlen(aux));
+
+	as->setSucceeded();
 }
 
 int main(int argc, char** argv)
@@ -85,9 +88,9 @@ int main(int argc, char** argv)
 		n = read(s,buff,255);
 		distance_U = atoi(buff);
 		if (n == 0)		printf("nothing read\n");
-		else if (n<0)		perror("Read Error:");
-		//else			
-		printf("distance_U = %d\n",distance_U);
+		else if (n<0)		perror("Read Error:");	
+		distance_U = float(distance_U)/58;
+		printf("distance_U = %f\n",distance_U);
 
 	// Accelerometer
 		sprintf(buff,"%c",char(101+10));
@@ -135,25 +138,22 @@ int main(int argc, char** argv)
 
 	// PWM
 		for (int i=1;i<=12;i++){			
-			printf("Sending i = %d\n",i+10);
 			sprintf(buff,"%c",char(i+10));
 			write(s,buff,strlen(buff));
 			
-			printf("Reading ack.\n");
 			memset(buff,0,strlen(buff));
 			read(s,buff,255);
 			
 			memset(buff,0,strlen(buff));
-			printf("Sending pwm_values[%d] = %d\n",i-1,pwm_values[i-1]+10);
+			printf("Sending pwm_values[%d] = %d\n",i-1,pwm_values[i-1]);
 			sprintf(buff,"%c",char(pwm_values[i-1]+10));
 			write(s,buff,strlen(buff));
-			printf("Done!\n");
 		}
 
-		printf("Values sent\n");
+		printf("\n\n\n");
 
 		ros::spinOnce();
-		ros::Duration(2).sleep();
+		//ros::Duration(2).sleep();
 	}
 	return 0;
 }

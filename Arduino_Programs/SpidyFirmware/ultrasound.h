@@ -9,8 +9,8 @@
 
   #define _ULTRASOUND_H_  
   
-  #define TrigerPin 7  //Trigger pin of HC-SR04
-  #define ListenPin 8  //Echo pin of HC-SR04
+  #define TrigerPin 22 //Trigger pin of HC-SR04   //previously 7
+  #define ListenPin 24 //Echo pin of HC-SR04      //previously 8
 
   void ultrasound_setup()
   {
