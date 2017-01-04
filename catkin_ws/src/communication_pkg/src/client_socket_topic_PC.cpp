@@ -14,7 +14,7 @@
 #define HOST "192.168.0.42"
 #define PORT 8888
 
-char pwm_values[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+char pwm_values[12] = {10,20,30,40,50,60,70,80,90,100,110,120};// {0,0,0,0,0,0,0,0,0,0,0,0};//
 int distance_U = 0;
 int accel_X = 0;
 int accel_Y = 0;
@@ -62,11 +62,12 @@ int main(int argc, char** argv)
 	addr.sin_port = htons(PORT);
 	inet_aton(HOST, &addr.sin_addr);
 
-	if (connect(s,(struct sockaddr *) &addr,sizeof(addr))<0)
+	if (connect(s,(struct sockaddr *) &addr,sizeof(addr))<0){
 		perror("Error connecting socket:");
-	else
+		exit(0);
+	}else{
 		printf("Socket connected\n");
-
+	}
 
 	Server server(h, "/arduino/pwm", boost::bind(&execute, _1, &server), false);
 	server.start();
@@ -76,7 +77,7 @@ int main(int argc, char** argv)
 	// Main loop
 	while(1){	
 	// Ultrasound
-		sprintf(buff,"100");
+		sprintf(buff,"%c",char(100+10));
 		write(s,buff,strlen(buff));
 		//printf("writen %s in socket\n",buff);	
 
@@ -89,47 +90,65 @@ int main(int argc, char** argv)
 		printf("distance_U = %d\n",distance_U);
 
 	// Accelerometer
-		sprintf(buff,"101");		write(s,buff,strlen(buff));
+		sprintf(buff,"%c",char(101+10));
+		write(s,buff,strlen(buff));
 		memset(buff,0,strlen(buff));
-		n = read(s,buff,255);		accel_X = atoi(buff);
+		n = read(s,buff,255);	
+		accel_X = atoi(buff);
 		printf("accel_X = %d\n",accel_X);
 
-		sprintf(buff,"102");		write(s,buff,strlen(buff));
+		sprintf(buff,"%c",char(102+10));
+		write(s,buff,strlen(buff));
 		memset(buff,0,strlen(buff));
-		n = read(s,buff,255);		accel_Y = atoi(buff);
+		n = read(s,buff,255);
+		accel_Y = atoi(buff);
 		printf("accel_Y = %d\n",accel_Y);
 
-		sprintf(buff,"103");		write(s,buff,strlen(buff));
+		sprintf(buff,"%c",char(103+10));
+		write(s,buff,strlen(buff));
 		memset(buff,0,strlen(buff));
-		n = read(s,buff,255);		accel_Z = atoi(buff);
+		n = read(s,buff,255);
+		accel_Z = atoi(buff);
 		printf("accel_Z = %d\n",accel_Z);
 
 	// Gyroscope
-		sprintf(buff,"104");		write(s,buff,strlen(buff));
+		sprintf(buff,"%c",char(104+10));
+		write(s,buff,strlen(buff));
 		memset(buff,0,strlen(buff));
-		n = read(s,buff,255);		gyro_X = atoi(buff);
+		n = read(s,buff,255);
+		gyro_X = atoi(buff);
 		printf("gyro_X = %d\n",gyro_X);
 
-		sprintf(buff,"105");		write(s,buff,strlen(buff));
+		sprintf(buff,"%c",char(105+10));
+		write(s,buff,strlen(buff));
 		memset(buff,0,strlen(buff));
-		n = read(s,buff,255);		gyro_Y = atoi(buff);
+		n = read(s,buff,255);
+		gyro_Y = atoi(buff);
 		printf("gyro_Y = %d\n",gyro_Y);
 
-		sprintf(buff,"106");		write(s,buff,strlen(buff));
+		sprintf(buff,"%c",char(106+10));
+		write(s,buff,strlen(buff));
 		memset(buff,0,strlen(buff));
-		n = read(s,buff,255);		gyro_Z = atoi(buff);
+		n = read(s,buff,255);
+		gyro_Z = atoi(buff);
 		printf("gyro_Z = %d\n",gyro_Z);
 
 	// PWM
-		/*for (int i=0;i<12;i++){
-			std::stringstream stream;	
-			stream << i;
-			write(s,stream.str(),stream.gcount());	//send the value of 'i'
-			memset(buff,0,strlen(buff));	read(s,buff,255);	memset(buff,0,strlen(buff));	//wait for acknowledge
-			stream << pwm_values[i]
-			write(s,stream.str(),stream.gcount());	//send pwm of servo 'i'
-			printf("pwm_value[%d] = %d\n",i,pwm_values[i]);
-		}*/
+		for (int i=1;i<=12;i++){			
+			printf("Sending i = %d\n",i+10);
+			sprintf(buff,"%c",char(i+10));
+			write(s,buff,strlen(buff));
+			
+			printf("Reading ack.\n");
+			memset(buff,0,strlen(buff));
+			read(s,buff,255);
+			
+			memset(buff,0,strlen(buff));
+			printf("Sending pwm_values[%d] = %d\n",i-1,pwm_values[i-1]+10);
+			sprintf(buff,"%c",char(pwm_values[i-1]+10));
+			write(s,buff,strlen(buff));
+			printf("Done!\n");
+		}
 
 		printf("Values sent\n");
 
