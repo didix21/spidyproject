@@ -10,29 +10,29 @@
   void Spidy::attachServos() {
        // Initialize Servo Motors
     l1s1.attach(L1S1_PIN);
-    delay(500);
+    delay(100);
     l1s2.attach(L1S2_PIN);
-    delay(500);
+    delay(100);
     l2s1.attach(L2S1_PIN);
-    delay(500);
+    delay(100);
     l2s2.attach(L2S2_PIN);
-    delay(500);
+    delay(100);
     l3s1.attach(L3S1_PIN);
-    delay(500);
+    delay(100);
     l3s2.attach(L3S2_PIN);
-    delay(500);
+    delay(100);
     l4s1.attach(L4S1_PIN);
-    delay(500);
+    delay(100);
     l4s2.attach(L4S2_PIN);
-    delay(500);
+    delay(100);
     l5s1.attach(L5S1_PIN);
-    delay(500);
+    delay(100);
     l5s2.attach(L5S2_PIN);
-    delay(500);
+    delay(100);
     l6s1.attach(L6S1_PIN);
-    delay(500);
+    delay(100);
     l6s2.attach(L6S2_PIN); 
-    delay(500);
+    delay(100);
   }
 
   /** 
@@ -133,7 +133,7 @@
    /**
     * CheckPostion: checks if all the servo have reached the goal values.
     */
-   bool checkPosition(uint8_t *legsAngle, uint8_t *legsPosition) {
+   bool* Spidy::checkPosition(uint8_t *legsAngle, uint8_t *legsPosition) {
     
     bool achievedPosition[12]; // This array will be used to know if all the servos has achieved the position
     
@@ -149,5 +149,18 @@
     }
 
     return achievedPosition;
+   }
+   
+   /**
+    * checkInsideMinMax: check if each servo angle received is inside min max range.
+    * This function avoids force the different servos.
+    */
+   uint8_t* Spidy::checkInsideMinMax(uint8_t *legsAngle) {
+    
+    int i;
+    for(i = 0; i < 11; i++) {
+      if(legsAngle[i] < minPos[i]) legsAngle[i] = minPos[i];
+      else if(legsAngle[i] > maxPos[i]) legsAngle[i] = maxPos[i];
+    }   
    }
    

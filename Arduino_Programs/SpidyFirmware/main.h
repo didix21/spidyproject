@@ -64,7 +64,7 @@
     bool comFinished= false;
     bool manual = true;
     int actualServo;
-  
+    
     
   
     void commandLine() {
