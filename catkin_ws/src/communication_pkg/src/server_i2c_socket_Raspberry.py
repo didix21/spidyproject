@@ -29,7 +29,17 @@ def init_accelerometer():
 	bus.write_byte_data(accel_address, 0x6B, 0) #wake up sensor - power management
 
 
-## Socket configuration
+## I2C configuration start
+# for RPI version 1, use "bus = smbus.SMBus(0)"
+print 'Configuring i2c ...'
+bus = smbus.SMBus(1)
+
+init_accelerometer()
+print 'Done!'
+## I2C configuration end
+
+
+## Socket configuration start
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created'
 
@@ -39,31 +49,54 @@ print 'Socket bind succesful'
 s.listen(10) #number of tolerable unaccepted connections
 c, addr = s.accept()
 print 'Connected with ' + addr[0] + ':' + str(addr[1])
+## Socket configuration end
 
 
-## I2C configuration
-# for RPI version 1, use "bus = smbus.SMBus(0)"
-print 'Configuring i2c ...'
-bus = smbus.SMBus(1)
-
-init_accelerometer()
-print 'Done!'
 state = 0
 ## Main loop
 while(1):
 	print 'Reading from Arduino ...'
-	bus.write_byte(arduino_address, 100)	# Request ultrasound distance
-	distance_U = float(bus.read_byte(arduino_address))/58 # Read the ultrasound distance
+	# Ultrasound start
+	print 'Ultrasound'
+	bus.write_byte(arduino_address, 100)
 
+	high = bus.read_byte(arduino_address)
+	low = bus.read_byte(arduino_address)
+	distance_U = (high << 8) + low
+
+	if (distance_U >= 0x8000):
+		distance_U = -((65535 - distance_U) + 1)
+
+	print distance_U
+	distance_U = float(distance_U)/58 
+	# Ultrasound end
+
+	
+	print 'Accelerometer'
+	#bus.write_byte(arduino_address, 101)
 	accel_X = read_word(accel_address, 0x3b)
+	#bus.write_byte(arduino_address, 102)
 	accel_Y = read_word(accel_address, 0x3d)
+	#bus.write_byte(arduino_address, 103)
 	accel_Z = read_word(accel_address, 0x3f)
+	print accel_X
+	print accel_Y
+	print accel_Z
 
+	print 'Gyroscope'
+	#bus.write_byte(arduino_address, 104)
 	gyro_X = read_word(accel_address, 0x43)
+	#bus.write_byte(arduino_address, 105)
 	gyro_Y = read_word(accel_address, 0x45)
+	#bus.write_byte(arduino_address, 106)
 	gyro_Z = read_word(accel_address, 0x47)
+	print gyro_X
+	print gyro_Y
+	print gyro_Z
+
 	print 'Done!'
 ##FAKE VALUES##
+	#"""
 	distance_U = 4
 
 	accel_X = 8
@@ -73,6 +106,7 @@ while(1):
 	gyro_X = 23
 	gyro_Y = 42
 	gyro_Z = 69
+	#"""
 ###############
 	try:	
 		if state==0:	
@@ -84,7 +118,7 @@ while(1):
 			pwm_value = ord(c.recv(1024))-10
 
 			print 'Wrting arduino'
-			bus.write_byte(arduino_address, state-10)
+			bus.write_byte(arduino_address, state)
 			bus.write_byte(arduino_address, pwm_value)
 			print 'Done!'
 			state = 0;
@@ -92,7 +126,9 @@ while(1):
 			c.send(str(distance_U))
 			state = 0;
 		if state==101:
+			print 'state 101'
 			c.send(str(accel_X))
+			print 'accel_X sent'
 			state = 0;
 		if state==102:
 			c.send(str(accel_Y))
