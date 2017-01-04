@@ -11,14 +11,17 @@ int main(int argc, char** argv)
 	client.waitForServer();
 
 	communication_pkg::PWMGoal goal;
+
 	for (int i=0;i<12;i++){
 		goal.pwm[i] = i;
+		printf("goal.pwm[%d] = %d\n",i,i);
 	}
-	client.sendGoal(goal);
 
+	client.sendGoal(goal);
 	client.waitForResult(ros::Duration(5.0));
+
 	if (client.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-		printf("Yay! The dishes are now clean");
+		printf("PWM values updates succesffully\n");
 	printf("Current State: %s\n", client.getState().toString().c_str());
 	return 0;
 }
