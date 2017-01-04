@@ -10,7 +10,7 @@ void setup() {
     MYSERIAL.println(ASTERISKS);
   }
   spidy.attachServos();
-  
+  spidy.setSpidyRest();
   init_comunication();
   ultrasound_setup();
 
@@ -23,7 +23,6 @@ void loop() {
   
   update_duration_U();
   read_angles(legsAngle);
-  
   spidy.refreshLegs(legsAngle);
 
 

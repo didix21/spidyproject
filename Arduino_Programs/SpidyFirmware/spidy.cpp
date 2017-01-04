@@ -10,29 +10,18 @@
   void Spidy::attachServos() {
        // Initialize Servo Motors
     l1s1.attach(L1S1_PIN);
-    delay(100);
     l1s2.attach(L1S2_PIN);
-    delay(100);
     l2s1.attach(L2S1_PIN);
-    delay(100);
     l2s2.attach(L2S2_PIN);
-    delay(100);
     l3s1.attach(L3S1_PIN);
-    delay(100);
     l3s2.attach(L3S2_PIN);
-    delay(100);
     l4s1.attach(L4S1_PIN);
-    delay(100);
     l4s2.attach(L4S2_PIN);
-    delay(100);
     l5s1.attach(L5S1_PIN);
-    delay(100);
     l5s2.attach(L5S2_PIN);
-    delay(100);
     l6s1.attach(L6S1_PIN);
-    delay(100);
     l6s2.attach(L6S2_PIN); 
-    delay(100);
+    
   }
 
   /** 
