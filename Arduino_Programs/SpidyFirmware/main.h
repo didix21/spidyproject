@@ -64,6 +64,7 @@
     bool comFinished= false;
     bool manual = true;
     int actualServo;
+
     static uint8_t legsAngle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
     
   
