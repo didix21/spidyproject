@@ -29,6 +29,9 @@
   #endif // LNSN
   // ***********************************************************************************
   
+  // Debugger mode 
+
+ // #define DEBUGGER // If the define is not commented, the debugger mode is set
   
  // Serial Definition
  #ifndef MYSERESIAL

@@ -68,8 +68,13 @@
       switch (state_receive){
         case 0:
           state_receive = Wire.read();
-          Serial.print("Request received: ");
-          Serial.println(state_receive);
+
+          #ifdef DEBUGGER
+          
+            Serial.print("Request received: ");
+            Serial.println(state_receive);
+          
+          #endif
   
           if (state_receive>99){
             option = state_receive - 100;
@@ -78,8 +83,14 @@
         break;        
         case 1 ... 12:
           legs_Angle[state_receive-1] = Wire.read();
-          Serial.print("data received: ");
-          Serial.println(legs_Angle[state_receive-1]);
+
+          #ifdef DEBUGGER
+          
+            Serial.print("data received: ");
+            Serial.println(legs_Angle[state_receive-1]);
+
+          #endif
+          
           state_receive = 0;
         break;
         default:
@@ -95,7 +106,13 @@
 
     switch (state_send){
       case 0:     // Save current distance in the buffer and send firts part
-        Serial.print(" - Sending data:");
+
+        #ifdef DEBUGGER
+          
+          Serial.print(" - Sending data:");
+
+        #endif
+        
         // to reconstruct
         // long value = (unsigned long)(buf[4] << 24) | (buf[3] << 16) | (buf[2] << 8) | buf[1];
         switch(option){
@@ -103,7 +120,12 @@
             buf[0] = (byte) duration_U;
             buf[1] = (byte) (duration_U >> 8);
             
-            Serial.println(duration_U);
+            #ifdef DEBUGGER
+            
+              Serial.println(duration_U);
+
+            #endif
+            
           break;
           default:
             option = 0;
@@ -111,14 +133,26 @@
         }
         
         Wire.write(buf[0]);
-        Serial.print(" - buf[0] sent:");
-        Serial.println(buf[0]);
+
+        #ifdef DEBUGGER
+        
+          Serial.print(" - buf[0] sent:");
+          Serial.println(buf[0]);
+          
+        #endif
+        
         state_send = 1;
       break;
       case 1:
         Wire.write(buf[1]); 
-        Serial.print(" - buf[1] sent:");
-        Serial.println(buf[1]);
+        
+        #ifdef DEBUGGER
+          
+          Serial.print(" - buf[1] sent:");
+          Serial.println(buf[1]);
+          
+        #endif
+        
         state_send = 0;    
       break;
       default:    
