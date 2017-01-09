@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "workspace_test")
-set(workspace_test_MAINTAINER "sxubach <sxubach@todo.todo>")
-set(workspace_test_DEPRECATED "")
-set(workspace_test_VERSION "0.0.0")
-set(workspace_test_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
-set(workspace_test_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
-set(workspace_test_BUILDTOOL_DEPENDS "catkin")
