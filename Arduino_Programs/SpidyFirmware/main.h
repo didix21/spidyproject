@@ -14,7 +14,7 @@
   #include "messages.h"
 
 
-  #ifdef COMMANDLINE_CONTROL
+ 
 
     /*
      * COMMAND LINE: 
@@ -67,7 +67,7 @@
 
     static uint8_t legsAngle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
     
-  
+   #ifdef COMMANDLINE_CONTROL
     void commandLine() {
       static String whichServo, command;
       static bool legCommandChoose = false, refreshMode = false;
@@ -198,8 +198,6 @@
       }
     }
  
- 
-
- #endif // COMMANDLINE_CONTROL
+  #endif // COMMANDLINE_CONTROL
   
 #endif // _MAIN_H_

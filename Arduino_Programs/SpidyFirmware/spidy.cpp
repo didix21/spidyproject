@@ -144,7 +144,7 @@
     * checkInsideMinMax: check if each servo angle received is inside min max range.
     * This function avoids force the different servos.
     */
-   uint8_t* Spidy::checkInsideMinMax(uint8_t *legsAngle) {
+   void Spidy::checkInsideMinMax(uint8_t *legsAngle) {
     
     int i;
     for(i = 0; i < 11; i++) {

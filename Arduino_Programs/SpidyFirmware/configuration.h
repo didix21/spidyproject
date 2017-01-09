@@ -37,11 +37,11 @@
 
   #ifndef BAUDRATE
 
-    #define BAUDRATE 9600
+    #define BAUDRATE 115200
 
   #endif
 
-  #define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
+ // #define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
  
  #endif // MYSER
 

@@ -18,26 +18,32 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  #ifdef COMMANDLINE_CONTROL // Go to configuration and comment the #define COMMANDLINE_CONTROL
+    
+    commandLine();
+    
+  #else
+    
+    update_duration_U();
+    read_angles(legsAngle);
+    spidy.checkInsideMinMax(legsAngle); // Check if the angles send are inside the min max.
+    spidy.refreshLegs(legsAngle);
   
-  commandLine();
-  
-  update_duration_U();
-  read_angles(legsAngle);
-  spidy.refreshLegs(legsAngle);
-
-
-  Serial.print("Distance_U = ");
-  Serial.println(duration_U);
-  Serial.print("pwm = [");
-  Serial.print(legsAngle[0]);
-  for (int i=1;i<12;i++){
-    Serial.print(", ");
-    Serial.print(legsAngle[i]);
-  }
-  Serial.println("]");
-  delay(50);
+    Serial.print("Distance_U = ");
+    Serial.println(duration_U);
+    Serial.print("pwm = [");
+    Serial.print(legsAngle[0]);
+    for (int i=1;i<12;i++){
+      Serial.print(", ");
+      Serial.print(legsAngle[i]);
+    }
+    Serial.println("]");
+    delay(50);
+    
+  #endif // COMMANDLINE_CONTROL
 }
-
+ #ifdef COMMANDLINE_CONTROL
+ 
    void serialEvent(){
       while(MYSERIAL.available()) {
         data=(char)MYSERIAL.read();    
@@ -51,3 +57,5 @@ void loop() {
         }
       }
    }
+   
+  #endif

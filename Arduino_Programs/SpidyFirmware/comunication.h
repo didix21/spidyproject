@@ -24,7 +24,7 @@
   static int state_receive=0;
   static int state_send=0, option;
 
-  static uint8_t legs_Angle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};// {1,2,3,4,5,6,7,8,9,10,11,12};//
+  static uint8_t legs_Angle[12] = {L1S1_REST, L1S2_REST,L2S1_REST, L2S2_REST, L3S1_REST, L3S2_REST, L4S1_REST, L4S2_REST, L5S1_REST, L5S2_REST, L6S1_REST, L6S2_REST};// {1,2,3,4,5,6,7,8,9,10,11,12};//
   static unsigned int duration_U=42;
   
   /*typedef struct{
