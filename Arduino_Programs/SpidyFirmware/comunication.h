@@ -22,21 +22,12 @@
   #define SLAVE_ADDRESS 0x04
   
   static int state_receive=0;
-  static int state_send=0, option;
+  static int state_send=0, option=0;
 
   static uint8_t legs_Angle[12] = {L1S1_REST, L1S2_REST,L2S1_REST, L2S2_REST, L3S1_REST, L3S2_REST, L4S1_REST, L4S2_REST, L5S1_REST, L5S2_REST, L6S1_REST, L6S2_REST};// {1,2,3,4,5,6,7,8,9,10,11,12};//
+  static uint8_t current_legs_Angle[12] = {1,2,3,4,5,6,7,8,9,10,11,12};//
   static unsigned int duration_U=42;
-  
-  /*typedef struct{
-    byte high;  
-    byte low;  
-  }2_bytes;
-
-  union{
-    static unsigned int value;
-    2_bytes buff;
-  }duration_U;*/
-
+ 
 
   void receiveData(int byteCount);
   void sendData();
@@ -57,6 +48,12 @@
     }
   }
 
+  void set_current_angles(uint8_t *legsAngle){
+    for (int i=0;i<12;i++){
+      current_legs_Angle[i] = legsAngle[i];
+    }
+  }
+
   void write_duration_U(unsigned int durationUltrasound){
     duration_U = durationUltrasound;
   }
@@ -69,11 +66,9 @@
         case 0:
           state_receive = Wire.read();
 
-          #ifdef DEBUGGER
-          
+          #ifdef DEBUGGER          
             Serial.print("Request received: ");
-            Serial.println(state_receive);
-          
+            Serial.println(state_receive);          
           #endif
   
           if (state_receive>99){
@@ -82,15 +77,7 @@
           }
         break;        
         case 1 ... 12:
-          legs_Angle[state_receive-1] = Wire.read();
-
-          #ifdef DEBUGGER
-          
-            Serial.print("data received: ");
-            Serial.println(legs_Angle[state_receive-1]);
-
-          #endif
-          
+          legs_Angle[state_receive-1] = Wire.read();          
           state_receive = 0;
         break;
         default:
@@ -106,11 +93,8 @@
 
     switch (state_send){
       case 0:     // Save current distance in the buffer and send firts part
-
-        #ifdef DEBUGGER
-          
+        #ifdef DEBUGGER          
           Serial.print(" - Sending data:");
-
         #endif
         
         // to reconstruct
@@ -120,39 +104,26 @@
             buf[0] = (byte) duration_U;
             buf[1] = (byte) (duration_U >> 8);
             
-            #ifdef DEBUGGER
+            Wire.write(buf[0]);
+            state_send = 1;
             
+            #ifdef DEBUGGER            
               Serial.println(duration_U);
-
-            #endif
+            #endif            
+          break;
+          case 1 ... 12:
+            Wire.write(current_legs_Angle[option-1]); 
             
+            #ifdef DEBUGGER         
+              Serial.print("current pwm");   
+              Serial.println(current_legs_Angle[option-1]);
+            #endif            
           break;
-          default:
-            option = 0;
-          break;
-        }
-        
-        Wire.write(buf[0]);
-
-        #ifdef DEBUGGER
-        
-          Serial.print(" - buf[0] sent:");
-          Serial.println(buf[0]);
-          
-        #endif
-        
-        state_send = 1;
+          option = 0;
+        }        
       break;
       case 1:
         Wire.write(buf[1]); 
-        
-        #ifdef DEBUGGER
-          
-          Serial.print(" - buf[1] sent:");
-          Serial.println(buf[1]);
-          
-        #endif
-        
         state_send = 0;    
       break;
       default:    

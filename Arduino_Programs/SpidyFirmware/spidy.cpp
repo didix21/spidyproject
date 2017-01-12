@@ -98,9 +98,9 @@
   /**
    * This function read all the actual servo values
    */
-   uint8_t* Spidy::readLegsPosition(uint8_t *legsAngle) {
+   uint8_t* Spidy::readLegsPosition(uint8_t *legsPosition) {
     
-    uint8_t legsPosition[12]; // Twelve Servo Motors
+    //uint8_t legsPosition[12]; // Twelve Servo Motors
     
     // Read actual legs position
     legsPosition[0] = l1s1.read();
