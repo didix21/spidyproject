@@ -26,18 +26,39 @@ void loop() {
     
     update_duration_U();
     read_angles(legsAngle);
+      Serial.println(duration_U);
+      Serial.print("pwm = [");
+      Serial.print(legsAngle[0]);
+      for (int i=1;i<12;i++){
+        Serial.print(", ");
+        Serial.print(legsAngle[i]);
+      }
+      Serial.println("]");    
     spidy.checkInsideMinMax(legsAngle); // Check if the angles send are inside the min max.
     spidy.refreshLegs(legsAngle);
-  
-    Serial.print("Distance_U = ");
-    Serial.println(duration_U);
+
+    spidy.readLegsPosition(current_legsAngle);
+    set_current_angles(current_legsAngle);
+
+    //#ifdef DEBUGGER  
+      Serial.print("Distance_U = ");
+      Serial.println(duration_U);
+      Serial.print("pwm = [");
+      Serial.print(legsAngle[0]);
+      for (int i=1;i<12;i++){
+        Serial.print(", ");
+        Serial.print(legsAngle[i]);
+      }
+      Serial.println("]");    
+    //#endif
     Serial.print("pwm = [");
-    Serial.print(legsAngle[0]);
+    Serial.print(current_legsAngle[0]);
     for (int i=1;i<12;i++){
       Serial.print(", ");
-      Serial.print(legsAngle[i]);
+      Serial.print(current_legsAngle[i]);
     }
-    Serial.println("]");
+    Serial.println("]");    
+    
     delay(50);
     
   #endif // COMMANDLINE_CONTROL

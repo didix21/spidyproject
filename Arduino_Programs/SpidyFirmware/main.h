@@ -66,6 +66,7 @@
     int actualServo;
 
     static uint8_t legsAngle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+    static uint8_t current_legsAngle[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
     
    #ifdef COMMANDLINE_CONTROL
     void commandLine() {
