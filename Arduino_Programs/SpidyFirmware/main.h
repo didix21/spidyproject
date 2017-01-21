@@ -12,6 +12,7 @@
   #include "comunication.h"
   #include "ultrasound.h"
   #include "messages.h"
+  #include "MPU6050_DMP6.h"
 
 
  

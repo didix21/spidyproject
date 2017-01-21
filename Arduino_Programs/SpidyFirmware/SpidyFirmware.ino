@@ -19,6 +19,7 @@ void setup() {
   spidy.setSpidyRest();
   init_comunication();
   ultrasound_setup();
+  setupInitMPU();
 
 }
 
@@ -27,9 +28,9 @@ void loop() {
   #ifdef COMMANDLINE_CONTROL // Go to configuration and comment the #define COMMANDLINE_CONTROL
     
     commandLine();
-    
+    loopMPU();
   #else
-    
+    loopMPU();
     update_duration_U();
     read_angles(legsAngle);
     
