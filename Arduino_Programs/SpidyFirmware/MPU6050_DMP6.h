@@ -67,7 +67,7 @@ MPU6050 mpu; // Creates MPU class
 // format used for the InvenSense teapot demo
 //#define OUTPUT_TEAPOT
 
-#define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
+#define INTERRUPT_PIN 19  // use pin 2 on Arduino Uno & most boards
 
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful

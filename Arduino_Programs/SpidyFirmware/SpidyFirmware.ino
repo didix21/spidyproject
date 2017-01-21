@@ -19,7 +19,7 @@ void setup() {
   spidy.setSpidyRest();
   init_comunication();
   ultrasound_setup();
-  setupInitMPU();
+  //setupInitMPU();
 
 }
 
@@ -30,7 +30,7 @@ void loop() {
     commandLine();
     loopMPU();
   #else
-    loopMPU();
+    //loopMPU();
     update_duration_U();
     read_angles(legsAngle);
     
