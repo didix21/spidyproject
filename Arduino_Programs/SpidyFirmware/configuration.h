@@ -110,7 +110,7 @@
   // Leg 6
   #define L6S1_MIN 25 // In degrees
   #define L6S1_MAX 180 // In degrees
-  #define L6S2_MIN 60 // In degrees
+  #define L6S2_MIN 70 // In degrees
   #define L6S2_MAX 160 // In degrees
 
   // Centrate Base Paws
