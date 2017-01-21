@@ -10,6 +10,36 @@
   * L = Leg, Nº is the leg number.
   * S = Servo, Nº is the servo number: 1 is the servo near the paw and 2 is the base servo
   */
+
+  /********************* SPIDY ********************
+   *                                              *
+   *                                              *
+   *                     POWER                    *
+   *                     -   +                    *
+   *                     |   |                    *
+   *       ________________________________       *
+   *      |                                |      *
+   * L6S2 | L6S1                      L5S1 | L5S2 *
+   *      |                                |      *
+   *      |                                |      *
+   *      |                                |      *
+   *      |                                |      *
+   *      |                                |      *
+   * L4S2 |  L4S1                     L3S1 | L3S2 *
+   *      |                                |      *
+   *      |                                |      *
+   *      |                                |      *
+   *      |                                |      *
+   *      |                                |      *
+   * L2S2 | L2S1                      L1S1 | L1S2 *
+   *      |________________________________|      *
+   *                    |     |                   *
+   *                    |     |                   *
+   *                    -------                   *
+   *                      USB                     * 
+   *                                              *
+   ************************************************                      
+   */
   // *********************************** SERVO PINS ***********************************
   #ifndef LNSN    
   
@@ -44,7 +74,7 @@
 
   #endif
 
- // #define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
+  //#define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
  
  #endif // MYSER
 
@@ -86,7 +116,7 @@
   // Centrate Base Paws
   #define L1S1_REST 60 //(L1S1_MAX - L1S1_MIN)/2
   #define L1S2_REST L1S2_MIN//(L1S2_MAX - L1S2_MIN)/2   //90
-  #define L2S1_REST 60 //(L2S1_MAX - L2S1_MIN)/2
+  #define L2S1_REST 120 //(L2S1_MAX - L2S1_MIN)/2
   #define L2S2_REST L2S2_MIN//(L2S2_MAX - L2S2_MIN)/2   //5
   
   #define L3S1_REST 45//(L3S1_MAX - L3S1_MIN)/2
