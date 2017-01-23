@@ -74,7 +74,7 @@
 
   #endif
 
-  #define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
+  //#define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
  
  #endif // MYSER
 
@@ -126,7 +126,7 @@
   
   #define L5S1_REST 60//(L5S1_MAX - L5S1_MIN)/2
   #define L5S2_REST L5S2_MIN//(L5S2_MAX - L5S2_MIN)/2   //0
-  #define L6S1_REST 120//(L6S1_MAX - L6S1_MIN)/2
+  #define L6S1_REST 120   //(L6S1_MAX - L6S1_MIN)/2
   #define L6S2_REST L6S2_MIN//(L1S2_MAX - L6S2_MIN)/2   //60
                      
   #define RANGE_OF_EACH_SERVO

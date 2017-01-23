@@ -24,11 +24,11 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  #ifdef COMMANDLINE_CONTROL // Go to configuration and comment the #define COMMANDLINE_CONTROL
+  #ifdef COMMANDLINE_CONTROL // Go to configuration and uncomment the #define COMMANDLINE_CONTROL
     
     commandLine();
     
-  #else
+  #else // Main Program to control with Raspberry PI
     
     update_duration_U();
     read_angles(legsAngle);
