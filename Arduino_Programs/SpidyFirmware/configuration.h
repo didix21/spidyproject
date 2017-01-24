@@ -84,17 +84,17 @@
   
   // Leg 1 
   #define L1S1_MIN 0  // In degrees
-  #define L1S1_MAX 125 // In degrees
-  #define L1S2_MIN 90 // In degrees
+  #define L1S1_MAX 110 // In degrees
+  #define L1S2_MIN 100 // In degrees
   #define L1S2_MAX 180 // In degrees
   // Leg 2
   #define L2S1_MIN 50 // In degrees
   #define L2S1_MAX 170 // In degrees
   #define L2S2_MIN 5 // In degrees
-  #define L2S2_MAX 90 // In degrees
+  #define L2S2_MAX 110 // In degrees
   // Leg 3
   #define L3S1_MIN 0 // In degrees
-  #define L3S1_MAX 90 // In degrees
+  #define L3S1_MAX 100 // In degrees
   #define L3S2_MIN 30 // In degrees
   #define L3S2_MAX 120 // In degrees
   // Leg 4
