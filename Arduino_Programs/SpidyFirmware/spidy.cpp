@@ -98,7 +98,7 @@
   /**
    * This function read all the actual servo values
    */
-   uint8_t* Spidy::readLegsPosition(uint8_t *legsPosition) {
+   void Spidy::readLegsPosition(uint8_t *legsPosition) {
     
     //uint8_t legsPosition[12]; // Twelve Servo Motors
     
@@ -116,7 +116,7 @@
     legsPosition[10] = l6s1.read();
     legsPosition[11] = l6s2.read();
 
-    return legsPosition;
+   
    }
    
    /**

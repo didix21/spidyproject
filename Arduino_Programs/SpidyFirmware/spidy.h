@@ -24,7 +24,7 @@
       void setSpidyDown();
       void refreshLegs(uint8_t *legsAngle);
       void checkInsideMinMax(uint8_t *legsAngle);
-      uint8_t* readLegsPosition(uint8_t *legsAngle);
+      void readLegsPosition(uint8_t *legsAngle);
       bool* checkPosition(uint8_t *legsAngle, uint8_t *legsPosition);
 
       
