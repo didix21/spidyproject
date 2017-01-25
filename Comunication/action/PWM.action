@@ -1,9 +1,0 @@
-
-
-#goal definition
-char[12] pwm
----
-#result definition
-bool success
----
-#feedback
