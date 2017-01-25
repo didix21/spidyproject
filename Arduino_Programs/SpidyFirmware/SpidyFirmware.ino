@@ -35,14 +35,14 @@ void loop() {
     
     #ifdef DEBUGGER // Debugger in order to print via serial the errors
     
-      Serial.println(duration_U);
-      Serial.print("pwm = [");
-      Serial.print(legsAngle[0]);
+      MYSERIAL.println(duration_U);
+      MYSERIAL.print("pwm = [");
+      MYSERIAL.print(legsAngle[0]);
       for (int i=1;i<12;i++){
-        Serial.print(", ");
-        Serial.print(legsAngle[i]);
+        MYSERIAL.print(", ");
+        MYSERIAL.print(legsAngle[i]);
       }
-      Serial.println("]");
+      MYSERIAL.println("]");
       
     #endif //DEBUGGER
         
@@ -54,23 +54,23 @@ void loop() {
 
     #ifdef DEBUGGER  
     
-      Serial.print("Distance_U = ");
-      Serial.println(duration_U);
-      Serial.print("pwm = [");
-      Serial.print(legsAngle[0]);
+      MYSERIAL.print("Distance_U = ");
+      MYSERIAL.println(duration_U);
+      MYSERIAL.print("pwm = [");
+      MYSERIAL.print(legsAngle[0]);
       for (int i=1;i<12;i++){
-        Serial.print(", ");
-        Serial.print(legsAngle[i]);
+        MYSERIAL.print(", ");
+        MYSERIAL.print(legsAngle[i]);
       }
-      Serial.println("]");    
+      MYSERIAL.println("]");    
     
-    Serial.print("pwm = [");
-    Serial.print(current_legsAngle[0]);
+    MYSERIAL.print("pwm = [");
+    MYSERIAL.print(current_legsAngle[0]);
     for (int i=1;i<12;i++){
-      Serial.print(", ");
-      Serial.print(current_legsAngle[i]);
+      MYSERIAL.print(", ");
+      MYSERIAL.print(current_legsAngle[i]);
     }
-    Serial.println("]");    
+    MYSERIAL.println("]");    
     
     #endif // DEBUGGER
     
