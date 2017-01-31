@@ -1,7 +1,8 @@
-# robotLearning
+# spidypriject
 
 # About it
 This repository contains all the firmware necessary to impliment with Spidy.
+Based on the robot: [Funny six feet + Myo](http://www.thingiverse.com/thing:1201161/#files)
 
 # Contributors
 
