@@ -12,7 +12,7 @@ install:
   - ln -s $PWD /usr/local/share/arduino/libraries/spidyproject
   
 script:
-  - arduino --verify --board arduino:avr:mega $PWD/SpidyFirmware/SpidyFirmware.ino
+  - arduino --verify --board arduino:avr:uno $PWD/SpidyFirmware/SpidyFirmware.ino
   
 notifications:
   email:
