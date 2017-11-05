@@ -1,10 +1,31 @@
-# spidypriject
+# spidyproject
 
-# About it
-This repository contains all the firmware necessary to impliment with Spidy.
+## About it
+This repository contains all the necessary firmware to be implimented in Arduino's Spidy. Spidy is a six leg robot which is controlled with an Arduino and the spidyfirmware.  
 Based on the robot: [Funny six feet + Myo](http://www.thingiverse.com/thing:1201161/#files)
 
-# Contributors
+# Characteristics
+Description about the hardware and firmware used in spidy.
+## Hardware
+ * Plastic chasis.
+ * Arduino.
+ * 16 channels pwm controller.
+ * 13 servo motors SG90.
+ * Ultrasonic sensor.
+ * MPU-6050 3 Axis Acceleration + Gyroscope / 6 Axis Attitude Module.
+ * Raspberry Pi 2.0. (Optional for controll it manually)
+ 
+ ## Firmware
+ * spidyfirmware
+
+## Things to do
+**Hardware**
+  * Implement the 16 channels pwm controller.
+  
+**Software**
+  * Create new code for using the previous hardware.
+
+## Contributors
 
 - [Sxubach](https://github.com/sxubach)
   - He will create the communication between a PC, the Raspberry Pi 3.0 and Arduino MEGA. 
@@ -14,5 +35,3 @@ Based on the robot: [Funny six feet + Myo](http://www.thingiverse.com/thing:1201
 
 - [XMabbX](https://github.com/XMabbX)
   - Investigate about the algorithm which will allow the robot to learn to walk and prepare for the next step of the project.
-
-# Material Needed
