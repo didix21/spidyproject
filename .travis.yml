@@ -10,7 +10,7 @@ before_install:
   
 install:
   - ln -s $PWD /usr/local/share/arduino/libraries/spidyproject
-  - arduino --install-libraries "Servo:1.1.2"
+  - arduino --install-libraries "Servo"
 script:
   - arduino --verify --board arduino:avr:uno $PWD/SpidyFirmware/SpidyFirmware.ino
   
