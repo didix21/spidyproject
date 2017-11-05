@@ -11,4 +11,4 @@ install:
   - ln -s $PWD /usr/local/share/arduino
   - git clone https://github.com/didix21/spidyproject.git $PWD/projects
 script:
-  - arduino --verify --board arduino:avr:uno $PWD/projects/spidyproject/SpidyFirmware/SpidyFirmware.ino
+  - arduino --verify --board arduino:avr:mega $PWD/projects/spidyproject/SpidyFirmware/SpidyFirmware.ino
