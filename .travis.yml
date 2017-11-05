@@ -12,7 +12,3 @@ install:
   - git clone https://github.com/didix21/spidyproject.git $PWD/projects
 script:
   - arduino --verify --board arduino:avr:uno $PWD/projects/spidyproject/SpidyFirmware/SpidyFirmware.ino
-notifications:
-email:
-  on_success: didaccoll_93@hotmail.com
-  on_failure: didaccoll_93@hotmail.com
