@@ -1,5 +1,5 @@
 # spidyproject
-
+[![version](https://badge.fury.io/gh/didix21%2Fspidyproject.svg)]
 ## About it
 This repository contains all the necessary firmware to be implimented in Arduino's Spidy. Spidy is a six leg robot which is controlled with an Arduino and the spidyfirmware.  
 Based on the robot: [Funny six feet + Myo](http://www.thingiverse.com/thing:1201161/#files)
