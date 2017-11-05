@@ -7,6 +7,7 @@ before_install:
   - tar xf arduino-1.8.5-linux64.tar.xz
   - sudo mv arduino-1.8.5 /usr/local/share/arduino-1.8.5
   - sudo ln -s /usr/local/share/arduino-1.8.5/arduino /usr/local/bin/arduino-1.8.5
+  - sudo mkdir /home/didix21/GitHub/Arduino
 install:
   - ln -s $PWD /home/didix21/GitHub/Arduino
 script:
