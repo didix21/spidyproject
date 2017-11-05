@@ -7,8 +7,14 @@ before_install:
   - tar xf arduino-1.6.5-linux64.tar.xz
   - sudo mv arduino-1.6.5 /usr/local/share/arduino
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
+  
 install:
-  - sudo ln -s $PWD /usr/local/share/arduino
-  - git clone https://github.com/didix21/spidyproject.git $PWD/projects
+  - ln -s $PWD /usr/local/share/arduino/libraries/spidyproject
+  
 script:
-  - arduino --verify --board arduino:avr:mega $PWD/projects/spidyproject/SpidyFirmware/SpidyFirmware.ino
+  - arduino --verify --board arduino:avr:mega $PWD/SpidyFirmware/SpidyFirmware.ino
+  
+notifications:
+  email:
+    on_success: change
+    on_failure: change
