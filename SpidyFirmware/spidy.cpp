@@ -122,22 +122,22 @@
    /**
     * CheckPostion: checks if all the servo have reached the goal values.
     */
-   bool* Spidy::checkPosition(uint8_t *legsAngle, uint8_t *legsPosition) {
+   bool *Spidy::checkPosition(uint8_t *legsAngle, uint8_t *legsPosition) {
     
-    bool achievedPosition[12]; // This array will be used to know if all the servos has achieved the position
+    bool *checkArray = new bool[12]; // This array will be used to know if all the servos has achieved the position
     
     // Check if servos has achieved the position desired
     for(int i = 0; i < 11; i++) {
       // (legsAngle[i] - 10) <= legsPosition[i] <= (legsAngle[i] + 10)
       if((legsPosition[i] >= (legsAngle[i] - 10)) && (legsPosition[i] <= (legsAngle[i] + 10))) { 
-        achievedPosition[i] = true;
+        checkArray[i] = true;
       } 
       else {
-        achievedPosition[i] = false;
+        checkArray[i] = false;
       }
     }
 
-    return achievedPosition;
+    return checkArray; 
    }
    
    /**
