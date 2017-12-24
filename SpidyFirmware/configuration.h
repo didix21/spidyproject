@@ -62,6 +62,15 @@
   // Debugger mode 
 
  // #define DEBUGGER // If the define is not commented, the debugger mode is set
+
+ // #deifne PCA9685_BOARD // Uncomment this if the spidy works with the PCA9685
+  #ifdef PCA9685_BOARD
+    
+    #define WIRE_BAUDRATE 400000    // Supported baud rates are 100kHz, 400kHz, and 1000kHz
+    #define I2C_ADDRESS B000000     // Address pins A5-A0 set to B000000
+    #define PWM_FREQUENCY 50        // 50Hz provides 20ms standard servo phase length
+
+  #endif
   
  // Serial Definition
  #ifndef MYSERESIAL
