@@ -15,7 +15,7 @@ void setup() {
     MYSERIAL.println(SPIDY_FIRMWARE);
     MYSERIAL.println(ASTERISKS);
   }
-  spidy.attachServos();
+  //spidy.attachServos();
   spidy.setSpidyRest();
   init_comunication();
   ultrasound_setup();

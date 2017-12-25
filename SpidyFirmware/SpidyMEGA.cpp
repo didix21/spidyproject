@@ -3,8 +3,8 @@
   /**
    *  Constructor
    */
-  SpidyMEGA::SpidyMEGA() {
-       // Nothing
+  SpidyMEGA::SpidyMEGA() {      
+       attachServos(); // Init Servos
   }
 
   void SpidyMEGA::attachServos() {
