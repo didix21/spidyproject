@@ -1,3 +1,6 @@
+
+#ifdef ARDUINO_MEGA
+
 /**
  * Declaration of Spidy Class
  */
@@ -37,3 +40,5 @@
   };
 
 #endif //_SPIDYMEGA_H_
+
+#endif // ARDUINO_MEGA

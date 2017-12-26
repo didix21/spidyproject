@@ -1,3 +1,5 @@
+#ifdef ARDUINO_MEGA
+
 #include "SpidyMEGA.h"
 
   /**
@@ -115,3 +117,5 @@
     legsPosition[11] = l6s2.read();
 
    }
+
+#endif // ARDUINO_MEGA
