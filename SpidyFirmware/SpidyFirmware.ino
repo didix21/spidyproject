@@ -3,20 +3,21 @@
  * use with the robot spidy. The refernces can be found in: 
  */
 
-#include "configuration.h"
 #include "main.h"
 
 void setup() {
   // put your setup code here, to run once:
   MYSERIAL.begin(BAUDRATE);
-  if(MYSERIAL.available()){
-    MYSERIAL.println(ASTERISKS);
-    MYSERIAL.println(SPIDY_FIRMWARE);
-    MYSERIAL.println(ASTERISKS);
-  }
+  // Print menu information
+  MYSERIAL.println(ASTERISKS);
+  MYSERIAL.println(SPIDY_FIRMWARE);
+  MYSERIAL.println(ASTERISKS);
 
-  init_comunication();
-  ultrasound_setup();
+  spidy.spidypca.wireConfiguration(WIRE_BAUDRATE);
+  spidy.spidypca.pcaConfiguration(I2C_ADDRESS);
+
+  //init_comunication();
+  //ultrasound_setup();
 
 }
 

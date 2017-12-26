@@ -11,9 +11,9 @@
   class SpidyPCA {
 
     public:
-      SpidyPCA::SpidyPCA(uint8_t wire_baudrate, byte i2c_address);
+      SpidyPCA() {}
       void wireConfiguration(uint8_t wire_baudrate); // Configures the Wire.
-      void pcaConfig(byte i2c_address);         // Configurates the PCA.
+      void pcaConfiguration(byte i2c_address);         // Configurates the PCA.
       void setSpidyRest();
       void setSpidyUp();
       void setSpidyDown();

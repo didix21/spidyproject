@@ -2,13 +2,6 @@
 #include "SpidyPCA.h"
 
 
-SpidyPCA::SpidyPCA(uint8_t wire_baudrate, byte i2c_address) {
-
-  wireConfiguration(wire_baudrate); // Starts Wire connection.
-  pcaConfig(i2c_address); // Configurates the PCA9685.
-
-}
-
 /**
 * @wireConfiguration: starts wire connection, must be started before
 * configurate the PCA9685 board.
@@ -19,7 +12,7 @@ void SpidyPCA::wireConfiguration(uint8_t wire_baudrate)
   Wire.setClock(wire_baudrate); // Supported baud rates are 100 kHz, 400 kHz, and 1000 kHz
 }
 
-void SpidyPCA::pcaConfig(byte i2c_address)
+void SpidyPCA::pcaConfiguration(byte i2c_address)
 {
   pwmController.resetDevices();   // Software resets all PCA9685 devices on Wire line
   pwmController.init(i2c_address);// Default is 200 Hz, supports 24 Hz to 1526 Hz

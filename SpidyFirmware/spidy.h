@@ -30,7 +30,7 @@
     #if defined(ARDUINO_MEGA)
       Spidy(){}
     #elif defined(PCA9685_BOARD)
-      Spidy(uint8_t wire_baudrate, byte i2c_addres) : spidypca(wire_baudrate, i2c_addres) {}
+      Spidy() : spidypca() {}
     #endif
       void attachServos();
       void setSpidyRest();
