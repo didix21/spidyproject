@@ -75,7 +75,7 @@
   
   // Debugger mode 
 
- // #define DEBUGGER // If the define is not commented, the debugger mode is set
+  #define DEBUGGER // If the define is not commented, the debugger mode is set
 
   
   #ifdef PCA9685_BOARD
@@ -97,12 +97,16 @@
 
   #endif
 
-  ///#define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
+  #define COMMANDLINE_CONTROL // Uncomment this if you want to use command line to control spidy robot.
  
  #endif // MYSER
 
 // *********************************** Range of each servo leg ***********************************
-
+/**
+ * The following variables configures the minimun and maximum range of each servo motor using
+ * Arduino MEGA.
+ */
+#ifdef ARDUINO_MEGA
  #ifndef RANGE_OF_EACH_SERVO // 
   
   // Leg 1 
@@ -155,7 +159,62 @@
   #define RANGE_OF_EACH_SERVO
 
  #endif // RANGE_OF_EACH_SERVO
+ #endif //ARDUINO_MEGA
 
+#ifdef PCA9685_BOARD
+  #ifndef RANGE_OF_EACH_SERVO // 
+  
+  // Leg 1 
+  #define L1S1_MIN -90  // In degrees
+  #define L1S1_MAX 20 // In degrees
+  #define L1S2_MIN 10 // In degrees
+  #define L1S2_MAX 90 // In degrees
+  // Leg 2
+  #define L2S1_MIN -40 // In degrees
+  #define L2S1_MAX 80 // In degrees
+  #define L2S2_MIN -80 // In degrees
+  #define L2S2_MAX 20 // In degrees
+  // Leg 3
+  #define L3S1_MIN -90 // In degrees
+  #define L3S1_MAX 10 // In degrees
+  #define L3S2_MIN -60 // In degrees
+  #define L3S2_MAX 40 // In degrees
+  // Leg 4
+  #define L4S1_MIN -75 // In degrees
+  #define L4S1_MAX 10 // In degrees
+  #define L4S2_MIN -65 // In degrees
+  #define L4S2_MAX 10 // In degrees
+  // Leg 5
+  #define L5S1_MIN -85// In degrees
+  #define L5S1_MAX 60 // In degrees
+  #define L5S2_MIN -90 // In degrees
+  #define L5S2_MAX 10 // In degrees
+  // Leg 6
+  #define L6S1_MIN -65 // In degrees
+  #define L6S1_MAX 90 // In degrees
+  #define L6S2_MIN -70 // In degrees
+  #define L6S2_MAX 20 // In degrees
+
+  // Centrate Base Paws
+  #define L1S1_REST -40 //(L1S1_MAX - L1S1_MIN)/2
+  #define L1S2_REST L1S2_MIN//(L1S2_MAX - L1S2_MIN)/2   //90
+  #define L2S1_REST -20 //(L2S1_MAX - L2S1_MIN)/2
+  #define L2S2_REST L2S2_MIN//(L2S2_MAX - L2S2_MIN)/2   //5
+  
+  #define L3S1_REST -40//(L3S1_MAX - L3S1_MIN)/2
+  #define L3S2_REST L3S2_MIN//(L3S2_MAX - L3S2_MIN)/2   //30
+  #define L4S1_REST -35//(L4S1_MAX - L4S1_MIN)/2
+  #define L4S2_REST L4S2_MIN//(L4S2_MAX - L4S2_MIN)/2   //20
+  
+  #define L5S1_REST -30//(L5S1_MAX - L5S1_MIN)/2
+  #define L5S2_REST L5S2_MIN//(L5S2_MAX - L5S2_MIN)/2   //0
+  #define L6S1_REST 30   //(L6S1_MAX - L6S1_MIN)/2
+  #define L6S2_REST L6S2_MIN//(L1S2_MAX - L6S2_MIN)/2   //60
+                     
+  #define RANGE_OF_EACH_SERVO
+
+ #endif // RANGE_OF_EACH_SERVO
+#endif // PCA9685_BOARD
 // **************************************************************************************************
 
 #endif // _CONFIGURATION_H_
