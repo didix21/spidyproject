@@ -124,47 +124,91 @@
            }
            else if (whichServo == "l1s2") {
               SERVO_SENT(whichServo);
-              //spidy.l1s2.write(intDegrees);
+              #if defined(ARDUINO_MEGA)
+                spidy.l1s2.write(intDegrees);
+              #elif defined(PCA9685_BOARD)
+                spidy.spidypca.refreshOneLeg(1, intDegrees);
+              #endif
            }
            else if (whichServo == "l2s1") {
              SERVO_SENT(whichServo);
-             //spidy.l2s1.write(intDegrees);
+             #if defined(ARDUINO_MEGA)
+               spidy.l2s1.write(intDegrees);
+             #elif defined(PCA9685_BOARD)
+               spidy.spidypca.refreshOneLeg(2, intDegrees);
+             #endif
            }
            else if (whichServo == "l2s2") {
              SERVO_SENT(whichServo);
-             //spidy.l2s2.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l2s2.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(3, intDegrees);
+            #endif
            }
            else if (whichServo == "l3s1") {
              SERVO_SENT(whichServo);
-             //spidy.l3s1.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l3s1.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(4, intDegrees);
+            #endif
            }
            else if (whichServo == "l3s2") {
              SERVO_SENT(whichServo);
-             //spidy.l3s2.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l3s2.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(5, intDegrees);
+            #endif
            }
            else if (whichServo == "l4s1") {
              SERVO_SENT(whichServo);
-             //spidy.l4s1.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l4s1.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(6, intDegrees);
+            #endif
            }
            else if (whichServo == "l4s2") {
              SERVO_SENT(whichServo);
-             //spidy.l4s2.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l1s1.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(7, intDegrees);
+            #endif
            }
            else if (whichServo == "l5s1") {
              SERVO_SENT(whichServo);
-             //spidy.l5s1.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l5s1.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(8, intDegrees);
+            #endif
            }
            else if (whichServo == "l5s2") {
              SERVO_SENT(whichServo);
-             //spidy.l5s2.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l5s2.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(9, intDegrees);
+            #endif
            }
            else if (whichServo == "l6s1") {
              SERVO_SENT(whichServo);
-             //spidy.l6s1.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l6s1.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(10, intDegrees);
+            #endif
            }
            else if (whichServo == "l6s2") {
              SERVO_SENT(whichServo);
-             //spidy.l6s2.write(intDegrees);
+            #if defined(ARDUINO_MEGA)
+              spidy.l1s1.write(intDegrees);
+            #elif defined(PCA9685_BOARD)
+              spidy.spidypca.refreshOneLeg(11, intDegrees);
+            #endif
            }
         }
         else if (refreshMode) {

@@ -21,7 +21,7 @@ void SpidyPCA::pcaConfiguration(byte i2c_address)
 
 void SpidyPCA::setSpidyRest()
 {
-  uint8_t servo_values[12] = {L1S1_REST, L1S2_REST, L2S1_REST, L2S2_REST, L3S1_REST, L3S2_REST, \
+  int servo_values[12] = {L1S1_REST, L1S2_REST, L2S1_REST, L2S2_REST, L3S1_REST, L3S2_REST, \
                               L4S1_REST, L4S2_REST, L5S1_REST, L5S2_REST, L6S1_REST, L6S2_REST};
   for(uint8_t i = 0; i < 12; i++)
     pwmController.setChannelPWM(i, servos.pwmForAngle(servo_values[i]));
@@ -40,7 +40,7 @@ void SpidyPCA::setSpidyUp()
 
 void SpidyPCA::setSpidyDown()
 {
-  uint8_t servo_values[6] = {L1S2_MIN, L2S2_MIN, L3S2_MIN, L4S2_MIN, L5S2_MIN, L6S2_MIN};
+  int servo_values[6] = {L1S2_MIN, L2S2_MIN, L3S2_MIN, L4S2_MIN, L5S2_MIN, L6S2_MIN};
   uint8_t j = 0;
   for(uint8_t i = 1; i < 12; i+2)
   {

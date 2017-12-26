@@ -5,10 +5,14 @@
    */
   void Spidy::setSpidyRest() {
     
-    #ifdef ARDUINO_MEGA
+    #if defined(ARDUINO_MEGA)
     
       spidymega.setSpidyRest();
 
+    #elif defined(PCA9685_BOARD)
+    
+      spidypca.setSpidyRest();
+  
     #endif
     
    }
@@ -18,10 +22,14 @@
     */
    void Spidy::setSpidyUp() {
 
-    #ifdef ARDUINO_MEGA
+    #if defined(ARDUINO_MEGA)
     
       spidymega.setSpidyUp();
-
+    
+    #elif defined(PCA9685_BOARD)
+    
+      spidypca.setSpidyUp();
+  
     #endif
     
    }
@@ -31,10 +39,14 @@
    */
    void Spidy::setSpidyDown() {
 
-    #ifdef ARDUINO_MEGA
+    #if defined(ARDUINO_MEGA)
     
       spidymega.setSpidyDown();
-
+      
+    #elif defined(PCA9685_BOARD)
+    
+      spidypca.setSpidyDown();
+  
     #endif
 
    }
@@ -44,12 +56,16 @@
    * Possible some time delays will be implemented in futur to 
    * avoid high inductances and Arduino Saturation.
    */
-   void Spidy::refreshLegs(uint8_t *legsAngle) {
+   void Spidy::refreshLegs(int *legsAngle) {
 
-    #ifdef ARDUINO_MEGA
+    #if defined(ARDUINO_MEGA)
     
       spidymega.refreshLegs(legsAngle); // Update legs position using Servo library.
-
+    
+    #elif defined(PCA9685_BOARD)
+    
+      //spidypca.refreshLegs(legsAngle);
+  
     #endif
     
    }
@@ -57,11 +73,15 @@
   /**
    * This function read all the actual servo values
    */
-   void Spidy::readLegsPosition(uint8_t *legsPosition) {
+   void Spidy::readLegsPosition(int *legsPosition) {
     
-    #ifdef ARDUINO_MEGA   
+    #if defined(ARDUINO_MEGA)
       
       spidymega.readLegsPosition(legsPosition); // Read actual legs position using Servo library
+
+    #elif defined(PCA9685_BOARD)
+
+     // spidypca.readLegsPosition(legsPosition);
 
     #endif
     
@@ -70,7 +90,7 @@
    /**
     * CheckPostion: checks if all the servo have reached the goal values.
     */
-   bool *Spidy::checkPosition(uint8_t *legsAngle, uint8_t *legsPosition) {
+   bool *Spidy::checkPosition(int *legsAngle, int *legsPosition) {
     
     bool *checkArray = new bool[12]; // This array will be used to know if all the servos has achieved the position
     
@@ -92,7 +112,7 @@
     * checkInsideMinMax: check if each servo angle received is inside min max range.
     * This function avoids force the different servos.
     */
-   void Spidy::checkInsideMinMax(uint8_t *legsAngle) {
+   void Spidy::checkInsideMinMax(int *legsAngle) {
     
     int i;
     for(i = 0; i < 11; i++) {
