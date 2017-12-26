@@ -33,7 +33,12 @@
      * Public variables
      */
     public:
-      SpidyMEGA spidymega;
+    
+      #ifdef ARDUINO_MEGA
+      
+        SpidyMEGA spidymega;
+
+      #endif
 
     /**
      * Private Variables

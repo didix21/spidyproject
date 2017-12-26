@@ -13,7 +13,11 @@
    */
   void Spidy::setSpidyRest() {
     
-    spidymega.setSpidyRest();
+    #ifdef ARDUINO_MEGA
+    
+      spidymega.setSpidyRest();
+
+    #endif
     
    }
 
@@ -21,8 +25,12 @@
     * To rise Spidy 
     */
    void Spidy::setSpidyUp() {
+
+    #ifdef ARDUINO_MEGA
     
-    spidymega.setSpidyUp();
+      spidymega.setSpidyUp();
+
+    #endif
     
    }
 
@@ -31,7 +39,11 @@
    */
    void Spidy::setSpidyDown() {
 
-    spidymega.setSpidyDown();
+    #ifdef ARDUINO_MEGA
+    
+      spidymega.setSpidyDown();
+
+    #endif
 
    }
 
@@ -42,8 +54,11 @@
    */
    void Spidy::refreshLegs(uint8_t *legsAngle) {
 
-    // Actualize legs position
-    spidymega.refreshLegs(legsAngle);
+    #ifdef ARDUINO_MEGA
+    
+      spidymega.refreshLegs(legsAngle); // Update legs position using Servo library.
+
+    #endif
     
    }
 
@@ -51,10 +66,13 @@
    * This function read all the actual servo values
    */
    void Spidy::readLegsPosition(uint8_t *legsPosition) {
-       
-    // Read actual legs position
-    spidymega.readLegsPosition(legsPosition);
+    
+    #ifdef ARDUINO_MEGA   
+      
+      spidymega.readLegsPosition(legsPosition); // Read actual legs position using Servo library
 
+    #endif
+    
    }
    
    /**
