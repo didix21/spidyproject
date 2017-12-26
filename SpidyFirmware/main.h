@@ -54,7 +54,7 @@
 
     //int val; // This variable reads the value from the analog pin
 
-    Spidy spidy;
+    Spidy spidy(WIRE_BAUDRATE, I2C_ADDRESS);
     char syllable[12];
     char data;
     int j=0;
@@ -119,7 +119,7 @@
               #if defined(ARDUINO_MEGA)
                 spidy.l1s1.write(intDegrees);
               #elif defined(PCA9685_BOARD)
-                //spidypca.refreshOneLeg(0, intDegrees);
+               // spidy.spidypca.refreshOneLeg(0, intDegrees);
               #endif
            }
            else if (whichServo == "l1s2") {
@@ -196,7 +196,7 @@
            /***************************************************************************
             ***************************************************************************
             ***************************************************************************/
-            spidy.refreshLegs(arrayOfDegrees); // Once the arrayOfDegrees has been filled, we call refreshLegs method.
+            //spidy.refreshLegs(arrayOfDegrees); // Once the arrayOfDegrees has been filled, we call refreshLegs method.
             refreshModeCounter = 0;
           }
         }

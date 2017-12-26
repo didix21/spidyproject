@@ -1,14 +1,6 @@
 #include "spidy.h"
   
   /** 
-   *  Constructor
-   */
-  Spidy::Spidy() {
-       // Nothing
-  }
-
-
-  /** 
    * Sent all the servos to rest  
    */
   void Spidy::setSpidyRest() {

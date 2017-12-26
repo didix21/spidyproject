@@ -75,7 +75,7 @@
   
   // Debugger mode 
 
- // #define DEBUGGER // If the define is not commented, the debugger mode is set
+  #define DEBUGGER // If the define is not commented, the debugger mode is set
 
   
   #ifdef PCA9685_BOARD

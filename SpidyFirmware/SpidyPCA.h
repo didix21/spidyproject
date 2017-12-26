@@ -1,19 +1,19 @@
 
-#ifdef PCA9685_BOARD
+
 
 #ifndef _SPIDYPCA_H_
   #define _SPIDY_PCA_H_
 
-
+  #include "configuration.h"
   #include <Wire.h>
   #include "PCA9685.h"
 
   class SpidyPCA {
 
     public:
-      SpidyPCA();
-      void wireConfiguration(); // Configures the Wire.
-      void pcaConfig();         // Configurates the PCA.
+      SpidyPCA::SpidyPCA(uint8_t wire_baudrate, byte i2c_address);
+      void wireConfiguration(uint8_t wire_baudrate); // Configures the Wire.
+      void pcaConfig(byte i2c_address);         // Configurates the PCA.
       void setSpidyRest();
       void setSpidyUp();
       void setSpidyDown();
@@ -29,4 +29,4 @@
 
 #endif // _SPIDYPCA_H_
 
-#endif // PCA9685_BOARD
+

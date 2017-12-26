@@ -8,8 +8,16 @@
   #include "Arduino.h"
   #include <Servo.h>
   #include "configuration.h"
-  #include "SpidyMEGA.h"
-  #include "SpidyPCA.h"
+
+  #if defined(ARDUINO_MEGA)
+    
+    #include "SpidyMEGA.h"
+    
+  #elif defined(PCA9685_BOARD)
+    
+    #include "SpidyPCA.h"
+
+  #endif
 
 
   class Spidy {
@@ -19,7 +27,11 @@
      * Public Methods
      */
     public:
-      Spidy();
+    #if defined(ARDUINO_MEGA)
+      Spidy(){}
+    #elif defined(PCA9685_BOARD)
+      Spidy(uint8_t wire_baudrate, byte i2c_addres) : spidypca(wire_baudrate, i2c_addres) {}
+    #endif
       void attachServos();
       void setSpidyRest();
       void setSpidyUp();
@@ -41,7 +53,7 @@
 
       #elif defined(PCA9685_BOARD)
 
-        SpidyPCA spidypca = SpidyPCA();
+        SpidyPCA spidypca;
 
       #endif
 
