@@ -40,9 +40,17 @@
    *                                              *
    ************************************************                      
    */
-  // *********************************** SERVO PINS ***********************************
-  #define ARDUINO_MEGA // Uncomment this line if you are using an arduino Mega to control 
-                       // the servo motors.
+   
+// ************************************ BOARDS ***********************************
+// Uncomment this board that you are using in order to control spidy.
+  
+  //#define ARDUINO_MEGA // Uncomment this line if you are using an arduino Mega to control 
+                         // the servo motors.   
+  #define PCA9685_BOARD // Uncomment this if the spidy works with the PCA9685
+// ***********************************************************************************
+                       
+// ************************************ SERVO PINS ***********************************
+
 #ifdef ARDUINO_MEGA
                 
   #ifndef LNSN    
@@ -69,7 +77,7 @@
 
  // #define DEBUGGER // If the define is not commented, the debugger mode is set
 
- // #deifne PCA9685_BOARD // Uncomment this if the spidy works with the PCA9685
+  
   #ifdef PCA9685_BOARD
     
     #define WIRE_BAUDRATE 400000    // Supported baud rates are 100kHz, 400kHz, and 1000kHz
