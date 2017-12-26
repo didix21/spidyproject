@@ -34,10 +34,14 @@
      * Public variables
      */
     public:
-    
-      #ifdef ARDUINO_MEGA
-      
+
+      #if defined(ARDUINO_MEGA)
+
         SpidyMEGA spidymega;
+
+      #elif defined(PCA9685_BOARD)
+
+        SpidyPCA spidypca = SpidyPCA();
 
       #endif
 

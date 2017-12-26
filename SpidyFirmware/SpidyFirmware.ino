@@ -3,8 +3,7 @@
  * use with the robot spidy. The refernces can be found in: 
  */
 
-
-
+#include "configuration.h"
 #include "main.h"
 
 void setup() {

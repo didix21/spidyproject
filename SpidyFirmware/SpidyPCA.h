@@ -18,6 +18,7 @@
       void setSpidyUp();
       void setSpidyDown();
       void refreshLegs(uint8_t *legsAngle);
+      void refreshOneLeg(char leg, int legAngle);
 
 
     public:
