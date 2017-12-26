@@ -9,6 +9,7 @@
   #include <Servo.h>
   #include "configuration.h"
   #include "SpidyMEGA.h"
+  #include "SpidyPCA.h"
 
 
   class Spidy {
