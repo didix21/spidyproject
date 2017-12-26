@@ -41,22 +41,28 @@
    ************************************************                      
    */
   // *********************************** SERVO PINS ***********************************
+  #define ARDUINO_MEGA // Uncomment this line if you are using an arduino Mega to control 
+                       // the servo motors.
+#ifdef ARDUINO_MEGA
+                
   #ifndef LNSN    
   
-   #define L1S1_PIN 13   // Leg 1 Servo 1
-   #define L1S2_PIN 12   // Leg 1 Servo 2
-   #define L2S1_PIN 11   // Leg 2 Servo 1
-   #define L2S2_PIN 10   // Leg 2 Servo 2
-   #define L3S1_PIN 9   // Leg 3 Servo 1
-   #define L3S2_PIN 8   // Leg 3 Servo 2
-   #define L4S1_PIN 7   // Leg 4 Servo 1 
-   #define L4S2_PIN 6  // Leg 4 Servo 2
-   #define L5S1_PIN 5  // Leg 5 Servo 1
-   #define L5S2_PIN 4  // Leg 5 Servo 2
-   #define L6S1_PIN 3  // Leg 6 Servo 1
-   #define L6S2_PIN 2  // Leg 6 Servo 2
+     #define L1S1_PIN 13   // Leg 1 Servo 1
+     #define L1S2_PIN 12   // Leg 1 Servo 2
+     #define L2S1_PIN 11   // Leg 2 Servo 1
+     #define L2S2_PIN 10   // Leg 2 Servo 2
+     #define L3S1_PIN 9   // Leg 3 Servo 1
+     #define L3S2_PIN 8   // Leg 3 Servo 2
+     #define L4S1_PIN 7   // Leg 4 Servo 1 
+     #define L4S2_PIN 6  // Leg 4 Servo 2
+     #define L5S1_PIN 5  // Leg 5 Servo 1
+     #define L5S2_PIN 4  // Leg 5 Servo 2
+     #define L6S1_PIN 3  // Leg 6 Servo 1
+     #define L6S2_PIN 2  // Leg 6 Servo 2
   
   #endif // LNSN
+
+#endif // ARDUINO_MEGA
   // ***********************************************************************************
   
   // Debugger mode 
